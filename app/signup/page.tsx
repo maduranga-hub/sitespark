@@ -4,12 +4,49 @@ import { useState } from 'react';
 import { Mail, Lock, User, ArrowRight, Github, Sparkles } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    if (!email || !password || !name) {
+      setError('Please fill in all fields');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        router.push('/dashboard');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during sign up');
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (
@@ -24,7 +61,7 @@ export default function SignupPage() {
             <p style={{ color: 'var(--text-muted)' }}>Get your business online in seconds.</p>
           </div>
 
-          <form onSubmit={e => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem' }}>FULL NAME</label>
               <div style={{ position: 'relative' }}>
@@ -70,10 +107,20 @@ export default function SignupPage() {
               </div>
             </div>
 
-            <button className="btn btn-primary" style={{ width: '100%', padding: '0.875rem', marginTop: '1rem' }}>
-              Create Account <ArrowRight size={18} />
-            </button>
+            {error && (
+              <div style={{ color: '#ff4444', fontSize: '0.85rem', textAlign: 'center', background: 'rgba(255,68,68,0.1)', padding: '0.75rem', borderRadius: '8px' }}>
+                {error}
+              </div>
+            )}
 
+            <button 
+              type="submit" 
+              className="btn btn-primary" 
+              disabled={loading}
+              style={{ width: '100%', padding: '0.875rem', marginTop: '1rem' }}
+            >
+              {loading ? 'Creating Account...' : 'Create Account'} <ArrowRight size={18} />
+            </button>
           </form>
 
           <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
