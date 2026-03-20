@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || '';
 
   // Define allowed domains (add your custom domain here after deploying)
-  const allowedDomains = ['sitespark.io', 'localhost:3000', 'sitespark-builder.vercel.app'];
+  const allowedDomains = ['sitespark.io', 'localhost:3000', 'vercel.app'];
 
   // Check if the current hostname is one of the main domains
   const isMainDomain = allowedDomains.some(domain => hostname.includes(domain));
