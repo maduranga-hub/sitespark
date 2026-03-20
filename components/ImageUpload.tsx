@@ -26,13 +26,13 @@ export default function ImageUpload({ onUpload, label, value, onRemove }: ImageU
       const filePath = `uploads/${fileName}`;
 
       const { data, error } = await supabase.storage
-        .from('site-assets')
+        .from('sites')
         .upload(filePath, file);
 
       if (error) throw error;
 
       const { data: { publicUrl } } = supabase.storage
-        .from('site-assets')
+        .from('sites')
         .getPublicUrl(filePath);
 
       onUpload(publicUrl);
