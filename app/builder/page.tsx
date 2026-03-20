@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { 
   Layout, 
@@ -50,7 +50,7 @@ const CATEGORIES = [
   { id: 'other', label: 'Other (Universal)', icon: Grid },
 ];
 
-export default function BuilderPage() {
+function BuilderContent() {
   const [step, setStep] = useState(1);
   const [isIgniting, setIsIgniting] = useState(false);
   
@@ -769,5 +769,13 @@ export default function BuilderPage() {
         .remove-btn-small { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; background: rgba(255,0,0,0.8); border: none; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
       `}</style>
     </main>
+  );
+}
+
+export default function BuilderPage() {
+  return (
+    <Suspense fallback={<div className="container" style={{ paddingTop: '100px', textAlign: 'center' }}>Loading Builder...</div>}>
+      <BuilderContent />
+    </Suspense>
   );
 }
