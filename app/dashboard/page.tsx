@@ -18,17 +18,22 @@ import {
   MessageSquare
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
   const [sites, setSites] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalViews, setTotalViews] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     async function loadDashboardData() {
       try {
         const { data: { session } } = await supabase.auth.getSession();
-        if (!session) return;
+        if (!session) {
+          router.push('/login?next=/dashboard');
+          return;
+        }
 
         const { data: sitesData, error: sitesError } = await supabase
           .from('sites')

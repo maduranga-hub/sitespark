@@ -32,7 +32,7 @@ import {
   Activity,
   Trash2
 } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import ImageUpload from '@/components/ImageUpload';
 import SitePreview from '@/components/SitePreview';
@@ -53,6 +53,9 @@ const CATEGORIES = [
 function BuilderContent() {
   const [step, setStep] = useState(1);
   const [isIgniting, setIsIgniting] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get('id');
   
   const [formData, setFormData] = useState({
     category: 'cleaning',
@@ -100,12 +103,15 @@ function BuilderContent() {
     paypalEmail: ''
   });
 
-  const searchParams = useSearchParams();
-  const editId = searchParams.get('id');
-
   useEffect(() => {
-    if (editId) {
-      const loadSite = async () => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/login?next=/builder');
+        return;
+      }
+
+      if (editId) {
         const { data, error } = await supabase
           .from('sites')
           .select('*')
@@ -160,20 +166,19 @@ function BuilderContent() {
             paypalEmail: d.payment?.paypalEmail || ''
           });
         }
-      };
-      loadSite();
-    } else {
-      // Load draft from localStorage
-      const draft = localStorage.getItem('sitespark_builder_draft');
-      if (draft) {
-        try {
-          setFormData(JSON.parse(draft));
-        } catch (e) {
-          console.error('Failed to load draft:', e);
+      } else {
+        const draft = localStorage.getItem('sitespark_builder_draft');
+        if (draft) {
+          try {
+            setFormData(JSON.parse(draft));
+          } catch (e) {
+            console.error('Failed to load draft:', e);
+          }
         }
       }
-    }
-  }, [editId]);
+    };
+    checkAuth();
+  }, [editId, router]);
 
   const updateField = (field: string, value: any) => {
     setFormData(prev => {
