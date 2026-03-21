@@ -27,7 +27,19 @@ export default function LoginPage() {
       if (error) throw error;
 
       if (data.user) {
-        router.push('/dashboard');
+        const email = data.user.email?.toLowerCase();
+        const ADMIN_EMAILS = [
+          'nirmal.maduranga@gmail.com',
+          'sinhawap@gmail.com'
+        ];
+
+        if (email === 'sinhawap@gmail.com') {
+          router.push('/admin/owner');
+        } else if (email && ADMIN_EMAILS.includes(email)) {
+          router.push('/admin');
+        } else {
+          router.push('/dashboard');
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Invalid login credentials');
@@ -37,7 +49,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'radial-gradient(circle at bottom left, rgba(0, 102, 255, 0.05), transparent 40%)', paddingTop: '80px' }}>
+    <main className="premium-dark" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', paddingTop: '80px' }}>
       <div className="container" style={{ maxWidth: '450px' }}>
         <div className="glass-card" style={{ padding: '3rem' }}>
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
@@ -47,9 +59,9 @@ export default function LoginPage() {
 
           <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem' }}>EMAIL ADDRESS</label>
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '0.5rem' }}>EMAIL ADDRESS</label>
               <div style={{ position: 'relative' }}>
-                <Mail size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                <Mail size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.2)' }} />
                 <input 
                   type="email"
                   className="auth-input" 
@@ -63,11 +75,11 @@ export default function LoginPage() {
 
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)' }}>PASSWORD</label>
+                <label style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--primary)' }}>PASSWORD</label>
                 <Link href="/forgot-password" style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 600 }}>Forgot?</Link>
               </div>
               <div style={{ position: 'relative' }}>
-                <Lock size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                <Lock size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.2)' }} />
                 <input 
                   type="password"
                   className="auth-input" 
@@ -89,7 +101,7 @@ export default function LoginPage() {
               type="submit" 
               className="btn btn-primary" 
               disabled={loading}
-              style={{ width: '100%', padding: '0.875rem', marginTop: '1rem' }}
+              style={{ width: '100%', padding: '0.875rem', marginTop: '1rem', borderRadius: '12px' }}
             >
               {loading ? 'Signing In...' : 'Sign In'} <ArrowRight size={18} />
             </button>
@@ -99,25 +111,35 @@ export default function LoginPage() {
             Don&apos;t have an account? <Link href="/signup" style={{ color: 'var(--primary)', fontWeight: 700 }}>Sign up free</Link>
           </p>
         </div>
+
+        {/* Version Number */}
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <span style={{ fontSize: '0.6rem', fontWeight: 900, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.1)', textTransform: 'uppercase' }}>
+            Site Spark Engine v2.0.4-premium
+          </span>
+        </div>
       </div>
 
       <style jsx global>{`
-        .auth-input {
+        .premium-dark .auth-input {
           width: 100%;
           padding: 0.875rem 1rem;
-          background: var(--glass);
-          border: 1px solid var(--glass-border);
-          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 12px;
           color: white;
           font-family: inherit;
           font-size: 0.95rem;
           transition: var(--transition);
         }
-        .auth-input:focus {
+        .premium-dark .auth-input::placeholder {
+          color: rgba(255, 255, 255, 0.2);
+        }
+        .premium-dark .auth-input:focus {
           outline: none;
           border-color: var(--primary);
-          background: var(--glass-hover);
-          box-shadow: 0 0 10px var(--primary-glow);
+          background: rgba(255, 255, 255, 0.05);
+          box-shadow: 0 0 15px var(--primary-glow);
         }
       `}</style>
     </main>

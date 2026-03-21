@@ -21,6 +21,24 @@ export default function ImageUpload({ onUpload, label, value, onRemove }: ImageU
 
     setIsUploading(true);
     try {
+      // 1. Image Moderation Check
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const modResponse = await fetch('/api/moderate', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const modResult = await modResponse.json();
+
+      if (modResult.safe === false) {
+        alert('Upload Blocked: ' + (modResult.reason || 'Inappropriate content detected.'));
+        setIsUploading(false);
+        return;
+      }
+
+      // 2. Proceed with Upload if safe
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
       const filePath = `uploads/${fileName}`;

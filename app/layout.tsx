@@ -8,6 +8,33 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "SiteSpark | Create & Host Your Website Instantly",
   description: "Transform your business details into a professional website in seconds with SiteSpark. No-code, instant hosting, and custom domains.",
+  keywords: ["website builder", "no-code", "instant hosting", "custom domains", "web design", "small business website"],
+  authors: [{ name: "SiteSpark Team" }],
+  openGraph: {
+    title: "SiteSpark | Ignite Your Brand",
+    description: "The fastest way to get your business online. Professional websites in seconds.",
+    url: "https://sitespark.online",
+    siteName: "SiteSpark",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "SiteSpark - Create Your Website Instantly",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SiteSpark | Ignite Your Brand",
+    description: "Professional websites in seconds. No-code, instant hosting.",
+    images: ["/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://sitespark.online",
+  },
 };
 
 export default function RootLayout({

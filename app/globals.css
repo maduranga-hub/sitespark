@@ -252,6 +252,48 @@ h1, h2, h3 {
   background: #94a3b8;
 }
 
+
+/* Premium Dark Theme Utilities */
+.premium-dark {
+  --bg: #020617;
+  --bg-subtle: rgba(255, 255, 255, 0.03);
+  --text: #f8fafc;
+  --text-muted: rgba(248, 250, 252, 0.4);
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.05);
+  --primary-glow: rgba(0, 102, 255, 0.3);
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+.premium-dark .glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.premium-dark input:not([type="color"]), 
+.premium-dark textarea, 
+.premium-dark select {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.premium-dark input:focus, 
+.premium-dark textarea:focus, 
+.premium-dark select:focus {
+  border-color: var(--primary) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 0 20px var(--primary-glow) !important;
+}
+
+.premium-dark .builder-input::placeholder {
+  color: rgba(255, 255, 255, 0.2) !important;
+}
+
 /* responsive */
 @media (max-width: 768px) {
   .hero-title {

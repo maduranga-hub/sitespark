@@ -539,7 +539,7 @@ function BuilderContent() {
                         />
                         <div style={{ display: 'flex', gap: '10px', marginTop: '5px' }}>
                           <select 
-                            style={{ background: 'var(--bg)', border: '1px solid var(--glass-border)', color: 'white', fontSize: '0.7rem', borderRadius: '4px', padding: '2px 5px' }}
+                            style={{ background: 'var(--bg)', border: '1px solid var(--glass-border)', color: 'black', fontSize: '0.7rem', borderRadius: '4px', padding: '2px 5px' }}
                             value={section.page}
                             onChange={e => {
                               const newSections = [...formData.sections];
@@ -699,7 +699,7 @@ function BuilderContent() {
   };
 
   return (
-    <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+    <main className="premium-dark" style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <div style={{ display: 'flex', height: '100vh' }}>
         {/* Left Side: Form */}
         <div style={{ flex: '1', overflowY: 'auto', padding: '120px 2rem 60px', borderRight: '1px solid var(--glass-border)' }}>
@@ -737,12 +737,19 @@ function BuilderContent() {
                 </div>
               </form>
             </div>
+
+            {/* Version Number */}
+            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+              <span style={{ fontSize: '0.6rem', fontWeight: 900, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.1)', textTransform: 'uppercase' }}>
+                Site Spark Engine v2.0.4-premium
+              </span>
+            </div>
           </div>
         </div>
 
         {/* Right Side: Live Preview */}
         <div className="preview-container" style={{ flex: '1.2', background: '#000', overflow: 'hidden', position: 'relative' }}>
-          <div style={{ position: 'absolute', top: '20px', left: '20px', right: '20px', bottom: '20px', background: '#fff', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
+          <div style={{ position: 'absolute', top: '20px', left: '20px', right: '20px', bottom: '20px', border: '1px solid rgba(255,255,255,0.1)', background: '#fff', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
             <div style={{ height: '40px', background: '#f1f5f9', borderBottom: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', padding: '0 1rem', gap: '0.5rem' }}>
               <div style={{ display: 'flex', gap: '6px' }}>
                 <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f56' }} />
@@ -764,13 +771,80 @@ function BuilderContent() {
         .step-title { font-size: 1.5rem; margin-bottom: 2rem; color: var(--primary); display: flex; align-items: center; gap: 0.75rem; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; font-size: 0.75rem; font-weight: 800; color: var(--text-muted); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
-        .builder-input { width: 100%; padding: 0.875rem 1rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 8px; color: white; font-family: inherit; font-size: 1rem; transition: var(--transition); }
-        .builder-input:focus { outline: none; border-color: var(--primary); background: var(--glass-hover); box-shadow: 0 0 15px var(--primary-glow); }
-        .input-suffix { background: var(--glass); padding: 0.875rem 1rem; border: 1px solid var(--glass-border); border-left: none; border-radius: 0 8px 8px 0; color: var(--text-muted); font-size: 0.9rem; }
-        .cat-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; cursor: pointer; transition: var(--transition); text-align: center; }
-        .cat-card:hover { border-color: var(--primary); background: var(--glass-hover); transform: translateY(-3px); }
-        .cat-card.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
-        .cat-card span { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        
+        /* Dark Theme Fixes */
+        .premium-dark .builder-input, 
+        .premium-dark input, 
+        .premium-dark textarea, 
+        .premium-dark select { 
+          color: #ffffff !important; 
+          font-family: inherit; 
+          font-size: 1rem; 
+          transition: var(--transition); 
+        }
+        
+        .premium-dark .builder-input, 
+        .premium-dark input:not([type="color"]), 
+        .premium-dark textarea, 
+        .premium-dark select { 
+          width: 100%; 
+          padding: 0.875rem 1rem; 
+          background: rgba(255, 255, 255, 0.05) !important; 
+          border: 1px solid rgba(255, 255, 255, 0.1) !important; 
+          border-radius: 12px; 
+        }
+        
+        .premium-dark .input-suffix { 
+          background: rgba(255, 255, 255, 0.08); 
+          padding: 0.875rem 1rem; 
+          border: 1px solid rgba(255, 255, 255, 0.1); 
+          border-left: none; 
+          border-radius: 0 12px 12px 0; 
+          color: var(--text-muted); 
+          font-size: 0.9rem; 
+        }
+        
+        .premium-dark .builder-input:focus, 
+        .premium-dark input:focus, 
+        .premium-dark textarea:focus, 
+        .premium-dark select:focus { 
+          outline: none; 
+          border-color: var(--primary) !important; 
+          background: rgba(255, 255, 255, 0.08) !important; 
+          box-shadow: 0 0 15px var(--primary-glow) !important; 
+        }
+        
+        .premium-dark .cat-card { 
+          background: rgba(255, 255, 255, 0.02); 
+          border: 1px solid rgba(255, 255, 255, 0.05); 
+          border-radius: 16px; 
+          padding: 1.5rem; 
+          display: flex; 
+          flex-direction: column; 
+          align-items: center; 
+          justify-content: center; 
+          gap: 0.75rem; 
+          cursor: pointer; 
+          transition: var(--transition); 
+          text-align: center; 
+          color: var(--text-muted);
+        }
+        
+        .premium-dark .cat-card:hover { 
+          border-color: rgba(255, 255, 255, 0.1); 
+          background: rgba(255, 255, 255, 0.04); 
+          transform: translateY(-3px); 
+          color: white;
+        }
+        
+        .premium-dark .cat-card.active { 
+          border-color: var(--primary); 
+          background: rgba(0, 102, 255, 0.1); 
+          color: var(--primary); 
+          box-shadow: 0 0 15px var(--primary-glow); 
+        }
+        
+        .premium-dark .cat-card span { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
         .remove-btn-small { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; background: rgba(255,0,0,0.8); border: none; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
       `}</style>
     </main>

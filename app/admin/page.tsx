@@ -19,24 +19,60 @@ import {
   Search
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
   const [sites, setSites] = useState<any[]>([]);
   const [stats, setStats] = useState({ total: 0, active: 0, expired: 0 });
   const [loading, setLoading] = useState(true);
+  const [loadingAuth, setLoadingAuth] = useState(true);
   const [search, setSearch] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const router = useRouter();
+
+  // Define authorized admin emails - You can add more here
+  const ADMIN_EMAILS = [
+    'nirmal.maduranga@gmail.com', // Primary Admin
+    'sinhawap@gmail.com',         // System Admin
+  ];
 
   useEffect(() => {
-    checkAdmin();
-    fetchSites();
+    const initializeAdmin = async () => {
+      setLoadingAuth(true);
+      const authenticated = await checkAdmin();
+      if (authenticated) {
+        await fetchSites();
+      }
+      setLoadingAuth(false);
+    };
+    
+    initializeAdmin();
   }, []);
 
   const checkAdmin = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    // For MVP, allow the creator's email or first user as admin
-    if (session?.user?.email) {
-      setIsAdmin(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        // Not logged in, redirect to login
+        router.push('/login?next=/admin');
+        return false;
+      }
+
+      const email = session.user.email;
+      
+      // Check if email is in the admin list
+      if (email && ADMIN_EMAILS.includes(email.toLowerCase())) {
+        setIsAdmin(true);
+        return true;
+      } else {
+        // Authenticated but NOT an admin
+        setIsAdmin(false);
+        return false;
+      }
+    } catch (err) {
+      console.error('Admin check error:', err);
+      return false;
     }
   };
 
@@ -87,7 +123,40 @@ export default function AdminDashboard() {
     s.subdomain.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (!isAdmin) return <div className="container" style={{ paddingTop: '100px' }}>Loading Admin Privileges...</div>;
+  if (loadingAuth) {
+    return (
+      <div className="container" style={{ paddingTop: '120px', textAlign: 'center' }}>
+        <div className="animate-spin" style={{ margin: '0 auto 2rem', width: '40px', height: '40px', border: '4px solid var(--primary-glow)', borderTopColor: 'var(--primary)', borderRadius: '50%' }}></div>
+        <h2 style={{ fontSize: '1.2rem', opacity: 0.7 }}>Authenticating Admin Privileges...</h2>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    const [userEmail, setUserEmail] = useState<string | null>(null);
+    useEffect(() => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setUserEmail(session?.user?.email || 'Unknown');
+      });
+    }, []);
+
+    return (
+      <div className="container" style={{ paddingTop: '120px', textAlign: 'center' }}>
+        <AlertCircle size={48} color="var(--error)" style={{ margin: '0 auto 2rem' }} />
+        <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Access <span className="text-error">Denied</span></h1>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', maxWidth: '500px', margin: '0 auto' }}>
+          This terminal is restricted to platform owners.
+        </p>
+        <p style={{ fontSize: '0.9rem', color: 'var(--error)', marginBottom: '2rem', fontWeight: 700 }}>
+          Current Identity: {userEmail}
+        </p>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <Link href="/dashboard" className="btn btn-primary">Go to Dashboard</Link>
+          <Link href="/" className="btn btn-glass">Return Home</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main style={{ minHeight: '100vh', paddingTop: '120px', paddingBottom: '60px' }}>
