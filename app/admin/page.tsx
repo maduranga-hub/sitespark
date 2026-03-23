@@ -32,7 +32,6 @@ export default function AdminDashboard() {
 
   // Define authorized admin emails - You can add more here
   const ADMIN_EMAILS = [
-    'nirmal.maduranga@gmail.com', // Primary Admin
     'sinhawap@gmail.com',         // System Admin
   ];
 

