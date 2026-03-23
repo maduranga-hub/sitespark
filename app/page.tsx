@@ -385,6 +385,9 @@ export default function LandingPage() {
           </div>
           <div style={{ paddingTop: '2.5rem', borderTop: '1px solid var(--glass-border)', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
             &copy; {new Date().getFullYear()} SiteSpark Ignition Systems. All rights reserved.
+            <div style={{ opacity: 0.3, fontSize: '0.65rem', fontWeight: 900, letterSpacing: '0.1em', marginTop: '1rem' }}>
+              REVISION: v2.2.0-master-portal
+            </div>
           </div>
         </div>
       </footer>
