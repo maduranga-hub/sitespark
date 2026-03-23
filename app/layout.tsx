@@ -62,9 +62,12 @@ export default function RootLayout({
         <footer style={{ padding: '4rem 0', borderTop: '1px solid var(--glass-border)', marginTop: '4rem' }}>
           <div className="container" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
             <div style={{ marginBottom: '1rem' }}>&copy; {new Date().getFullYear()} SiteSpark. All rights reserved.</div>
-            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
               <Link href="/privacy">Privacy Policy</Link>
               <Link href="/terms">Terms of Service</Link>
+            </div>
+            <div style={{ opacity: 0.3, fontSize: '0.65rem', fontWeight: 900, letterSpacing: '0.1em' }}>
+              REVISION: v2.2.0-master-portal
             </div>
           </div>
         </footer>
