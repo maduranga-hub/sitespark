@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
                 <Mail size={18} className="icon" />
                 <input 
                   type="email" 
-                  placeholder="admin@sitespark.online"
+                  placeholder="admin-v2.0.5@sitespark.online"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
