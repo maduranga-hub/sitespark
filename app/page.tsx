@@ -132,6 +132,49 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Services Section */}
+      <section id="services" style={{ padding: '6rem 0', background: 'white' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '5rem' }} className="reveal">
+            <h2 style={{ fontSize: '3.5rem', marginBottom: '1.5rem' }}>Our <span className="text-gradient">Specialized</span> Services.</h2>
+            <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto' }}>
+              We provide elite digital solutions tailored for growth and operational excellence.
+            </p>
+          </div>
+
+          <div className="grid-3">
+            {[
+              { 
+                icon: Layout, 
+                title: "Premium Web Design", 
+                desc: "High-end, responsive architectures designed to convert visitors into loyal customers." 
+              },
+              { 
+                icon: CheckCircle2, 
+                title: "Payroll & CMS Dev", 
+                desc: "Custom management tools, payroll systems, and staff tracking modules for your business." 
+              },
+              { 
+                icon: Sparkles, 
+                title: "Graphic Design", 
+                desc: "Professional branding, social assets, and visual identity that makes your brand stand out." 
+              }
+            ].map((service, i) => (
+              <div key={i} className={`glass-card reveal reveal-delay-${i + 1}`} style={{ padding: '3rem' }}>
+                <div style={{ width: '60px', height: '60px', background: 'var(--primary-glow)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', marginBottom: '2rem' }}>
+                  <service.icon size={32} />
+                </div>
+                <h3 style={{ fontSize: '1.8rem', marginBottom: '1.2rem' }}>{service.title}</h3>
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.8 }}>{service.desc}</p>
+                <Link href="#contact" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)', fontWeight: 700, marginTop: '2rem', fontSize: '0.9rem' }}>
+                  Learn More <ArrowRight size={16} />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Trust section */}
       <section style={{ padding: '4rem 0', background: 'var(--bg-subtle)', borderTop: '1px solid var(--glass-border)', borderBottom: '1px solid var(--glass-border)' }}>
         <div className="container">

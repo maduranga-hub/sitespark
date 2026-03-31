@@ -53,6 +53,7 @@ export default function RootLayout({
             </Link>
             <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
               <Link href="#features" style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Features</Link>
+              <Link href="#services" style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Service</Link>
               <Link href="/builder" className="btn btn-glass" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}>Start Building</Link>
               <Link href="/login" className="btn btn-primary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}>Login</Link>
             </nav>
