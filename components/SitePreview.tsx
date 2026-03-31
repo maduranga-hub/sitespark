@@ -377,6 +377,3 @@ export default function SitePreview({ formData }: { formData: any }) {
     </div>
   );
 }
-    </div>
-  );
-}
