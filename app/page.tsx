@@ -98,35 +98,35 @@ export default function LandingPage() {
   return (
     <div className="bg-black text-white min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-40 pb-20 px-6 overflow-hidden min-h-screen flex items-center">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Immersive 3D Background */}
         <SparkBackground />
 
-        <div className="max-w-7xl mx-auto w-full relative z-10">
+        <div className="section-padding relative z-10 w-full">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="max-w-4xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-black tracking-widest uppercase mb-8 text-electric-blue">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[10px] font-black tracking-[0.3em] uppercase mb-10 text-electric-blue">
               <Sparkles size={12} /> Digital Evolution Engine
             </div>
-            <h1 className="font-sora font-black text-6xl md:text-8xl header-tight mb-8">
-              CRAFTING THE <span className="text-electric-blue">FUTURE</span> OF DIGITAL EXPERIENCES.
+            <h1 className="header-tight text-6xl md:text-9xl mb-10">
+              CRAFTING THE <br /> <span className="text-electric-blue">FUTURE</span> OF DIGITAL.
             </h1>
-            <p className="text-xl text-white/40 max-w-2xl leading-relaxed mb-12">
+            <p className="text-lg md:text-xl text-white/40 max-w-xl leading-relaxed mb-12">
               From SaaS ecosystems to high-end Graphic Design. We spark your brand's digital evolution through precision engineering and editorial aesthetics.
             </p>
-            <div className="flex flex-wrap gap-6">
-              <Link href="mailto:info@sitespark.online" className="px-8 py-4 bg-electric-blue text-white font-black rounded-xl hover:shadow-[0_0_30px_rgba(0,112,243,0.4)] transition-all flex items-center gap-3">
-                Ignite Your Project <ArrowRight size={20} />
+            <div className="flex flex-wrap gap-6 items-center">
+              <Link href="mailto:info@sitespark.online" className="btn-pill btn-primary flex items-center gap-3">
+                Ignite Your Project <ArrowRight size={18} />
               </Link>
-              <div className="flex items-center gap-4 text-white/40 text-sm font-bold">
-                <div className="flex -space-x-2">
-                  {[1,2,3].map(i => <div key={i} className="w-8 h-8 rounded-full bg-white/10 border-2 border-black" />)}
+              <div className="flex items-center gap-4 text-white/20 text-[10px] font-black uppercase tracking-widest">
+                <div className="flex -space-x-3">
+                  {[1,2,3].map(i => <div key={i} className="w-10 h-10 rounded-full bg-white/5 border-2 border-black" />)}
                 </div>
-                500+ Businesses Sparked
+                <span>500+ Businesses Sparked</span>
               </div>
             </div>
           </motion.div>
@@ -134,64 +134,61 @@ export default function LandingPage() {
       </section>
 
       {/* Services Bento Grid */}
-      <section id="services" className="py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-            <div className="max-w-2xl">
-              <h2 className="font-sora font-black text-4xl md:text-5xl tracking-tighter mb-4">OUR SPECIALIZED <span className="text-royal-purple">FORGE</span>.</h2>
-              <p className="text-white/40 text-lg">A precision-engineered toolkit for modern digital dominance.</p>
-            </div>
-            <Link href="mailto:info@sitespark.online" className="text-sm font-bold flex items-center gap-2 hover:text-electric-blue transition-colors">
-              VIEW FULL CAPABILITIES <ArrowRight size={16} />
-            </Link>
+      <section id="services" className="section-padding">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+          <div className="max-w-2xl">
+            <h2 className="header-tight text-4xl md:text-6xl mb-6">OUR <span className="text-royal-purple italic">FORGE</span>.</h2>
+            <p className="text-white/40 text-lg">A precision-engineered toolkit for modern digital dominance.</p>
           </div>
+          <Link href="mailto:info@sitespark.online" className="text-[10px] font-black tracking-widest uppercase flex items-center gap-2 hover:text-electric-blue transition-colors">
+            Full Capabilities <ArrowRight size={14} />
+          </Link>
+        </div>
 
-          <div className="bento-grid">
-            {services.map((service, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`${service.span} glass glass-hover p-8 rounded-[2rem] flex flex-col justify-between group cursor-pointer relative overflow-hidden`}
-              >
-                {/* Background Glow */}
-                <div className={`absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-br ${service.color} blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
-                
-                <div>
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 text-white group-hover:text-electric-blue transition-colors">
-                      <service.icon size={24} />
-                    </div>
-                    {service.badge && (
-                      <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 bg-white/10 rounded-md border border-white/10">{service.badge}</span>
-                    )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`${service.span} glass card-glow p-10 flex flex-col justify-between group cursor-pointer relative overflow-hidden`}
+            >
+              <div className={`absolute -bottom-20 -right-20 w-60 h-60 bg-gradient-to-br ${service.color} blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000`} />
+              
+              <div className="relative z-10">
+                <div className="flex justify-between items-start mb-10">
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 text-white group-hover:text-electric-blue transition-all duration-500">
+                    <service.icon size={28} />
                   </div>
-                  <h3 className="font-sora font-black text-2xl mb-4 group-hover:translate-x-1 transition-transform">{service.title}</h3>
-                  <p className="text-white/40 text-sm leading-relaxed max-w-[200px]">{service.desc}</p>
+                  {service.badge && (
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 bg-electric-blue text-white rounded-full">{service.badge}</span>
+                  )}
                 </div>
+                <h3 className="font-sora font-black text-3xl mb-4 leading-tight">{service.title}</h3>
+                <p className="text-white/40 text-sm leading-relaxed max-w-[240px]">{service.desc}</p>
+              </div>
 
-                <div className="mt-8 flex justify-end">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500">
-                    <ArrowRight size={18} />
-                  </div>
+              <div className="mt-12 flex justify-end relative z-10">
+                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-electric-blue group-hover:border-electric-blue transition-all duration-500">
+                  <ArrowRight size={20} />
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* Client Showcase */}
-      <section id="work" className="py-32 px-6 bg-white/[0.02] border-y border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="font-sora font-black text-4xl md:text-5xl tracking-tighter mb-4">PREMIUM <span className="text-electric-blue">SHOWCASE</span>.</h2>
-            <p className="text-white/40 text-lg max-w-xl mx-auto">Elite brands that have undergone our digital synthesis.</p>
+      <section id="work" className="bg-white/[0.01] border-y border-white/5">
+        <div className="section-padding">
+          <div className="max-w-3xl mb-24">
+            <h2 className="header-tight text-4xl md:text-7xl mb-6 uppercase">Showcase<span className="text-electric-blue">.</span></h2>
+            <p className="text-white/40 text-xl">Elite brands synthesized by SiteSpark.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-12">
             {showcase.map((item, i) => (
               <motion.a
                 key={i}
@@ -202,21 +199,25 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.2 }}
-                className="group relative block rounded-[2.5rem] overflow-hidden border border-white/5"
+                className="group glass card-glow flex flex-col md:flex-row items-center gap-12 p-8 md:p-12"
               >
-                <div className="aspect-[4/5] w-full">
+                <div className="w-full md:w-[45%] aspect-video rounded-3xl overflow-hidden border border-white/5">
                   <img 
                     src={item.image} 
                     alt={item.title} 
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
-                <div className="absolute bottom-0 left-0 p-8 w-full">
-                  <div className="text-[10px] font-black uppercase tracking-widest text-electric-blue mb-2">{item.tag}</div>
-                  <h3 className="font-sora font-black text-2xl group-hover:text-electric-blue transition-colors">{item.title}</h3>
-                  <div className="mt-4 flex items-center gap-2 text-xs font-bold text-white/40 group-hover:text-white transition-colors">
-                    EXPLORE PROJECT <ArrowRight size={14} />
+                <div className="flex-grow space-y-6">
+                  <div className="text-[10px] font-black uppercase tracking-[0.4em] text-electric-blue">{item.tag}</div>
+                  <h3 className="header-tight text-4xl md:text-5xl uppercase">{item.title}</h3>
+                  <p className="text-white/40 text-lg leading-relaxed max-w-md">
+                    Comprehensive digital transformation involving bespoke UI/UX architecture and custom-engineered backends.
+                  </p>
+                  <div className="pt-6">
+                    <div className="btn-pill btn-secondary inline-flex items-center gap-3">
+                      View Project <ArrowRight size={16} />
+                    </div>
                   </div>
                 </div>
               </motion.a>
@@ -226,29 +227,50 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-40 px-6">
-        <div className="max-w-5xl mx-auto text-center relative">
-          {/* Accent Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-royal-purple/20 blur-[120px] rounded-full pointer-events-none" />
+      <section className="section-padding">
+        <div className="glass p-16 md:p-32 text-center relative overflow-hidden group">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-royal-purple/10 blur-[150px] rounded-full pointer-events-none group-hover:bg-electric-blue/10 transition-colors duration-1000" />
           
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
+            className="relative z-10"
           >
-            <h2 className="font-sora font-black text-5xl md:text-7xl tracking-tighter mb-12">READY TO <span className="text-electric-blue">SPARK</span> YOUR NEXT PROJECT?</h2>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-              <Link href="mailto:info@sitespark.online" className="px-12 py-6 bg-white text-black font-black text-xl rounded-2xl hover:bg-electric-blue hover:text-white transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:shadow-electric-blue/20">
+            <h2 className="header-tight text-5xl md:text-8xl mb-12">READY TO <span className="text-electric-blue">SPARK</span>?</h2>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-10">
+              <Link href="mailto:info@sitespark.online" className="btn-pill bg-white text-black text-xl px-16 py-6 hover:bg-electric-blue hover:text-white">
                 LET'S TALK.
               </Link>
-              <div className="text-left">
-                <div className="text-sm font-bold text-white/40 uppercase tracking-widest mb-1">Direct Line</div>
+              <div className="text-left border-l border-white/10 pl-10 hidden md:block">
+                <div className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-2">Direct Terminal</div>
                 <div className="text-lg font-black font-sora tracking-tighter">info@sitespark.online</div>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
+
+      <footer className="py-20 px-8 md:px-24 border-t border-white/5">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 bg-white/10 rounded flex items-center justify-center">
+              <span className="font-sora font-black text-[10px]">S</span>
+            </div>
+            <span className="font-sora font-bold text-sm tracking-tighter">SiteSpark.</span>
+          </div>
+          
+          <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.2em] text-white/30">
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+            <a href="mailto:info@sitespark.online" className="hover:text-white transition-colors">Connect</a>
+          </div>
+
+          <div className="text-[10px] font-black text-white/10 tracking-[0.3em] uppercase">
+            &copy; {new Date().getFullYear()} REVISION: v2.5.0
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

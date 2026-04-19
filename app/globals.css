@@ -18,45 +18,48 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 @layer base {
   * {
-    @apply border-white/10;
+    @apply border-white/5;
   }
 }
 
-/* Glassmorphism Utilities */
+/* Editorial Spacing */
+.section-padding {
+  @apply py-32 px-8 md:px-16 lg:px-24 max-w-[1600px] mx-auto;
+}
+
+/* Glassmorphism Navbar */
+.nav-glass {
+  @apply fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full border border-white/10 backdrop-blur-xl bg-black/40 flex items-center justify-between w-[90%] max-w-5xl;
+}
+
+/* Glassmorphism Cards */
 .glass {
-  @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  @apply backdrop-blur-xl bg-white/[0.03] border border-white/10 rounded-[2.5rem];
 }
 
-.glass-hover {
-  @apply transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_30px_rgba(0,112,243,0.15)];
+.card-glow {
+  @apply transition-all duration-700 hover:border-electric-blue/50 hover:shadow-[0_0_50px_rgba(0,112,243,0.15)];
 }
 
-/* Custom Letter Spacing for Bold Headers */
+/* Pill Buttons */
+.btn-pill {
+  @apply px-8 py-3 rounded-full font-black text-sm uppercase tracking-widest transition-all duration-300 active:scale-95;
+}
+
+.btn-primary {
+  @apply bg-electric-blue text-white hover:shadow-[0_0_30px_rgba(0,112,243,0.5)];
+}
+
+.btn-secondary {
+  @apply bg-white/5 border border-white/10 text-white hover:bg-white/10;
+}
+
+/* Typography */
 .header-tight {
-  letter-spacing: -0.05em;
-  line-height: 0.9;
-}
-
-/* Bento Grid Specifics */
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: minmax(200px, auto);
-  gap: 1rem;
-}
-
-@media (max-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .bento-grid {
-    grid-template-columns: 1fr;
-  }
+  @apply font-sora font-black tracking-tighter leading-[0.9] md:leading-[0.85];
 }

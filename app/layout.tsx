@@ -27,23 +27,21 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${sora.variable} font-inter bg-black text-white antialiased`}>
-        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b border-white/5">
-          <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-electric-blue rounded-lg flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(0,112,243,0.5)] transition-shadow">
-                <span className="font-sora font-black text-white text-xl">S</span>
-              </div>
-              <span className="font-sora font-bold text-xl tracking-tighter">SiteSpark</span>
+        <header className="nav-glass">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 bg-electric-blue rounded-lg flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(0,112,243,0.5)] transition-shadow">
+              <span className="font-sora font-black text-white text-xl">S</span>
+            </div>
+            <span className="font-sora font-bold text-xl tracking-tighter">SiteSpark</span>
+          </Link>
+          
+          <nav className="hidden md:flex items-center gap-8">
+            <Link href="#services" className="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">Services</Link>
+            <Link href="#work" className="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">Showcase</Link>
+            <Link href="mailto:info@sitespark.online" className="btn-pill btn-primary py-2 text-[10px]">
+              Let's Talk
             </Link>
-            
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="#services" className="text-sm text-white/60 hover:text-white transition-colors">Services</Link>
-              <Link href="#work" className="text-sm text-white/60 hover:text-white transition-colors">Showcase</Link>
-              <Link href="mailto:info@sitespark.online" className="px-5 py-2 bg-white text-black text-sm font-bold rounded-full hover:bg-electric-blue hover:text-white transition-all">
-                Let's Talk
-              </Link>
-            </nav>
-          </div>
+          </nav>
         </header>
 
         <main>{children}</main>
