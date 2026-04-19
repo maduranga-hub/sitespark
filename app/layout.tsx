@@ -1,40 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import Link from 'next/link';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: '--font-inter',
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: '--font-sora',
+});
 
 export const metadata: Metadata = {
-  title: "SiteSpark | Create & Host Your Website Instantly",
-  description: "Transform your business details into a professional website in seconds with SiteSpark. No-code, instant hosting, and custom domains.",
-  keywords: ["website builder", "no-code", "instant hosting", "custom domains", "web design", "small business website"],
-  authors: [{ name: "SiteSpark Team" }],
-  openGraph: {
-    title: "SiteSpark | Ignite Your Brand",
-    description: "The fastest way to get your business online. Professional websites in seconds.",
-    url: "https://sitespark.online",
-    siteName: "SiteSpark",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "SiteSpark - Create Your Website Instantly",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "SiteSpark | Ignite Your Brand",
-    description: "Professional websites in seconds. No-code, instant hosting.",
-    images: ["/og-image.png"],
-  },
-  alternates: {
-    canonical: "https://sitespark.online",
-  },
+  title: "SiteSpark | Crafting the Future of Digital Experiences",
+  description: "High-end digital agency specializing in SaaS ecosystems, web development, and premium graphic design.",
+  keywords: ["web design", "SaaS development", "graphic design", "digital agency", "SiteSpark"],
 };
 
 export default function RootLayout({
@@ -43,32 +25,39 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <header className="header">
-          <div className="container header-inner">
-            <Link href="/" className="logo">
-              <img src="/logo.png" alt="SiteSpark" className="logo-img" />
-              <span>SiteSpark</span>
+    <html lang="en" className="scroll-smooth">
+      <body className={`${inter.variable} ${sora.variable} font-inter bg-black text-white antialiased`}>
+        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b border-white/5">
+          <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="w-8 h-8 bg-electric-blue rounded-lg flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(0,112,243,0.5)] transition-shadow">
+                <span className="font-sora font-black text-white text-xl">S</span>
+              </div>
+              <span className="font-sora font-bold text-xl tracking-tighter">SiteSpark</span>
             </Link>
-            <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-              <Link href="#features" style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Features</Link>
-              <Link href="#services" style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Service</Link>
-              <Link href="/builder" className="btn btn-glass" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}>Start Building</Link>
-              <Link href="/login" className="btn btn-primary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}>Login</Link>
+            
+            <nav className="hidden md:flex items-center gap-8">
+              <Link href="#services" className="text-sm text-white/60 hover:text-white transition-colors">Services</Link>
+              <Link href="#work" className="text-sm text-white/60 hover:text-white transition-colors">Showcase</Link>
+              <Link href="mailto:info@sitespark.online" className="px-5 py-2 bg-white text-black text-sm font-bold rounded-full hover:bg-electric-blue hover:text-white transition-all">
+                Let's Talk
+              </Link>
             </nav>
           </div>
         </header>
-        {children}
-        <footer style={{ padding: '4rem 0', borderTop: '1px solid var(--glass-border)', marginTop: '4rem' }}>
-          <div className="container" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-            <div style={{ marginBottom: '1rem' }}>&copy; {new Date().getFullYear()} SiteSpark. All rights reserved.</div>
-            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
-              <Link href="/privacy">Privacy Policy</Link>
-              <Link href="/terms">Terms of Service</Link>
+
+        <main>{children}</main>
+
+        <footer className="py-20 border-t border-white/5 bg-black">
+          <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <div className="font-sora font-black text-3xl mb-8 tracking-tighter">SiteSpark.</div>
+            <div className="flex gap-8 mb-8 text-sm text-white/40">
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <a href="mailto:info@sitespark.online" className="hover:text-white transition-colors">Contact</a>
             </div>
-            <div style={{ opacity: 0.3, fontSize: '0.65rem', fontWeight: 900, letterSpacing: '0.1em' }}>
-              REVISION: v2.2.0-master-portal
+            <div className="text-[10px] font-black text-white/10 tracking-[0.2em] uppercase">
+              &copy; {new Date().getFullYear()} SiteSpark Digital. All Rights Reserved.
             </div>
           </div>
         </footer>
