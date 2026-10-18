@@ -54,7 +54,7 @@ export default function BTCapturesAuditPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#06080d] text-slate-100 font-sans selection:bg-teal-500 selection:text-white pb-32 overflow-x-hidden">
+    <div className="min-h-screen bg-[#06080d] text-slate-100 font-sans selection:bg-teal-500 selection:text-white pb-32">
       
       {/* BACKGROUND AMBIENT GLOWS */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -63,80 +63,85 @@ export default function BTCapturesAuditPage() {
         <div className="absolute bottom-10 left-1/3 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[140px]" />
       </div>
 
-      {/* TOP HEADER BAR */}
-      <header className="sticky top-0 z-50 bg-[#090d15]/85 backdrop-blur-xl border-b border-white/10 px-4 md:px-8 py-3.5 flex items-center justify-between shadow-2xl">
-        <div className="flex items-center gap-3">
-          <a href="https://sitespark.online" className="flex items-center gap-2.5 group">
-            <span className="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 via-cyan-500 to-blue-600 flex items-center justify-center font-black text-black text-base shadow-[0_0_20px_rgba(45,212,191,0.5)] group-hover:scale-105 transition-transform">
-              S
-            </span>
-            <div className="hidden sm:flex flex-col">
-              <span className="font-extrabold tracking-tight text-white leading-tight">
-                SiteSpark
+      {/* UNIFIED STICKY TOP HEADER & NAVIGATION */}
+      <div className="sticky top-0 z-50 bg-[#090d15]/95 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
+        
+        {/* Top Header Row */}
+        <header className="px-4 md:px-8 py-3 flex items-center justify-between border-b border-white/5">
+          <div className="flex items-center gap-3">
+            <a href="https://sitespark.online" className="flex items-center gap-2.5 group">
+              <span className="w-8 h-8 rounded-xl bg-gradient-to-tr from-teal-400 via-cyan-500 to-blue-600 flex items-center justify-center font-black text-black text-sm shadow-[0_0_20px_rgba(45,212,191,0.5)] group-hover:scale-105 transition-transform">
+                S
               </span>
-              <span className="text-[10px] text-teal-400 font-semibold tracking-wider uppercase">
-                Agency Diagnostic
-              </span>
-            </div>
-          </a>
-          <span className="text-white/20">/</span>
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] uppercase font-bold tracking-wider text-teal-300 bg-teal-500/10 border border-teal-500/30 px-3 py-0.5 rounded-full shadow-inner">
-              Client Audit
-            </span>
-            <a
-              href="https://btcaptures.com.au"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-semibold text-slate-200 hover:text-teal-300 flex items-center gap-1.5 transition-colors group"
-            >
-              <span>btcaptures.com.au</span>
-              <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-teal-300 transition-colors" />
+              <div className="hidden sm:flex flex-col">
+                <span className="font-extrabold tracking-tight text-white leading-tight">
+                  SiteSpark
+                </span>
+                <span className="text-[9px] text-teal-400 font-semibold tracking-wider uppercase">
+                  Agency Diagnostic
+                </span>
+              </div>
             </a>
+            <span className="text-white/20">/</span>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-teal-300 bg-teal-500/10 border border-teal-500/30 px-2.5 py-0.5 rounded-full shadow-inner">
+                Client Audit
+              </span>
+              <a
+                href="https://btcaptures.com.au"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs sm:text-sm font-semibold text-slate-200 hover:text-teal-300 flex items-center gap-1.5 transition-colors group"
+              >
+                <span>btcaptures.com.au</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-teal-300 transition-colors" />
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={() => window.print()}
-            className="flex items-center gap-2 bg-gradient-to-r from-teal-500/20 to-blue-500/20 hover:from-teal-500/30 hover:to-blue-500/30 text-teal-200 border border-teal-500/30 px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all hover:scale-102 cursor-pointer shadow-lg shadow-teal-950/40"
-          >
-            <Printer className="w-4 h-4 text-teal-400" />
-            <span className="hidden sm:inline">Export PDF Report</span>
-            <span className="sm:hidden">PDF</span>
-          </button>
-        </div>
-      </header>
-
-      {/* QUICK-JUMP STICKY NAVIGATION PILLS */}
-      <nav className="sticky top-[57px] z-40 bg-[#080b12]/95 backdrop-blur-md border-b border-white/5 py-2.5 px-4 overflow-x-auto no-scrollbar shadow-md">
-        <div className="max-w-6xl mx-auto flex items-center gap-2 text-xs font-semibold">
-          <span className="text-slate-400 hidden md:inline font-mono mr-1">JUMP TO:</span>
-          {[
-            { id: "overview", label: "Overview", icon: "📊" },
-            { id: "seo", label: "SEO & Google", icon: "🔍" },
-            { id: "usability", label: "Usability & Bugs", icon: "📱" },
-            { id: "performance", label: "Speed & 270 Photos", icon: "⚡" },
-            { id: "security", label: "Security & Social", icon: "🔒" },
-            { id: "comparison", label: "Before vs After", icon: "⚖️" },
-            { id: "solution", label: "VPS + Sanity + Next.js", icon: "💎" },
-            { id: "roadmap", label: "Fix Roadmap", icon: "🚀" }
-          ].map((tab) => (
+          <div className="flex items-center gap-2.5">
             <button
-              key={tab.id}
-              onClick={() => scrollTo(tab.id)}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeNav === tab.id
-                  ? "bg-teal-500/20 text-teal-300 border border-teal-500/40 shadow-[0_0_12px_rgba(20,184,166,0.2)]"
-                  : "bg-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/10"
-              }`}
+              onClick={() => window.print()}
+              className="flex items-center gap-2 bg-gradient-to-r from-teal-500/20 to-blue-500/20 hover:from-teal-500/30 hover:to-blue-500/30 text-teal-200 border border-teal-500/30 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all hover:scale-102 cursor-pointer shadow-lg shadow-teal-950/40"
             >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
+              <Printer className="w-3.5 h-3.5 text-teal-400" />
+              <span className="hidden sm:inline">Export PDF Report</span>
+              <span className="sm:hidden">PDF</span>
             </button>
-          ))}
-        </div>
-      </nav>
+          </div>
+        </header>
+
+        {/* Quick-Jump Navigation Pills Row */}
+        <nav className="py-2 px-4 md:px-8 overflow-x-auto no-scrollbar">
+          <div className="max-w-6xl mx-auto flex items-center gap-2 text-xs font-semibold">
+            <span className="text-slate-400 hidden md:inline font-mono mr-1">JUMP TO:</span>
+            {[
+              { id: "overview", label: "Overview", icon: "📊" },
+              { id: "seo", label: "SEO & Google", icon: "🔍" },
+              { id: "usability", label: "Usability & Bugs", icon: "📱" },
+              { id: "performance", label: "Speed & 270 Photos", icon: "⚡" },
+              { id: "security", label: "Security & Social", icon: "🔒" },
+              { id: "comparison", label: "Before vs After", icon: "⚖️" },
+              { id: "solution", label: "VPS + Sanity + Next.js", icon: "💎" },
+              { id: "roadmap", label: "Fix Roadmap", icon: "🚀" }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => scrollTo(tab.id)}
+                className={`px-3 py-1 rounded-lg whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer text-xs ${
+                  activeNav === tab.id
+                    ? "bg-teal-500/20 text-teal-300 border border-teal-500/40 shadow-[0_0_12px_rgba(20,184,166,0.2)]"
+                    : "bg-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/10"
+                }`}
+              >
+                <span>{tab.icon}</span>
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+        </nav>
+
+      </div>
 
       {/* MAIN CONTENT AREA */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 relative z-10">
