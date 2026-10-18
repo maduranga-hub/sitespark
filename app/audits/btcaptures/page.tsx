@@ -937,13 +937,13 @@ export default function BTCapturesWhiteDashboard() {
                   <circle cx="520" cy="180" r="4" fill="#8b5cf6" stroke="#ffffff" strokeWidth="2" />
                 </svg>
 
-                {/* X-Axis Month / Sprint labels */}
+                {/* X-Axis Month / Milestone labels */}
                 <div className="flex justify-between text-[11px] text-slate-400 font-semibold px-2 pt-2 border-t border-slate-100">
-                  <span>Audit Launch</span>
-                  <span>Day 2: Assets</span>
-                  <span>Day 4: Next.js</span>
-                  <span>Day 5: VPS Host</span>
-                  <span>Day 7: Live</span>
+                  <span>Phase 1: Audit</span>
+                  <span>Phase 2: Assets</span>
+                  <span>Phase 3: Next.js</span>
+                  <span>Phase 4: VPS Host</span>
+                  <span>Phase 5: Production</span>
                   <span>Goal: 95+ Score</span>
                 </div>
               </div>
@@ -1196,7 +1196,7 @@ export default function BTCapturesWhiteDashboard() {
                 Transform BT Captures to 95+ PageSpeed Score
               </h3>
               <p className="text-purple-200 text-xs sm:text-sm max-w-xl">
-                Migrate from bloated Flatsome WordPress to High-Performance Next.js 15 + Sanity.io Studio on a dedicated Cloud VPS in just 7 days.
+                Migrate from bloated Flatsome WordPress to High-Performance Next.js 15 + Sanity.io Studio on a dedicated Cloud VPS.
               </p>
             </div>
 
