@@ -120,13 +120,6 @@
               </span>
               <span class="text-[10px] font-extrabold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">8 Issues</span>
             </button>
-            <button onclick="scrollToId('roadmap')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-left">
-              <span class="flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-                Sprint Checklist
-              </span>
-              <span class="text-[10px] font-extrabold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">7 Days</span>
-            </button>
           </div>
         </div>
       </nav>
@@ -213,8 +206,8 @@
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             Start 7-Day Sprint
           </a>
-          <button onclick="scrollToId('roadmap')" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs cursor-pointer">
-            View Sprint
+          <button onclick="scrollToId('issues')" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs cursor-pointer">
+            View Issues
           </button>
         </div>
       </div>
@@ -589,100 +582,7 @@
         </div>
       </div>
 
-      <!-- ========================================================= -->
-      <!-- ROW 4: INTERACTIVE 7-DAY SPRINT ROADMAP -->
-      <!-- ========================================================= -->
-      <div id="roadmap" class="scroll-mt-24 bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-          <div>
-            <span class="text-xs font-bold text-purple-600 uppercase tracking-wider flex items-center gap-1.5">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              SiteSpark 7-Day Sprint
-            </span>
-            <h3 class="text-xl font-black text-slate-900 mt-1">Interactive Priority Fix Roadmap</h3>
-          </div>
-          <div class="bg-purple-50 text-purple-700 font-bold px-3 py-1.5 rounded-xl border border-purple-200 text-xs flex items-center gap-2">
-            <span id="sprintCounter">2 of 5 Milestones Resolved</span>
-          </div>
-        </div>
 
-        <div class="space-y-3" id="sprintTasks">
-          <!-- Sprint Items -->
-          <div onclick="toggleTask(this)" class="cursor-pointer rounded-xl p-4 transition-all border border-purple-200 bg-purple-50/50 flex items-start justify-between gap-4">
-            <div class="flex items-start gap-3">
-              <div class="w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 bg-purple-600 text-white">
-                <svg class="w-3.5 h-3.5 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-purple-100 text-purple-700">Day 1</span>
-                  <h5 class="text-xs sm:text-sm font-bold line-through text-slate-500">Headless Content Modeling (Sanity.io Studio)</h5>
-                </div>
-                <p class="text-xs text-slate-500 mt-1">Set up fast schema for Wedding, Portrait, Corporate galleries with instant mobile uploads.</p>
-              </div>
-            </div>
-            <span class="text-[11px] font-bold text-purple-600 shrink-0">Completed</span>
-          </div>
-
-          <div onclick="toggleTask(this)" class="cursor-pointer rounded-xl p-4 transition-all border border-purple-200 bg-purple-50/50 flex items-start justify-between gap-4">
-            <div class="flex items-start gap-3">
-              <div class="w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 bg-purple-600 text-white">
-                <svg class="w-3.5 h-3.5 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-purple-100 text-purple-700">Day 2–3</span>
-                  <h5 class="text-xs sm:text-sm font-bold line-through text-slate-500">Next.js 15 App Router Frontend & Masonry Grid</h5>
-                </div>
-                <p class="text-xs text-slate-500 mt-1">Fluid infinite masonry portfolio with automatic AVIF/WebP image optimization and blur-up loading.</p>
-              </div>
-            </div>
-            <span class="text-[11px] font-bold text-purple-600 shrink-0">Completed</span>
-          </div>
-
-          <div onclick="toggleTask(this)" class="cursor-pointer rounded-xl p-4 transition-all border border-slate-200/70 bg-slate-50 hover:bg-white hover:border-purple-300 flex items-start justify-between gap-4">
-            <div class="flex items-start gap-3">
-              <div class="w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 border-2 border-slate-400"></div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-purple-100 text-purple-700">Day 4</span>
-                  <h5 class="text-xs sm:text-sm font-bold text-slate-900">Dedicated Cloud VPS Hosting & Dockerization</h5>
-                </div>
-                <p class="text-xs text-slate-500 mt-1">Deploy onto high-speed Sydney/Melbourne VPS with automated Nginx reverse proxy and SSL.</p>
-              </div>
-            </div>
-            <span class="text-[11px] font-bold text-purple-600 shrink-0">Pending</span>
-          </div>
-
-          <div onclick="toggleTask(this)" class="cursor-pointer rounded-xl p-4 transition-all border border-slate-200/70 bg-slate-50 hover:bg-white hover:border-purple-300 flex items-start justify-between gap-4">
-            <div class="flex items-start gap-3">
-              <div class="w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 border-2 border-slate-400"></div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-purple-100 text-purple-700">Day 5</span>
-                  <h5 class="text-xs sm:text-sm font-bold text-slate-900">Melbourne Local SEO & Schema.org Rich Snippets</h5>
-                </div>
-                <p class="text-xs text-slate-500 mt-1">Inject dynamic Photographer and AggregateRating structured data for Google Maps 3-Pack ranking.</p>
-              </div>
-            </div>
-            <span class="text-[11px] font-bold text-purple-600 shrink-0">Pending</span>
-          </div>
-
-          <div onclick="toggleTask(this)" class="cursor-pointer rounded-xl p-4 transition-all border border-slate-200/70 bg-slate-50 hover:bg-white hover:border-purple-300 flex items-start justify-between gap-4">
-            <div class="flex items-start gap-3">
-              <div class="w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 border-2 border-slate-400"></div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-purple-100 text-purple-700">Day 6–7</span>
-                  <h5 class="text-xs sm:text-sm font-bold text-slate-900">Conversion Engine & Direct WhatsApp Booking Integration</h5>
-                </div>
-                <p class="text-xs text-slate-500 mt-1">Embed live 5-star Google reviews carousel and 1-tap WhatsApp consultation buttons (+94715448553).</p>
-              </div>
-            </div>
-            <span class="text-[11px] font-bold text-purple-600 shrink-0">Pending</span>
-          </div>
-        </div>
-      </div>
 
       <!-- ========================================================= -->
       <!-- BOTTOM CALL TO ACTION BANNER -->
@@ -842,25 +742,6 @@
       } else {
         sidebar.classList.add('-translate-x-full');
         backdrop.classList.add('hidden');
-      }
-    }
-
-    function toggleTask(el) {
-      const box = el.querySelector('.w-5');
-      const text = el.querySelector('h5');
-      const status = el.querySelector('span:last-child');
-      if (box.classList.contains('bg-purple-600')) {
-        box.className = 'w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 border-2 border-slate-400';
-        box.innerHTML = '';
-        text.className = 'text-xs sm:text-sm font-bold text-slate-900';
-        status.innerText = 'Pending';
-        el.className = 'cursor-pointer rounded-xl p-4 transition-all border border-slate-200/70 bg-slate-50 hover:bg-white hover:border-purple-300 flex items-start justify-between gap-4';
-      } else {
-        box.className = 'w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 bg-purple-600 text-white';
-        box.innerHTML = '<svg class="w-3.5 h-3.5 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
-        text.className = 'text-xs sm:text-sm font-bold line-through text-slate-500';
-        status.innerText = 'Completed';
-        el.className = 'cursor-pointer rounded-xl p-4 transition-all border border-purple-200 bg-purple-50/50 flex items-start justify-between gap-4';
       }
     }
 

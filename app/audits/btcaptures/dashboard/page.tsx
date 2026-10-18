@@ -47,13 +47,6 @@ export default function BTCapturesWhiteDashboard() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("overview");
   const [activeTab, setActiveTab] = useState<"all" | "critical" | "performance" | "seo">("all");
-  const [completedTasks, setCompletedTasks] = useState<number[]>([1, 2]);
-
-  const toggleTask = (id: number) => {
-    setCompletedTasks(prev =>
-      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
-    );
-  };
 
   const scrollTo = (id: string) => {
     setActiveMenu(id);
@@ -317,19 +310,6 @@ export default function BTCapturesWhiteDashboard() {
                   </span>
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() => scrollTo("roadmap")}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-left"
-                >
-                  <span className="flex items-center gap-2">
-                    <FolderKanban className="w-3.5 h-3.5 text-slate-400" />
-                    Sprint Checklist
-                  </span>
-                  <span className="text-[10px] font-extrabold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
-                    7 Days
-                  </span>
-                </button>
               </div>
             </div>
           </nav>
@@ -453,10 +433,10 @@ export default function BTCapturesWhiteDashboard() {
               </a>
               <button
                 type="button"
-                onClick={() => scrollTo("roadmap")}
+                onClick={() => scrollTo("issues")}
                 className="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
               >
-                View Sprint
+                View Issues
               </button>
             </div>
           </div>
@@ -1000,98 +980,6 @@ export default function BTCapturesWhiteDashboard() {
                   Dedicated Australian Docker container with Nginx reverse proxy, automated SSL, and brotli compression ensuring sub-100ms TTFB response.
                 </p>
               </div>
-            </div>
-          </div>
-
-          {/* ========================================================= */}
-          {/* ROW 4: INTERACTIVE 7-DAY SPRINT ROADMAP */}
-          {/* ========================================================= */}
-          <div id="roadmap" className="scroll-mt-24 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <div>
-                <span className="text-xs font-bold text-purple-600 uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  SiteSpark 7-Day Sprint
-                </span>
-                <h3 className="text-xl font-black text-slate-900 mt-1">
-                  Interactive Priority Fix Roadmap
-                </h3>
-              </div>
-              <div className="bg-purple-50 text-purple-700 font-bold px-3 py-1.5 rounded-xl border border-purple-200 text-xs flex items-center gap-2">
-                <span>{completedTasks.length} of 5 Milestones Resolved</span>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              {[
-                {
-                  id: 1,
-                  day: "Day 1",
-                  title: "Headless Content Modeling (Sanity.io Studio)",
-                  desc: "Set up fast schema for Wedding, Portrait, Corporate galleries with instant mobile uploads."
-                },
-                {
-                  id: 2,
-                  day: "Day 2–3",
-                  title: "Next.js 15 App Router Frontend & Masonry Grid",
-                  desc: "Fluid infinite masonry portfolio with automatic AVIF/WebP image optimization and blur-up loading."
-                },
-                {
-                  id: 3,
-                  day: "Day 4",
-                  title: "Dedicated Cloud VPS Hosting & Dockerization",
-                  desc: "Deploy onto high-speed Sydney/Melbourne VPS with automated Nginx reverse proxy and SSL."
-                },
-                {
-                  id: 4,
-                  day: "Day 5",
-                  title: "Melbourne Local SEO & Schema.org Rich Snippets",
-                  desc: "Inject dynamic Photographer and AggregateRating structured data for Google Maps 3-Pack ranking."
-                },
-                {
-                  id: 5,
-                  day: "Day 6–7",
-                  title: "Conversion Engine & Direct WhatsApp Booking Integration",
-                  desc: "Embed live 5-star Google reviews carousel and 1-tap WhatsApp consultation buttons (+94715448553)."
-                }
-              ].map((task) => {
-                const isChecked = completedTasks.includes(task.id);
-                return (
-                  <div
-                    key={task.id}
-                    onClick={() => toggleTask(task.id)}
-                    className={`cursor-pointer rounded-xl p-4 transition-all border flex items-start justify-between gap-4 ${
-                      isChecked
-                        ? "bg-purple-50/50 border-purple-200"
-                        : "bg-slate-50 border-slate-200/70 hover:bg-white hover:border-purple-300"
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div
-                        className={`w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
-                          isChecked ? "bg-purple-600 text-white" : "border-2 border-slate-400"
-                        }`}
-                      >
-                        {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-purple-100 text-purple-700">
-                            {task.day}
-                          </span>
-                          <h5 className={`text-xs sm:text-sm font-bold ${isChecked ? "line-through text-slate-500" : "text-slate-900"}`}>
-                            {task.title}
-                          </h5>
-                        </div>
-                        <p className="text-xs text-slate-500 mt-1">{task.desc}</p>
-                      </div>
-                    </div>
-                    <span className="text-[11px] font-bold text-purple-600 shrink-0">
-                      {isChecked ? "Completed" : "Pending"}
-                    </span>
-                  </div>
-                );
-              })}
             </div>
           </div>
 
