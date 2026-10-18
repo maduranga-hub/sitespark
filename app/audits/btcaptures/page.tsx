@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   CheckCircle2,
@@ -31,7 +32,9 @@ import {
   DownloadCloud,
   FileCode2,
   Lock,
-  MessageCircle
+  MessageCircle,
+  Sun,
+  LayoutDashboard
 } from "lucide-react";
 
 export default function BTCapturesAuditPage() {
@@ -108,12 +111,21 @@ export default function BTCapturesAuditPage() {
           </div>
 
           <div className="flex items-center gap-2.5">
+            <Link
+              href="/audits/btcaptures/dashboard"
+              className="flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 text-purple-200 border border-purple-500/40 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all hover:scale-102 cursor-pointer shadow-lg shadow-purple-950/40"
+            >
+              <Sun className="w-3.5 h-3.5 text-yellow-300" />
+              <span className="hidden sm:inline">White Dashboard</span>
+              <span className="sm:hidden">Dashboard</span>
+            </Link>
+
             <button
               onClick={() => window.print()}
               className="flex items-center gap-2 bg-gradient-to-r from-teal-500/20 to-blue-500/20 hover:from-teal-500/30 hover:to-blue-500/30 text-teal-200 border border-teal-500/30 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all hover:scale-102 cursor-pointer shadow-lg shadow-teal-950/40"
             >
               <Printer className="w-3.5 h-3.5 text-teal-400" />
-              <span className="hidden sm:inline">Export PDF Report</span>
+              <span className="hidden sm:inline">Export PDF</span>
               <span className="sm:hidden">PDF</span>
             </button>
           </div>
