@@ -38,6 +38,14 @@ export default function BTCapturesAuditPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [deviceView, setDeviceView] = useState<"desktop" | "mobile">("desktop");
   const [activeNav, setActiveNav] = useState("overview");
+  const [completedTasks, setCompletedTasks] = useState<number[]>([]);
+  const [roadmapTab, setRoadmapTab] = useState<"migration" | "quickfix">("migration");
+
+  const toggleTask = (id: number) => {
+    setCompletedTasks(prev =>
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
 
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -1145,68 +1153,242 @@ export default function BTCapturesAuditPage() {
         {/* ==================================================== */}
         <div id="roadmap" className="scroll-mt-32" />
         <section className="bg-gradient-to-br from-[#121927] via-[#0e1420] to-[#080c14] border border-teal-500/30 rounded-3xl p-6 md:p-10 mb-12 shadow-2xl relative overflow-hidden">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-teal-400 flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4" />
-                Implementation Plan
+                Actionable Implementation Plan
               </span>
               <h3 className="text-2xl md:text-3xl font-black text-white mt-1">Priority Fix Roadmap</h3>
+              <p className="text-slate-400 text-xs md:text-sm mt-1">
+                Interactive checklist — click any item to preview resolution status and track audit score progression.
+              </p>
             </div>
-            <div className="bg-teal-500/20 text-teal-300 font-bold px-4 py-2 rounded-xl border border-teal-500/30 text-xs sm:text-sm self-start sm:self-center shadow-lg">
-              Target Score: C+ &rarr; A (92+)
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="bg-teal-500/10 text-teal-300 font-bold px-4 py-2 rounded-xl border border-teal-500/30 text-xs sm:text-sm shadow-lg flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
+                Target Score: C+ (64) &rarr; A (94+)
+              </div>
             </div>
           </div>
 
-          <div className="space-y-3.5">
-            {[
-              {
-                priority: "Immediate",
-                color: "bg-red-500 text-white",
-                title: "Fix Client Partner Logos Linking to Raw JPEGs",
-                desc: "Disable link action in Flatsome builder so clicking logos doesn't open media files."
-              },
-              {
-                priority: "Day 1–2",
-                color: "bg-red-500 text-white",
-                title: "Configure Melbourne Keyword Titles & Meta Descriptions",
-                desc: "Target 'Melbourne Event & Portrait Photographer' in AIOSEO across all main pages."
-              },
-              {
-                priority: "Week 1",
-                color: "bg-amber-500 text-black font-bold",
-                title: "Compress Homepage Photos & Segment 270-Image Portfolio",
-                desc: "Convert to WebP format to drop 6.39MB payload down to under 850KB."
-              },
-              {
-                priority: "Week 1",
-                color: "bg-amber-500 text-black font-bold",
-                title: "Correct Footer Copyright Entity & Phone Link Spacing",
-                desc: "Fix character encoding glitch (©) and remove '%20' space from tel link."
-              },
-              {
-                priority: "Growth",
-                color: "bg-teal-400 text-black font-bold",
-                title: "Embed Google 5-Star Reviews & WhatsApp Quick Chat Button",
-                desc: "Significantly lifts inquiry and booking conversions for Melbourne clients."
-              }
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-[#080b11]/80 border border-white/5 rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-teal-500/30 transition-all hover:translate-x-1"
-              >
-                <div className="flex items-center gap-3.5">
-                  <span className={`text-[10px] uppercase tracking-wider px-3 py-1 rounded-md font-extrabold ${item.color}`}>
-                    {item.priority}
+          {/* Interactive Sprint Tabs */}
+          <div className="flex flex-wrap gap-2.5 mb-6 border-b border-white/10 pb-4">
+            <button
+              onClick={() => setRoadmapTab("migration")}
+              className={`px-4 py-2 rounded-xl font-bold text-xs md:text-sm transition-all flex items-center gap-2 ${
+                roadmapTab === "migration"
+                  ? "bg-teal-400 text-black shadow-[0_0_20px_rgba(45,212,191,0.35)] font-black"
+                  : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/5"
+              }`}
+            >
+              <Zap className="w-4 h-4" />
+              🚀 Next.js + Sanity.io 7-Day Sprint (SiteSpark Recommendation)
+            </button>
+            <button
+              onClick={() => setRoadmapTab("quickfix")}
+              className={`px-4 py-2 rounded-xl font-bold text-xs md:text-sm transition-all flex items-center gap-2 ${
+                roadmapTab === "quickfix"
+                  ? "bg-teal-400 text-black shadow-[0_0_20px_rgba(45,212,191,0.35)] font-black"
+                  : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/5"
+              }`}
+            >
+              <Layers className="w-4 h-4" />
+              🔧 WordPress Quick Hotfixes (Temporary Patch)
+            </button>
+          </div>
+
+          {/* Progress Tracker Bar */}
+          {(() => {
+            const currentList = roadmapTab === "migration" ? [101, 102, 103, 104, 105] : [201, 202, 203, 204, 205];
+            const completedCount = currentList.filter(id => completedTasks.includes(id)).length;
+            const progressPct = Math.round((completedCount / currentList.length) * 100);
+
+            return (
+              <div className="bg-[#080b11]/90 border border-white/10 rounded-2xl p-4 mb-6">
+                <div className="flex items-center justify-between text-xs mb-2">
+                  <span className="text-slate-300 font-semibold flex items-center gap-2">
+                    <span className="text-teal-400 font-black">{completedCount} of {currentList.length}</span> Milestones Marked Resolved
                   </span>
-                  <div>
-                    <h5 className="text-sm font-bold text-white">{item.title}</h5>
-                    <p className="text-xs text-slate-400 mt-0.5">{item.desc}</p>
+                  <span className="text-teal-400 font-extrabold">{progressPct}% Complete</span>
+                </div>
+                <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-teal-500 to-emerald-400 h-2 rounded-full transition-all duration-500 ease-out shadow-[0_0_12px_rgba(45,212,191,0.6)]"
+                    style={{ width: `${progressPct}%` }}
+                  />
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Task List */}
+          <div className="space-y-3.5">
+            {(roadmapTab === "migration"
+              ? [
+                  {
+                    id: 101,
+                    priority: "Day 1",
+                    color: "bg-blue-500 text-white",
+                    title: "Sanity.io Headless CMS Architecture & Schema Design",
+                    desc: "Model high-res photography galleries (Weddings, Events, Portraits), Melbourne shoot locations, and client video testimonials with instant real-time publishing.",
+                    benefit: "Eliminates WordPress admin bloat, zero plugin conflicts, studio team can upload photos directly from phone."
+                  },
+                  {
+                    id: 102,
+                    priority: "Day 2–3",
+                    color: "bg-purple-500 text-white",
+                    title: "Next.js 15 App Router Frontend & Framer Motion Masonry Gallery",
+                    desc: "Build lightning-fast fluid portfolio grid using next/image with AVIF/WebP automatic compression, blur placeholders, and zero CLS (Cumulative Layout Shift).",
+                    benefit: "Drops page weight from 6.39MB to < 650KB with sub-second portfolio transitions."
+                  },
+                  {
+                    id: 103,
+                    priority: "Day 4",
+                    color: "bg-indigo-500 text-white",
+                    title: "Dockerized Cloud VPS Deployment with Nginx & HTTP/3",
+                    desc: "Deploy standalone Docker container onto dedicated high-speed Sydney/Melbourne cloud VPS instance with automated Let's Encrypt SSL and brotli compression.",
+                    benefit: "Bypasses shared WordPress hosting CPU throttling; instant server response (<120ms TTFB)."
+                  },
+                  {
+                    id: 104,
+                    priority: "Day 5",
+                    color: "bg-amber-400 text-black font-black",
+                    title: "Melbourne Local SEO Architecture & Schema.org Rich Snippets",
+                    desc: "Inject dynamic Photographer, LocalBusiness, AggregateRating, and geo-targeted JSON-LD structured data with canonical OpenGraph cards across all service pages.",
+                    benefit: "Ranks BT Captures directly in Melbourne Google Maps 3-Pack and rich image search carousels."
+                  },
+                  {
+                    id: 105,
+                    priority: "Day 6–7",
+                    color: "bg-emerald-400 text-black font-black",
+                    title: "Conversion Engine: Google 5★ Social Proof & Direct WhatsApp Inquiries",
+                    desc: "Wire up live Google reviews carousel, sticky booking bar, and one-tap WhatsApp quick consultation button (+94 71 544 8553) with automated client lead attribution.",
+                    benefit: "Doubles inquiry conversion rate from mobile traffic and Instagram visitors."
+                  }
+                ]
+              : [
+                  {
+                    id: 201,
+                    priority: "Immediate",
+                    color: "bg-red-500 text-white",
+                    title: "Fix Client Partner Logos Linking to Raw JPEGs",
+                    desc: "Disable link action in Flatsome UX builder so clicking client logos does not navigate users to raw media file paths (/wp-content/uploads/...).",
+                    benefit: "Instantly removes unprofessional dead ends for prospective corporate clients."
+                  },
+                  {
+                    id: 202,
+                    priority: "Day 1–2",
+                    color: "bg-red-500 text-white",
+                    title: "Configure Melbourne Keyword Titles & Meta Descriptions",
+                    desc: "Configure All in One SEO (AIOSEO) with targeted meta tags focusing on 'Melbourne Event & Portrait Photographer' instead of default page names.",
+                    benefit: "Fixes zero-click search snippets and increases search engine CTR."
+                  },
+                  {
+                    id: 203,
+                    priority: "Week 1",
+                    color: "bg-amber-500 text-black font-bold",
+                    title: "Compress Homepage Photos & Paginate 270-Image Portfolio Overload",
+                    desc: "Run ShortPixel or WebP Express to convert bulky JPEGs and implement infinite lazy-loading to eliminate the initial 6.39MB download stall.",
+                    benefit: "Reduces Largest Contentful Paint (LCP) from 3.8s down to under 1.8s."
+                  },
+                  {
+                    id: 204,
+                    priority: "Week 1",
+                    color: "bg-amber-500 text-black font-bold",
+                    title: "Correct Footer Copyright Entity & Telephone Link Spacing",
+                    desc: "Replace raw HTML entity glitch (©) in Flatsome theme footer options and strip the invalid '%20' space from the `tel:+61 400 000 000` link tag.",
+                    benefit: "Ensures Australian mobile phone visitors can dial directly in one tap."
+                  },
+                  {
+                    id: 205,
+                    priority: "Growth",
+                    color: "bg-teal-400 text-black font-bold",
+                    title: "Embed Google 5-Star Reviews & Floating WhatsApp Quick Chat",
+                    desc: "Add Elfsight or Trustindex Google Review badge and install direct WhatsApp floating action widget linked to +94 71 544 8553.",
+                    benefit: "Capitalizes on 5-star reputation to convert casual visitors into booked sessions."
+                  }
+                ]
+            ).map((item) => {
+              const isChecked = completedTasks.includes(item.id);
+
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => toggleTask(item.id)}
+                  className={`cursor-pointer rounded-2xl p-4 md:p-5 transition-all duration-200 border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
+                    isChecked
+                      ? "bg-emerald-950/20 border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+                      : "bg-[#080b11]/80 border-white/10 hover:border-teal-500/40 hover:bg-[#0c121d]"
+                  }`}
+                >
+                  <div className="flex items-start gap-3.5">
+                    <button
+                      type="button"
+                      aria-label="Toggle task completion"
+                      className={`mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-all ${
+                        isChecked
+                          ? "bg-emerald-500 text-black shadow-[0_0_12px_rgba(16,185,129,0.5)]"
+                          : "border-2 border-slate-600 hover:border-teal-400 text-transparent"
+                      }`}
+                    >
+                      <Check className="w-4 h-4 stroke-[3]" />
+                    </button>
+
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <span className={`text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded font-extrabold ${item.color}`}>
+                          {item.priority}
+                        </span>
+                        <h5 className={`text-sm md:text-base font-bold transition-all ${
+                          isChecked ? "text-emerald-300 line-through opacity-85" : "text-white"
+                        }`}>
+                          {item.title}
+                        </h5>
+                      </div>
+                      <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                      <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-teal-400/90 font-medium">
+                        <Sparkles className="w-3 h-3 text-teal-400" />
+                        <span>Impact: {item.benefit}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="shrink-0 self-end md:self-center">
+                    {isChecked ? (
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/30">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                        Resolved with SiteSpark
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 bg-white/5 px-3 py-1.5 rounded-xl border border-white/10 hover:border-teal-500/30">
+                        <Clock className="w-3.5 h-3.5 text-slate-500" />
+                        Action Required
+                      </span>
+                    )}
                   </div>
                 </div>
-                <CheckCircle2 className="w-5 h-5 text-slate-600 sm:self-center self-end" />
-              </div>
-            ))}
+              );
+            })}
+          </div>
+
+          {/* Bottom Roadmap Action Bar */}
+          <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-teal-950/30 -mx-6 md:-mx-10 -mb-6 md:-mb-10 p-6 md:p-8">
+            <div>
+              <h4 className="text-white font-bold text-sm md:text-base">Ready to execute this transformation?</h4>
+              <p className="text-slate-400 text-xs mt-0.5">
+                SiteSpark can deliver the complete Next.js 15 + Sanity.io migration with 95+ PageSpeed guaranteed.
+              </p>
+            </div>
+            <a
+              href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20reviewed%20the%20Priority%20Fix%20Roadmap%20for%20BT%20Captures%20and%20would%20like%20to%20begin%20the%207-day%20migration%20sprint."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-teal-400 hover:bg-teal-300 text-black font-black px-6 py-3 rounded-xl text-xs md:text-sm uppercase tracking-wider transition-all hover:scale-105 shadow-[0_0_20px_rgba(45,212,191,0.4)] flex items-center gap-2 shrink-0"
+            >
+              <MessageCircle className="w-4 h-4" />
+              Start 7-Day Sprint via WhatsApp
+            </a>
           </div>
         </section>
 
