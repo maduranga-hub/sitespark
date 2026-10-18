@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Results for btcaptures.com.au</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Chart.js for Radar & Doughnut charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary-navy: #3b4859;
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      
+      --color-pass: #10b981;
+      --color-pass-bg: #ecfdf5;
+      --color-warn: #f59e0b;
+      --color-warn-bg: #fffbeb;
+      --color-fail: #ef4444;
+      --color-fail-bg: #fef2f2;
+      --color-blue: #3b82f6;
+
+      --ring-blue: #3b82f6;
+      --ring-orange: #f97316;
+      --ring-green: #10b981;
+      --ring-purple: #8b5cf6;
+      --ring-red: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 80px;
+    }
+
+    /* TOP HEADER BAR */
+    .top-header {
+      background-color: var(--primary-navy);
+      color: #ffffff;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+
+    .top-header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-header .domain-link {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+    .top-header .domain-link:hover {
+      text-decoration: underline;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-pdf {
+      background-color: #2563eb;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-pdf:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1140px;
+      margin: 32px auto 0;
+      padding: 0 20px;
+    }
+
+    /* HERO AUDIT SUMMARY CARD */
+    .hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin-bottom: 32px;
+    }
+
+    .hero-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid #edf2f7;
+    }
+
+    .hero-score-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Big Grade Ring */
+    .main-grade-ring {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: conic-gradient(
+        var(--ring-blue) 0% 60%,
+        #e2e8f0 60% 100%
+      );
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .main-grade-ring::after {
+      content: '';
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    .main-grade-letter {
+      position: relative;
+      z-index: 2;
+      font-size: 44px;
+      font-weight: 800;
+      color: var(--ring-blue);
+      letter-spacing: -1px;
+    }
+
+    .hero-verdict {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .hero-pill-badge {
+      display: inline-block;
+      background-color: #ef4444;
+      color: #ffffff;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.25);
+    }
+
+    /* Desktop Mockup */
+    .mockup-wrapper {
+      flex: 1.2;
+      display: flex;
+      justify-content: center;
+    }
+
+    .imac-mockup {
+      width: 100%;
+      max-width: 440px;
+      background: #1e293b;
+      border-radius: 12px 12px 0 0;
+      padding: 10px 10px 0;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .imac-screen {
+      background: #ffffff;
+      border-radius: 6px 6px 0 0;
+      height: 230px;
+      overflow: hidden;
+      border: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .imac-browser-bar {
+      height: 22px;
+      background: #f1f5f9;
+      border-bottom: 1px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 5px;
+    }
+
+    .imac-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #94a3b8;
+    }
+
+    .imac-url-bar {
+      flex: 1;
+      height: 14px;
+      background: #ffffff;
+      border-radius: 3px;
+      font-size: 8px;
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      color: #64748b;
+    }
+
+    .imac-content {
+      flex: 1;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://btcaptures.com.au/wp-content/uploads/2024/04/banner-03.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .imac-content h3 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .imac-content p {
+      font-size: 9px;
+      color: #cbd5e1;
+      max-width: 280px;
+    }
+
+    .imac-chin {
+      height: 24px;
+      background: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .imac-apple-logo {
+      width: 10px;
+      height: 10px;
+      background: #94a3b8;
+      border-radius: 50%;
+    }
+
+    .imac-stand {
+      width: 90px;
+      height: 40px;
+      background: linear-gradient(to bottom, #94a3b8, #cbd5e1);
+      margin: 0 auto;
+      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+    }
+
+    .imac-base {
+      width: 150px;
+      height: 6px;
+      background: #64748b;
+      margin: 0 auto;
+      border-radius: 3px;
+    }
+
+    /* FIVE CATEGORY RINGS + SPIDER RADAR */
+    .hero-categories-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .category-gauges-group {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .gauge-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .circle-ring {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .circle-ring::after {
+      content: '';
+      position: absolute;
+      width: 66px;
+      height: 66px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    .circle-letter {
+      position: relative;
+      z-index: 2;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .gauge-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Radar Chart Container */
+    .radar-chart-container {
+      width: 220px;
+      height: 170px;
+      flex-shrink: 0;
+    }
+
+    /* SECTION DETAIL CARDS (Sequential Scrolling) */
+    .audit-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 2px solid #f1f5f9;
+      margin-bottom: 24px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .section-heading {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .section-subtext {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .section-grade-pill {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    /* AUDIT CHECK ITEMS */
+    .check-item {
+      padding: 18px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .check-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .check-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .status-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .status-icon.pass { background: var(--color-pass-bg); color: var(--color-pass); border: 1.5px solid var(--color-pass); }
+    .status-icon.warn { background: var(--color-warn-bg); color: var(--color-warn); border: 1.5px solid var(--color-warn); }
+    .status-icon.fail { background: var(--color-fail-bg); color: var(--color-fail); border: 1.5px solid var(--color-fail); }
+
+    .check-body {
+      flex: 1;
+    }
+
+    .check-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .check-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .check-status-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .check-status-tag.pass { background: var(--color-pass-bg); color: var(--color-pass); }
+    .check-status-tag.warn { background: var(--color-warn-bg); color: #b45309; }
+    .check-status-tag.fail { background: var(--color-fail-bg); color: var(--color-fail); }
+
+    .check-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .check-evidence-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #334155;
+      margin: 8px 0;
+      overflow-x: auto;
+    }
+
+    .check-fix-box {
+      background: #f0fdf4;
+      border-left: 3px solid var(--color-pass);
+      padding: 8px 12px;
+      border-radius: 0 4px 4px 0;
+      font-size: 13px;
+      color: #166534;
+      margin-top: 6px;
+    }
+
+    .check-fix-box strong {
+      color: #15803d;
+    }
+
+    /* ACTION CHECKLIST CARD */
+    .checklist-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 36px;
+      margin-top: 40px;
+    }
+
+    .checklist-card h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .checklist-card p {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .roadmap-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .roadmap-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .roadmap-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .roadmap-priority-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .roadmap-priority-pill.high { background: #ef4444; color: #fff; }
+    .roadmap-priority-pill.med { background: #f59e0b; color: #fff; }
+    .roadmap-priority-pill.low { background: #3b82f6; color: #fff; }
+
+    .roadmap-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: #f1f5f9;
+    }
+
+    .roadmap-sub {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      color: var(--text-light);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .hero-top-row { flex-direction: column; }
+      .hero-categories-row { flex-direction: column; }
+      .radar-chart-container { width: 100%; height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER BAR -->
+  <header class="top-header">
+    <h1>
+      Audit Results for <a href="https://btcaptures.com.au/" target="_blank" class="domain-link">btcaptures.com.au</a>
+    </h1>
+    <div class="top-actions">
+      <button class="btn-pdf" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save / Print PDF
+      </button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- HERO AUDIT SUMMARY CARD -->
+    <section class="hero-card">
+      <div class="hero-top-row">
+
+        <!-- Left: Overall Grade & Status -->
+        <div class="hero-score-box">
+          <div class="main-grade-ring">
+            <span class="main-grade-letter">C+</span>
+          </div>
+          <div class="hero-verdict">Your page needs improvement</div>
+          <div class="hero-pill-badge">You have 12 Improvements Recommended</div>
+        </div>
+
+        <!-- Right: Realistic Desktop Device Mockup -->
+        <div class="mockup-wrapper">
+          <div class="imac-mockup">
+            <div class="imac-screen">
+              <div class="imac-browser-bar">
+                <div class="imac-dot" style="background:#ef4444;"></div>
+                <div class="imac-dot" style="background:#f59e0b;"></div>
+                <div class="imac-dot" style="background:#10b981;"></div>
+                <div class="imac-url-bar">https://btcaptures.com.au/</div>
+              </div>
+              <div class="imac-content">
+                <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #93c5fd; margin-bottom: 2px;">Professional Photography</div>
+                <h3>BT Captures</h3>
+                <p>Corporate Events, Fashion, Celebrities, Birthdays &amp; Family Shoots in Melbourne</p>
+                <div style="margin-top: 10px; background: #3b82f6; color: #fff; font-size: 9px; font-weight: 700; padding: 4px 10px; border-radius: 4px;">VIEW PORTFOLIO</div>
+              </div>
+            </div>
+            <div class="imac-chin">
+              <div class="imac-apple-logo"></div>
+            </div>
+            <div class="imac-stand"></div>
+            <div class="imac-base"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Categories Row: 5 Rings + Spider Radar Chart -->
+      <div class="hero-categories-row">
+
+        <div class="category-gauges-group">
+
+          <!-- Gauge 1: SEO -->
+          <div class="gauge-item">
+            <div class="circle-ring" style="background: conic-gradient(var(--ring-blue) 0% 55%, #e2e8f0 55% 100%);">
+              <span class="circle-letter" style="color: var(--ring-blue);">C</span>
+            </div>
+            <span class="gauge-label">SEO</span>
+          </div>
+
+          <!-- Gauge 2: Usability -->
+          <div class="gauge-item">
+            <div class="circle-ring" style="background: conic-gradient(var(--ring-orange) 0% 65%, #e2e8f0 65% 100%);">
+              <span class="circle-letter" style="color: var(--ring-orange);">C+</span>
+            </div>
+            <span class="gauge-label">Usability</span>
+          </div>
+
+          <!-- Gauge 3: Performance -->
+          <div class="gauge-item">
+            <div class="circle-ring" style="background: conic-gradient(var(--ring-red) 0% 45%, #e2e8f0 45% 100%);">
+              <span class="circle-letter" style="color: var(--ring-red);">D+</span>
+            </div>
+            <span class="gauge-label">Performance</span>
+          </div>
+
+          <!-- Gauge 4: Social -->
+          <div class="gauge-item">
+            <div class="circle-ring" style="background: conic-gradient(var(--ring-purple) 0% 50%, #e2e8f0 50% 100%);">
+              <span class="circle-letter" style="color: var(--ring-purple);">C-</span>
+            </div>
+            <span class="gauge-label">Social</span>
+          </div>
+
+          <!-- Gauge 5: Security -->
+          <div class="gauge-item">
+            <div class="circle-ring" style="background: conic-gradient(var(--ring-green) 0% 70%, #e2e8f0 70% 100%);">
+              <span class="circle-letter" style="color: var(--ring-green);">B-</span>
+            </div>
+            <span class="gauge-label">Security</span>
+          </div>
+
+        </div>
+
+        <!-- Radar Chart on the Right -->
+        <div class="radar-chart-container">
+          <canvas id="radarChart"></canvas>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 1: SEO AUDIT (Scroll Down)            -->
+    <!-- ============================================== -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-icon-badge" style="background: rgba(59, 130, 246, 0.1); color: var(--color-blue);">🔍</div>
+          <div>
+            <h2 class="section-heading">Search Engine Optimization (SEO)</h2>
+            <div class="section-subtext">Evaluates keyword targeting, meta tags, heading structure, and crawlability</div>
+          </div>
+        </div>
+        <span class="section-grade-pill" style="background: rgba(59, 130, 246, 0.1); color: var(--color-blue);">Grade: C (55/100)</span>
+      </div>
+
+      <!-- Item 1.1: Meta Description -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon fail">✕</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Meta Description Tag Missing</span>
+              <span class="check-status-tag fail">Failed</span>
+            </div>
+            <p class="check-desc">Your site does not have a meta description tag on Home, About, Portfolio, or Contact pages. Search engines use this text to display an attractive snippet in search results.</p>
+            <div class="check-evidence-box">
+              &lt;meta name="description" content="" /&gt;  &lt;!-- Completely Missing from &lt;head&gt; --&gt;
+            </div>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Open All in One SEO (AIOSEO) settings in WordPress. Set a unique description (140–160 characters), e.g.: <em>"BT Captures is Melbourne's premier photography studio by Bandara Thennakoon. Specializing in corporate events, weddings, fashion, birthdays, and portraits."</em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 1.2: Page Titles -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon warn">!</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Page Titles Lack Geographic &amp; Service Keywords</span>
+              <span class="check-status-tag warn">Warning</span>
+            </div>
+            <p class="check-desc">Your title tags are too generic and don't target Melbourne clients who search for specific photography services.</p>
+            <div class="check-evidence-box">
+              Current: &lt;title&gt;HOME - BT Captures&lt;/title&gt;<br>
+              Recommended: &lt;title&gt;BT Captures | Event &amp; Portrait Photographer Melbourne&lt;/title&gt;
+            </div>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Update page titles in WordPress to include your location (Melbourne, VIC) and primary specialties (Events, Fashion, Portraits).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 1.3: Headings -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon warn">!</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">H1 Tag Structure &amp; Missing H2/H3 Subheadings</span>
+              <span class="check-status-tag warn">Warning</span>
+            </div>
+            <p class="check-desc">The homepage has two separate H1 tags (<code>&lt;h1&gt;BT Captures&lt;/h1&gt;</code> and <code>&lt;h1&gt;Clients&lt;/h1&gt;</code>), and zero H2/H3 tags. Best practices dictate exactly one primary H1 per page followed by logical H2 subheadings.</p>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Keep one single H1 for your primary headline, and convert the "Clients" header into an <code>&lt;h2&gt;</code> tag in the Flatsome page builder.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 1.4: Image Alt Attributes -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon fail">✕</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Image Alt Attributes Empty (18 of 20 images)</span>
+              <span class="check-status-tag fail">Failed</span>
+            </div>
+            <p class="check-desc">90% of your homepage images have empty <code>alt=""</code> attributes. For photographers, Google Image Search is a major source of discovery.</p>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> In WordPress Media Library, add descriptive alternative text for all client photos, e.g., <em>"Melbourne Fashion Week runway show photography by BT Captures"</em>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 1.5: XML Sitemap & Robots.txt -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon pass">✓</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">XML Sitemap and Robots.txt Present</span>
+              <span class="check-status-tag pass">Passed</span>
+            </div>
+            <p class="check-desc">Your <code>robots.txt</code> and dynamic XML sitemap (<code>sitemap.xml</code> via AIOSEO) are properly configured and accessible to Googlebot.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 2: USABILITY AUDIT (Scroll Down)      -->
+    <!-- ============================================== -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-icon-badge" style="background: rgba(245, 158, 11, 0.1); color: var(--color-warn);">📱</div>
+          <div>
+            <h2 class="section-heading">Usability &amp; User Experience</h2>
+            <div class="section-subtext">Evaluates mobile responsiveness, broken links, tap targets, and layout consistency</div>
+          </div>
+        </div>
+        <span class="section-grade-pill" style="background: rgba(245, 158, 11, 0.1); color: var(--color-warn);">Grade: C+ (65/100)</span>
+      </div>
+
+      <!-- Item 2.1: Client Logo Link Bug -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon fail">✕</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Client Partner Logos Link Directly to Raw JPEGs</span>
+              <span class="check-status-tag fail">Failed</span>
+            </div>
+            <p class="check-desc">When users click the logos of Monash University, SriLankan Airlines, or Melbourne Fashion Week, the website navigates away to a raw JPEG upload file instead of staying on your site or linking to client pages.</p>
+            <div class="check-evidence-box">
+              Clicking logo navigates to: https://btcaptures.com.au/wp-content/uploads/2024/04/srilankan-airlines-logo.jpg
+            </div>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> In Flatsome theme editor, change client logo links from "Media File" to "None", or set external client links with <code>target="_blank"</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2.2: Character Encoding Bug -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon warn">!</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Footer Copyright Symbol Displays Character Encoding Error</span>
+              <span class="check-status-tag warn">Warning</span>
+            </div>
+            <p class="check-desc">Your footer displays <code>Copyright 2026 &#xFFFD; BT Captures</code>. The copyright symbol (<code>&copy;</code>) was saved with a character encoding mismatch, displaying a broken question mark box.</p>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Replace the character in Flatsome Theme Options &rarr; Footer with standard HTML code: <code>Copyright &amp;copy; 2026 BT Captures. All rights reserved.</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2.3: Phone Link Encoding -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon warn">!</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Phone Link Contains URL-Encoded Whitespace (`%20`)</span>
+              <span class="check-status-tag warn">Warning</span>
+            </div>
+            <p class="check-desc">The call link is formatted as <code>tel:%200433887629</code>. Certain smartphone dialers fail or produce errors when spaces are encoded into a phone dial protocol.</p>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Update the anchor tag to the standard international format without spaces: <code>&lt;a href="tel:+61433887629"&gt;</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2.4: Mobile Viewport -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon pass">✓</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Mobile Viewport Configured Properly</span>
+              <span class="check-status-tag pass">Passed</span>
+            </div>
+            <p class="check-desc"><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code> is properly defined, ensuring layout scaling on mobile screens.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 3: PERFORMANCE AUDIT (Scroll Down)   -->
+    <!-- ============================================== -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-icon-badge" style="background: rgba(239, 68, 68, 0.1); color: var(--color-fail);">⚡</div>
+          <div>
+            <h2 class="section-heading">Performance &amp; Speed</h2>
+            <div class="section-subtext">Evaluates image payloads, page weight, script execution, and loading responsiveness</div>
+          </div>
+        </div>
+        <span class="section-grade-pill" style="background: rgba(239, 68, 68, 0.1); color: var(--color-fail);">Grade: D+ (45/100)</span>
+      </div>
+
+      <!-- Item 3.1: Heavy Images -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon fail">✕</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Massive Uncompressed Images (Homepage Weight: 6.39 MB)</span>
+              <span class="check-status-tag fail">Failed</span>
+            </div>
+            <p class="check-desc">The homepage requires over 6.3MB of image downloads alone. Individual photos exceed 1.5MB to 2.3MB each, drastically slowing down Largest Contentful Paint (LCP) on 4G mobile devices.</p>
+            <div class="check-evidence-box">
+              Fashion-22.jpg &rarr; 2,353 KB (2.35 MB) [Uncompressed JPEG]<br>
+              Kids-14.jpg &rarr; 1,617 KB (1.61 MB)<br>
+              MELMARA23-69.jpg &rarr; 611 KB<br>
+              Major-Events-73-scaled.jpg &rarr; 602 KB
+            </div>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Resize images to a maximum display width of 1920px and convert them to modern <strong>WebP/AVIF</strong> format. This will shrink total homepage weight from 6.39 MB down to under 850 KB.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3.2: Portfolio Overload -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon fail">✕</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Portfolio Page Loads 270 Images in a Single Request</span>
+              <span class="check-status-tag fail">Failed</span>
+            </div>
+            <p class="check-desc">The <code>/portfolio/</code> page loads <strong>270 high-resolution photos</strong> at once. On mobile browsers, this causes excessive memory consumption, stuttering scroll, and potential crashes.</p>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Split the portfolio into dedicated sub-galleries (e.g., Weddings, Corporate, Fashion) or implement infinite-scroll lazy loading with 16–20 photos loaded per batch.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3.3: Web Server & HTTP/3 -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon pass">✓</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">LiteSpeed Server with HTTP/3 &amp; Brotli Enabled</span>
+              <span class="check-status-tag pass">Passed</span>
+            </div>
+            <p class="check-desc">The web server is running high-performance LiteSpeed with active HTTP/3 (QUIC) support, ensuring minimal network latency.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 4: SOCIAL TAGS AUDIT (Scroll Down)    -->
+    <!-- ============================================== -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-icon-badge" style="background: rgba(139, 92, 246, 0.1); color: var(--ring-purple);">🔗</div>
+          <div>
+            <h2 class="section-heading">Social Media &amp; Sharing</h2>
+            <div class="section-subtext">Evaluates Open Graph meta tags, Twitter card previews, and social profile links</div>
+          </div>
+        </div>
+        <span class="section-grade-pill" style="background: rgba(139, 92, 246, 0.1); color: var(--ring-purple);">Grade: C- (50/100)</span>
+      </div>
+
+      <!-- Item 4.1: Open Graph Description -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon fail">✕</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Open Graph Description (`og:description`) Missing</span>
+              <span class="check-status-tag fail">Failed</span>
+            </div>
+            <p class="check-desc">When someone shares your website link on WhatsApp, Facebook, LinkedIn, or iMessage, no summary preview appears under the card.</p>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Fill out the Facebook &amp; Social settings inside AIOSEO with a compelling summary card and high-res cover image.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 4.2: Facebook Profile Link -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon warn">!</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Facebook Link Points to Legacy URL (`facebook.com/ClickU.photos/`)</span>
+              <span class="check-status-tag warn">Warning</span>
+            </div>
+            <p class="check-desc">The footer Facebook icon links to <code>https://www.facebook.com/ClickU.photos/</code>, which appears to be a past branding handle or placeholder.</p>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Verify and update your Facebook profile link in the Flatsome Social Links menu to match your official BT Captures profile.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 5: SECURITY AUDIT (Scroll Down)       -->
+    <!-- ============================================== -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="section-icon-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--color-pass);">🔒</div>
+          <div>
+            <h2 class="section-heading">Security &amp; Technical Hardening</h2>
+            <div class="section-subtext">Evaluates SSL encryption, security headers, plugin freshness, and attack surface</div>
+          </div>
+        </div>
+        <span class="section-grade-pill" style="background: rgba(16, 185, 129, 0.1); color: var(--color-pass);">Grade: B- (70/100)</span>
+      </div>
+
+      <!-- Item 5.1: SSL Certificate -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon pass">✓</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">HTTPS / SSL Certificate Active &amp; Valid</span>
+              <span class="check-status-tag pass">Passed</span>
+            </div>
+            <p class="check-desc">The domain enforces valid HTTPS encryption across all pages with modern TLS protocols.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 5.2: Security Headers -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon warn">!</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Missing Standard HTTP Security Headers</span>
+              <span class="check-status-tag warn">Warning</span>
+            </div>
+            <p class="check-desc">HTTP security headers like <code>Strict-Transport-Security (HSTS)</code>, <code>X-Frame-Options</code>, and <code>X-Content-Type-Options</code> are not being sent by your LiteSpeed server.</p>
+            <div class="check-evidence-box">
+              # Add to your .htaccess file:<br>
+              Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS<br>
+              Header set X-Frame-Options "SAMEORIGIN"<br>
+              Header set X-Content-Type-Options "nosniff"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 5.3: Outdated Plugins -->
+      <div class="check-item">
+        <div class="check-header">
+          <div class="status-icon warn">!</div>
+          <div class="check-body">
+            <div class="check-title-row">
+              <span class="check-title">Outdated WP Rocket Cache Plugin (v3.11.2 from 2022)</span>
+              <span class="check-status-tag warn">Warning</span>
+            </div>
+            <p class="check-desc">The site exposes <code>X-Powered-By: WP Rocket/3.11.2</code>. Running plugins that are over two years out of date exposes your WordPress site to known security flaws.</p>
+            <div class="check-fix-box">
+              <strong>How to Fix:</strong> Update WP Rocket or switch to the native LiteSpeed Cache for WordPress plugin.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- ROADMAP / PRIORITY ACTION CHECKLIST            -->
+    <!-- ============================================== -->
+    <section class="checklist-card">
+      <h2>Recommended Priority Action Plan</h2>
+      <p>Follow these high-impact steps to elevate your score from <strong>C+ (58)</strong> to an <strong>A (90+)</strong></p>
+
+      <div class="roadmap-list">
+        
+        <div class="roadmap-item">
+          <div class="roadmap-left">
+            <span class="roadmap-priority-pill high">High Priority</span>
+            <div>
+              <div class="roadmap-text">Fix Client Partner Logos Linking to Raw JPEGs</div>
+              <div class="roadmap-sub">Set link destination to 'None' in Flatsome theme builder</div>
+            </div>
+          </div>
+          <span style="color: #ef4444; font-weight: 700; font-size: 13px;">Immediate</span>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="roadmap-left">
+            <span class="roadmap-priority-pill high">High Priority</span>
+            <div>
+              <div class="roadmap-text">Configure Meta Descriptions &amp; Keyword Titles</div>
+              <div class="roadmap-sub">Target "Melbourne Event Photographer" in AIOSEO across all main pages</div>
+            </div>
+          </div>
+          <span style="color: #ef4444; font-weight: 700; font-size: 13px;">Day 1–2</span>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="roadmap-left">
+            <span class="roadmap-priority-pill high">High Priority</span>
+            <div>
+              <div class="roadmap-text">Compress Homepage Photos &amp; Restructure 270 Portfolio Images</div>
+              <div class="roadmap-sub">Convert to WebP format to reduce 6.39MB payload to ~850KB</div>
+            </div>
+          </div>
+          <span style="color: #f59e0b; font-weight: 700; font-size: 13px;">Week 1</span>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="roadmap-left">
+            <span class="roadmap-priority-pill med">Medium Priority</span>
+            <div>
+              <div class="roadmap-text">Fix Footer Copyright Symbol &amp; Phone URL Spacing</div>
+              <div class="roadmap-sub">Fix <code>Copyright 2026 &#xFFFD;</code> and <code>tel:+61433887629</code></div>
+            </div>
+          </div>
+          <span style="color: #f59e0b; font-weight: 700; font-size: 13px;">Week 1</span>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="roadmap-left">
+            <span class="roadmap-priority-pill low">Growth</span>
+            <div>
+              <div class="roadmap-text">Add Google 5-Star Reviews &amp; WhatsApp Floating Chat Button</div>
+              <div class="roadmap-sub">Drastically lifts inquiries and booking conversions for Melbourne clients</div>
+            </div>
+          </div>
+          <span style="color: #3b82f6; font-weight: 700; font-size: 13px;">Week 2</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>&copy; 2026 Audit Report generated for <strong>BT Captures</strong> (btcaptures.com.au)</p>
+      <p style="margin-top: 4px;">Audited on October 18, 2026 with automated Lighthouse, SEO, and Security parsers.</p>
+    </footer>
+
+  </div>
+
+  <!-- RADAR CHART INITIALIZATION SCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const ctx = document.getElementById('radarChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['SEO', 'Usability', 'Performance', 'Social', 'Security'],
+          datasets: [{
+            data: [55, 65, 45, 50, 70],
+            backgroundColor: 'rgba(59, 130, 246, 0.25)',
+            borderColor: '#3b82f6',
+            borderWidth: 2,
+            pointBackgroundColor: '#2563eb',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: '#2563eb'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              angleLines: { color: '#e2e8f0' },
+              grid: { color: '#e2e8f0' },
+              pointLabels: {
+                font: { size: 10.5, family: 'Inter', weight: '600' },
+                color: '#475569'
+              },
+              ticks: { display: false, max: 100, min: 0 }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
