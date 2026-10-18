@@ -1124,7 +1124,7 @@ export default function BTCapturesAuditPage() {
               <p className="text-xs text-slate-300 mt-0.5">SiteSpark can seamlessly migrate your existing photography content in under 7 days.</p>
             </div>
             <a
-              href="https://wa.me/94770000000?text=Hi%20SiteSpark,%20I%20reviewed%20the%20BT%20Captures%20audit%20and%20would%20like%20to%20discuss%20the%20VPS%20+%20Sanity.io%20+%20Next.js%20migration%20stack."
+              href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20reviewed%20the%20BT%20Captures%20audit%20and%20would%20like%20to%20discuss%20the%20VPS%20+%20Sanity.io%20+%20Next.js%20migration%20stack."
               target="_blank"
               rel="noopener noreferrer"
               className="bg-teal-400 hover:bg-teal-300 text-black font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all hover:scale-105 shadow-[0_0_20px_rgba(45,212,191,0.4)] whitespace-nowrap"
@@ -1231,7 +1231,7 @@ export default function BTCapturesAuditPage() {
                 <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href="https://wa.me/94770000000?text=Hi%20SiteSpark,%20I%20reviewed%20the%20BT%20Captures%20audit%20and%20would%20like%20to%20discuss%20optimizing%20my%20website."
+                href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20reviewed%20the%20BT%20Captures%20audit%20and%20would%20like%20to%20discuss%20optimizing%20my%20website."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white/10 hover:bg-white/20 text-white font-bold px-7 py-3.5 rounded-full text-sm transition-all border border-white/20 flex items-center gap-2 backdrop-blur-md"
