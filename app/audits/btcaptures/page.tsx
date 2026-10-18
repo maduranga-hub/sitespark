@@ -119,6 +119,7 @@ export default function BTCapturesAuditPage() {
             { id: "performance", label: "Speed & 270 Photos", icon: "⚡" },
             { id: "security", label: "Security & Social", icon: "🔒" },
             { id: "comparison", label: "Before vs After", icon: "⚖️" },
+            { id: "solution", label: "VPS + Sanity + Next.js", icon: "💎" },
             { id: "roadmap", label: "Fix Roadmap", icon: "🚀" }
           ].map((tab) => (
             <button
@@ -927,6 +928,211 @@ export default function BTCapturesAuditPage() {
             </div>
 
           </div>
+        </section>
+
+        {/* ==================================================== */}
+        {/* THE RECOMMENDED SOLUTION: NEXT.JS + SANITY.IO + VPS */}
+        {/* ==================================================== */}
+        <div id="solution" className="scroll-mt-32" />
+        <section className="relative bg-gradient-to-b from-[#131b2e] via-[#0d1322] to-[#080d18] border-2 border-teal-500/40 rounded-3xl p-6 md:p-10 mb-12 shadow-[0_0_50px_rgba(20,184,166,0.15)] overflow-hidden">
+          
+          {/* Background Ambient Glow */}
+          <div className="absolute top-0 right-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-white/10 mb-8 relative z-10">
+            <div>
+              <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-teal-300 bg-teal-500/20 border border-teal-500/40 px-3.5 py-1.5 rounded-full shadow-lg mb-3">
+                <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+                The Permanent Modern Solution
+              </span>
+              <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight">
+                Next.js + Sanity.io + High-Performance VPS
+              </h3>
+              <p className="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+                Rather than spending time and money continuously patching an outdated, bloated WordPress template with 270 raw images, migrating to a <strong>Modern Headless Architecture</strong> gives BT Captures lightning-fast speed, effortless photo updates, and 100/100 Google scores.
+              </p>
+            </div>
+
+            <div className="bg-[#0b101c] border border-teal-500/30 p-4 rounded-2xl flex flex-col items-center text-center self-start md:self-auto min-w-[200px] shadow-xl">
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Target Performance</span>
+              <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-emerald-400 mt-0.5">
+                99 / 100
+              </span>
+              <span className="text-[10px] text-teal-400 font-semibold mt-1">Google Core Web Vitals</span>
+            </div>
+          </div>
+
+          {/* 3 Core Architectural Pillars */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 relative z-10">
+            
+            {/* Pillar 1: Next.js */}
+            <div className="bg-[#0a0e17]/90 border border-teal-500/30 rounded-2xl p-6 hover:border-teal-400/60 transition-all shadow-xl group">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-blue-600 flex items-center justify-center text-black font-black text-xl mb-4 shadow-[0_0_20px_rgba(45,212,191,0.4)] group-hover:scale-105 transition-transform">
+                ▲
+              </div>
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-lg font-black text-white">Next.js 15 Frontend</h4>
+                <span className="text-[10px] uppercase font-mono font-bold text-teal-400 bg-teal-950 px-2 py-0.5 rounded border border-teal-500/30">React SSR</span>
+              </div>
+              <p className="text-xs text-slate-400 mb-4 font-medium">The world&apos;s fastest modern framework</p>
+              
+              <ul className="space-y-2.5 text-xs text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Sub-Second Loading (&lt;0.8s):</strong> Zero lag, instantaneous page transitions across all devices.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Next/Image Auto-Optimization:</strong> High-res photography is dynamically compressed to WebP/AVIF without quality loss.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Infinite Smooth Portfolio:</strong> 270+ photos render in categorized tabs (Weddings, Fashion, Corporate) without browser freezing.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Automated Melbourne Local SEO:</strong> Dynamic Open Graph social previews and automated JSON-LD rich snippets.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Pillar 2: Sanity.io */}
+            <div className="bg-[#0a0e17]/90 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-400/60 transition-all shadow-xl group">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 via-rose-500 to-purple-600 flex items-center justify-center text-white font-black text-lg mb-4 shadow-[0_0_20px_rgba(244,63,94,0.4)] group-hover:scale-105 transition-transform">
+                ✦
+              </div>
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-lg font-black text-white">Sanity.io Studio</h4>
+                <span className="text-[10px] uppercase font-mono font-bold text-rose-400 bg-rose-950 px-2 py-0.5 rounded border border-rose-500/30">Headless CMS</span>
+              </div>
+              <p className="text-xs text-slate-400 mb-4 font-medium">Tailored visual content management for Bandara</p>
+              
+              <ul className="space-y-2.5 text-xs text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Upload from Phone or Camera:</strong> Bandara can upload new client galleries directly from mobile or laptop in seconds.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Smart Hotspot Cropping:</strong> Automatically locks focus on models&apos; faces and couples so mobile screens never cut people out.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Drag-and-Drop Gallery Sorting:</strong> Easily organize featured shoots, pricing packages, client logos, and testimonials.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Zero Plugin Maintenance:</strong> Never worry about broken WordPress plugins, outdated PHP, or database crashes again.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Pillar 3: High-Performance VPS */}
+            <div className="bg-[#0a0e17]/90 border border-blue-500/30 rounded-2xl p-6 hover:border-blue-400/60 transition-all shadow-xl group">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-lg mb-4 shadow-[0_0_20px_rgba(59,130,246,0.4)] group-hover:scale-105 transition-transform">
+                ⚡
+              </div>
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-lg font-black text-white">High-Performance VPS</h4>
+                <span className="text-[10px] uppercase font-mono font-bold text-blue-400 bg-blue-950 px-2 py-0.5 rounded border border-blue-500/30">Dedicated Cloud</span>
+              </div>
+              <p className="text-xs text-slate-400 mb-4 font-medium">Isolated dedicated power with Sydney/Melbourne edge</p>
+              
+              <ul className="space-y-2.5 text-xs text-slate-300">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Dedicated CPU &amp; NVMe Storage:</strong> No shared hosting limits. Your site handles unlimited viral traffic with zero slowdowns.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Enterprise Nginx with HTTP/3 &amp; Brotli:</strong> Modern transport protocol delivers photos over 2x faster than standard Apache.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Bank-Grade Security (HSTS &amp; CSP):</strong> Complete protection against DDoS, brute-force attacks, and xmlrpc exploits.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Automated Daily Cloud Backups:</strong> Full snapshot backups keep your entire photography portfolio 100% safe.</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Side-by-Side Comparison Matrix */}
+          <div className="bg-[#090d16] border border-white/10 rounded-2xl overflow-hidden shadow-2xl mb-8 relative z-10">
+            <div className="px-6 py-4 bg-white/5 border-b border-white/10 flex items-center justify-between">
+              <span className="font-bold text-sm text-white flex items-center gap-2">
+                <span>⚖️</span>
+                <span>WordPress (Flatsome) vs. SiteSpark Modern Headless Stack</span>
+              </span>
+              <span className="text-xs text-teal-400 font-semibold font-mono">Direct Technical Audit Comparison</span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-white/10 bg-[#0e1422] text-slate-400 uppercase font-mono text-[10px] tracking-wider">
+                    <th className="py-3 px-5">Performance &amp; Feature Area</th>
+                    <th className="py-3 px-5 text-rose-400">Current Site (WordPress + Flatsome)</th>
+                    <th className="py-3 px-5 text-teal-300">SiteSpark Stack (VPS + Sanity + Next.js)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 text-slate-300">
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3 px-5 font-bold text-white">Homepage Download Payload</td>
+                    <td className="py-3 px-5 text-rose-400 font-mono font-semibold">❌ 6.39 MB (Extreme data load)</td>
+                    <td className="py-3 px-5 text-teal-300 font-mono font-bold">✅ &lt; 650 KB (Automatic WebP conversion)</td>
+                  </tr>
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3 px-5 font-bold text-white">Portfolio Image Experience</td>
+                    <td className="py-3 px-5 text-rose-400">❌ 270 raw photos loaded in single page (Crashes mobile)</td>
+                    <td className="py-3 px-5 text-teal-300 font-bold">✅ Categorized dynamic tabs with lazy loading (Infinite scroll)</td>
+                  </tr>
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3 px-5 font-bold text-white">Photo Uploads &amp; Editing</td>
+                    <td className="py-3 px-5 text-rose-400">❌ Clunky WP Media Library + manual resizing</td>
+                    <td className="py-3 px-5 text-teal-300 font-bold">✅ Sanity Studio: Upload from phone with smart facial hotspot cropping</td>
+                  </tr>
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3 px-5 font-bold text-white">Security &amp; Maintenance</td>
+                    <td className="py-3 px-5 text-rose-400">❌ Outdated WP Rocket (2022), exposed xmlrpc, plugin vulnerabilities</td>
+                    <td className="py-3 px-5 text-teal-300 font-bold">✅ 100% Headless: Immune to WordPress bots, zero plugin maintenance</td>
+                  </tr>
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3 px-5 font-bold text-white">Hosting Infrastructure</td>
+                    <td className="py-3 px-5 text-rose-400">❌ Shared LiteSpeed hosting limits</td>
+                    <td className="py-3 px-5 text-teal-300 font-bold">✅ Dedicated Cloud VPS with HTTP/3, Brotli &amp; Australian edge caching</td>
+                  </tr>
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3 px-5 font-bold text-white">Google SEO &amp; Rich Cards</td>
+                    <td className="py-3 px-5 text-rose-400">❌ Missing meta descriptions, weak generic titles</td>
+                    <td className="py-3 px-5 text-teal-300 font-bold">✅ Dynamic Melbourne schema markup, automated OpenGraph previews</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Quick Migration Quote Banner */}
+          <div className="bg-gradient-to-r from-teal-500/10 via-blue-500/10 to-purple-500/10 border border-teal-500/30 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left relative z-10">
+            <div>
+              <h5 className="text-base font-bold text-white">Ready to elevate BT Captures with Next.js, Sanity.io &amp; a Dedicated VPS?</h5>
+              <p className="text-xs text-slate-300 mt-0.5">SiteSpark can seamlessly migrate your existing photography content in under 7 days.</p>
+            </div>
+            <a
+              href="https://wa.me/94770000000?text=Hi%20SiteSpark,%20I%20reviewed%20the%20BT%20Captures%20audit%20and%20would%20like%20to%20discuss%20the%20VPS%20+%20Sanity.io%20+%20Next.js%20migration%20stack."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-teal-400 hover:bg-teal-300 text-black font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all hover:scale-105 shadow-[0_0_20px_rgba(45,212,191,0.4)] whitespace-nowrap"
+            >
+              Request Stack Migration
+            </a>
+          </div>
+
         </section>
 
         {/* ==================================================== */}
