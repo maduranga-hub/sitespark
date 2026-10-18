@@ -1,48 +1,54 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import {
+  Search,
+  Moon,
+  Sun,
+  Bell,
+  Grid,
+  Menu,
+  X,
+  Sparkles,
+  Zap,
+  ShieldCheck,
+  Globe,
+  Smartphone,
+  ExternalLink,
   CheckCircle2,
   AlertTriangle,
   XCircle,
-  Search,
-  Smartphone,
-  Zap,
-  Share2,
-  ShieldCheck,
-  ExternalLink,
-  Printer,
-  ArrowRight,
-  Sparkles,
-  Layers,
-  Image as ImageIcon,
-  Clock,
-  PhoneCall,
-  Globe,
-  Award,
-  Copy,
-  Check,
-  TrendingUp,
-  Monitor,
-  Flame,
-  HelpCircle,
-  ChevronRight,
-  DownloadCloud,
-  FileCode2,
-  Lock,
   MessageCircle,
-  Sun,
-  LayoutDashboard
+  PhoneCall,
+  DollarSign,
+  Users,
+  TrendingUp,
+  Clock,
+  Layers,
+  ChevronRight,
+  Filter,
+  Download,
+  Share2,
+  SlidersHorizontal,
+  FolderKanban,
+  FileText,
+  Settings,
+  HelpCircle,
+  RefreshCw,
+  LayoutDashboard,
+  PieChart as PieIcon,
+  BarChart3,
+  Flame,
+  Check
 } from "lucide-react";
 
-export default function BTCapturesAuditPage() {
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [deviceView, setDeviceView] = useState<"desktop" | "mobile">("desktop");
-  const [activeNav, setActiveNav] = useState("overview");
-  const [completedTasks, setCompletedTasks] = useState<number[]>([]);
-  const [roadmapTab, setRoadmapTab] = useState<"migration" | "quickfix">("migration");
+export default function BTCapturesWhiteDashboard() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState("default");
+  const [activeTab, setActiveTab] = useState<"all" | "critical" | "performance" | "seo">("all");
+  const [completedTasks, setCompletedTasks] = useState<number[]>([1]);
+  const [chartMetric, setChartMetric] = useState<"speed" | "inquiries">("speed");
 
   const toggleTask = (id: number) => {
     setCompletedTasks(prev =>
@@ -50,1406 +56,1005 @@ export default function BTCapturesAuditPage() {
     );
   };
 
-  const copyToClipboard = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
-
-  const scrollTo = (id: string) => {
-    setActiveNav(id);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  const whatsappUrl =
+    "https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20am%20reviewing%20the%20BT%20Captures%20Executive%20Dashboard%20and%20would%20like%20to%20discuss%20the%20Next.js%20+%20Sanity.io%20+%20VPS%20migration.";
 
   return (
-    <div className="min-h-screen bg-[#06080d] text-slate-100 font-sans selection:bg-teal-500 selection:text-white pb-32">
-      
-      {/* BACKGROUND AMBIENT GLOWS */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[140px]" />
-        <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[140px]" />
-        <div className="absolute bottom-10 left-1/3 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[140px]" />
-      </div>
+    <div className="min-h-screen bg-[#f4f6fa] text-slate-800 flex font-sans antialiased selection:bg-purple-100 selection:text-purple-900">
+      {/* ========================================================= */}
+      {/* MOBILE SIDEBAR BACKDROP */}
+      {/* ========================================================= */}
+      {mobileMenuOpen && (
+        <div
+          onClick={() => setMobileMenuOpen(false)}
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden transition-opacity"
+        />
+      )}
 
-      {/* UNIFIED STICKY TOP HEADER & NAVIGATION */}
-      <div className="sticky top-0 z-50 bg-[#090d15]/95 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
-        
-        {/* Top Header Row */}
-        <header className="px-4 md:px-8 py-3 flex items-center justify-between border-b border-white/5">
-          <div className="flex items-center gap-3">
-            <a href="https://sitespark.online" className="flex items-center gap-2.5 group">
-              <span className="w-8 h-8 rounded-xl bg-gradient-to-tr from-teal-400 via-cyan-500 to-blue-600 flex items-center justify-center font-black text-black text-sm shadow-[0_0_20px_rgba(45,212,191,0.5)] group-hover:scale-105 transition-transform">
-                S
-              </span>
-              <div className="hidden sm:flex flex-col">
-                <span className="font-extrabold tracking-tight text-white leading-tight">
-                  SiteSpark
+      {/* ========================================================= */}
+      {/* LEFT SIDEBAR (SYN-UI REPLICA) */}
+      {/* ========================================================= */}
+      <aside
+        className={`fixed lg:sticky top-0 left-0 h-screen w-64 bg-white border-r border-slate-200/90 z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out shrink-0 ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
+        <div className="flex flex-col h-full overflow-y-auto">
+          {/* Brand Header */}
+          <div className="h-16 flex items-center justify-between px-6 border-b border-slate-100">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 via-indigo-500 to-pink-500 flex items-center justify-center shadow-md shadow-purple-500/20">
+                <Sparkles className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <span className="font-black text-lg tracking-tight bg-gradient-to-r from-purple-700 via-indigo-700 to-slate-900 bg-clip-text text-transparent">
+                  SITESPARK
                 </span>
-                <span className="text-[9px] text-teal-400 font-semibold tracking-wider uppercase">
-                  Agency Diagnostic
+                <span className="text-[10px] font-bold text-purple-600 ml-1.5 uppercase px-1.5 py-0.5 bg-purple-50 rounded">
+                  UI-OS
                 </span>
               </div>
-            </a>
-            <span className="text-white/20">/</span>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-teal-300 bg-teal-500/10 border border-teal-500/30 px-2.5 py-0.5 rounded-full shadow-inner">
-                Client Audit
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="lg:hidden p-1.5 rounded-lg hover:bg-slate-100 text-slate-500"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="p-4 space-y-6 text-xs font-semibold">
+            {/* Group 1: Dashboard */}
+            <div>
+              <div className="px-3 mb-2 flex items-center justify-between text-purple-700 uppercase tracking-wider text-[11px] font-bold">
+                <span className="flex items-center gap-2">
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  Dashboard
+                </span>
+                <ChevronRight className="w-3.5 h-3.5 rotate-90" />
+              </div>
+              <div className="space-y-1">
+                <button
+                  onClick={() => setActiveMenu("default")}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all ${
+                    activeMenu === "default"
+                      ? "bg-purple-50 text-purple-700 font-bold shadow-sm"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className={`w-2 h-2 rounded-full ${activeMenu === "default" ? "bg-purple-600 ring-4 ring-purple-100" : "bg-slate-300"}`} />
+                    <span>Default Audit View</span>
+                  </div>
+                  <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">
+                    Live
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => setActiveMenu("performance")}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
+                    activeMenu === "performance"
+                      ? "bg-purple-50 text-purple-700 font-bold"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-slate-300" />
+                  <span>Performance & Speed</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveMenu("seo")}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
+                    activeMenu === "seo"
+                      ? "bg-purple-50 text-purple-700 font-bold"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-slate-300" />
+                  <span>Melbourne Local SEO</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveMenu("architecture")}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
+                    activeMenu === "architecture"
+                      ? "bg-purple-50 text-purple-700 font-bold"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-slate-300" />
+                  <span>VPS + Next.js + Sanity</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Group 2: Audit Modules */}
+            <div>
+              <span className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                Audit Modules
               </span>
+              <div className="space-y-1">
+                <a
+                  href="#overview"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all"
+                >
+                  <span className="flex items-center gap-2">
+                    <BarChart3 className="w-3.5 h-3.5 text-slate-400" />
+                    Overall Health Score
+                  </span>
+                  <span className="text-[10px] font-extrabold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
+                    C+ (64)
+                  </span>
+                </a>
+
+                <a
+                  href="#payload"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all"
+                >
+                  <span className="flex items-center gap-2">
+                    <PieIcon className="w-3.5 h-3.5 text-slate-400" />
+                    Payload Breakdown
+                  </span>
+                  <span className="text-[10px] font-extrabold text-red-600 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">
+                    6.39 MB
+                  </span>
+                </a>
+
+                <a
+                  href="#issues"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all"
+                >
+                  <span className="flex items-center gap-2">
+                    <AlertTriangle className="w-3.5 h-3.5 text-slate-400" />
+                    Flagged Deficiencies
+                  </span>
+                  <span className="text-[10px] font-extrabold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">
+                    8 Issues
+                  </span>
+                </a>
+
+                <a
+                  href="#roadmap"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all"
+                >
+                  <span className="flex items-center gap-2">
+                    <FolderKanban className="w-3.5 h-3.5 text-slate-400" />
+                    Sprint Checklist
+                  </span>
+                  <span className="text-[10px] font-extrabold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                    7 Days
+                  </span>
+                </a>
+              </div>
+            </div>
+
+          </nav>
+
+          {/* Sidebar Footer / Client Badge */}
+          <div className="p-4 border-t border-slate-100 bg-slate-50/50 mt-auto">
+            <div className="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs">
+              <div className="flex items-center gap-3 mb-2.5">
+                <div className="w-9 h-9 rounded-xl bg-purple-600 text-white font-black flex items-center justify-center text-xs shadow-md shadow-purple-500/20">
+                  BT
+                </div>
+                <div className="overflow-hidden">
+                  <h6 className="font-bold text-xs text-slate-900 truncate">BT Captures</h6>
+                  <p className="text-[10px] text-slate-500 truncate">Melbourne, Australia</p>
+                </div>
+              </div>
               <a
-                href="https://btcaptures.com.au"
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs sm:text-sm font-semibold text-slate-200 hover:text-teal-300 flex items-center gap-1.5 transition-colors group"
+                className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-[11px] flex items-center justify-center gap-1.5 shadow-sm shadow-emerald-500/30 transition-all"
               >
-                <span>btcaptures.com.au</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-teal-300 transition-colors" />
+                <MessageCircle className="w-3.5 h-3.5" />
+                Chat via WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      {/* ========================================================= */}
+      {/* MAIN CONTENT AREA */}
+      {/* ========================================================= */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Top Header Bar */}
+        <header className="h-16 bg-white border-b border-slate-200/90 px-4 md:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+          {/* Left: Mobile hamburger + Search */}
+          <div className="flex items-center gap-3 flex-1 max-w-lg">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100"
+              aria-label="Open sidebar"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
+            <div className="relative w-full max-w-md hidden sm:block">
+              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search audit metrics, findings, fixes..."
+                className="w-full pl-9 pr-4 py-2 bg-[#f4f6fa] border border-slate-200 rounded-xl text-xs text-slate-700 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
+              />
+            </div>
+          </div>
+
+          {/* Right Action Icons */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="relative">
+              <button
+                className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all relative"
+                aria-label="Notifications"
+              >
+                <Bell className="w-4 h-4" />
+                <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-rose-500 text-white rounded-full text-[9px] font-extrabold flex items-center justify-center">
+                  8
+                </span>
+              </button>
+            </div>
+
+            {/* Direct WhatsApp Callout in Header */}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-700 border border-emerald-200/80 hover:bg-emerald-100 px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all shadow-xs"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              WhatsApp: +94 71 544 8553
+            </a>
+
+            {/* Client Profile Avatar */}
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
+              <div className="w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center ring-2 ring-purple-500/20">
+                BT
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Dashboard Body */}
+        <main className="p-4 md:p-8 space-y-6">
+          {/* Breadcrumb + Header Title Row */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
+                <span className="hover:text-slate-700 cursor-pointer">Dashboard</span>
+                <span>/</span>
+                <span className="hover:text-slate-700 cursor-pointer">Client Audits</span>
+                <span>/</span>
+                <span className="text-purple-600 font-semibold">btcaptures.com.au</span>
+              </div>
+              <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mt-1 flex items-center gap-2.5">
+                Bandara Thennakoon Photography
+                <span className="text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full border border-amber-300">
+                  Audit Grade: C+ (64)
+                </span>
+              </h1>
+            </div>
+
+            <div className="flex items-center gap-2.5 self-start sm:self-center">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-purple-600/20 flex items-center gap-1.5 transition-all hover:scale-102"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                Upgrade to Next.js + Sanity
               </a>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <Link
-              href="/audits/btcaptures/dashboard"
-              className="flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 text-purple-200 border border-purple-500/40 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all hover:scale-102 cursor-pointer shadow-lg shadow-purple-950/40"
-            >
-              <Sun className="w-3.5 h-3.5 text-yellow-300" />
-              <span className="hidden sm:inline">White Dashboard</span>
-              <span className="sm:hidden">Dashboard</span>
-            </Link>
+          {/* ========================================================= */}
+          {/* TOP ROW: 3 CARDS (MATCHING SYN-UI LAYOUT) */}
+          {/* ========================================================= */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+            {/* 1. DONUT GAUGE CARD (TOTAL HEALTH / 85% CIRCLE) */}
+            <div className="lg:col-span-4 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-sm text-slate-900">Total Audit Score</h3>
+                <span className="text-slate-400 hover:text-slate-600 cursor-pointer text-xs font-bold">•••</span>
+              </div>
 
-            <button
-              onClick={() => window.print()}
-              className="flex items-center gap-2 bg-gradient-to-r from-teal-500/20 to-blue-500/20 hover:from-teal-500/30 hover:to-blue-500/30 text-teal-200 border border-teal-500/30 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all hover:scale-102 cursor-pointer shadow-lg shadow-teal-950/40"
-            >
-              <Printer className="w-3.5 h-3.5 text-teal-400" />
-              <span className="hidden sm:inline">Export PDF</span>
-              <span className="sm:hidden">PDF</span>
-            </button>
-          </div>
-        </header>
-
-        {/* Quick-Jump Navigation Pills Row */}
-        <nav className="py-2 px-4 md:px-8 overflow-x-auto no-scrollbar">
-          <div className="max-w-6xl mx-auto flex items-center gap-2 text-xs font-semibold">
-            <span className="text-slate-400 hidden md:inline font-mono mr-1">JUMP TO:</span>
-            {[
-              { id: "overview", label: "Overview", icon: "📊" },
-              { id: "seo", label: "SEO & Google", icon: "🔍" },
-              { id: "usability", label: "Usability & Bugs", icon: "📱" },
-              { id: "performance", label: "Speed & 270 Photos", icon: "⚡" },
-              { id: "security", label: "Security & Social", icon: "🔒" },
-              { id: "comparison", label: "Before vs After", icon: "⚖️" },
-              { id: "solution", label: "VPS + Sanity + Next.js", icon: "💎" },
-              { id: "roadmap", label: "Fix Roadmap", icon: "🚀" }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => scrollTo(tab.id)}
-                className={`px-3 py-1 rounded-lg whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer text-xs ${
-                  activeNav === tab.id
-                    ? "bg-teal-500/20 text-teal-300 border border-teal-500/40 shadow-[0_0_12px_rgba(20,184,166,0.2)]"
-                    : "bg-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/10"
-                }`}
-              >
-                <span>{tab.icon}</span>
-                <span>{tab.label}</span>
-              </button>
-            ))}
-          </div>
-        </nav>
-
-      </div>
-
-      {/* MAIN CONTENT AREA */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 relative z-10">
-
-        {/* ==================================================== */}
-        {/* HERO AUDIT SUMMARY CARD (SEOptimer Layout) */}
-        {/* ==================================================== */}
-        <div id="overview" className="scroll-mt-32" />
-        <motion.section
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="relative bg-gradient-to-b from-[#101522]/90 to-[#0a0e16]/95 border border-white/15 rounded-3xl p-6 md:p-10 shadow-2xl backdrop-blur-2xl mb-12 overflow-hidden"
-        >
-          {/* Top Row: Score on Left, Device Mockup on Right */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pb-10 border-b border-white/10">
-            
-            {/* Left: Overall Grade Circle */}
-            <div className="lg:col-span-5 flex flex-col items-center text-center">
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 180 }}
-                className="relative w-44 h-44 flex items-center justify-center mb-6"
-              >
-                {/* SVG Animated Ring with Drop Shadow */}
-                <svg className="w-full h-full transform -rotate-90 filter drop-shadow-[0_0_20px_rgba(56,189,248,0.35)]">
+              {/* Circular SVG Donut Chart */}
+              <div className="relative flex items-center justify-center my-3">
+                <svg className="w-52 h-52 -rotate-90 transform" viewBox="0 0 160 160">
+                  {/* Background track */}
                   <circle
-                    cx="88"
-                    cy="88"
-                    r="74"
-                    stroke="#162033"
-                    strokeWidth="12"
+                    cx="80"
+                    cy="80"
+                    r="60"
                     fill="transparent"
+                    stroke="#f1f5f9"
+                    strokeWidth="16"
                   />
-                  <motion.circle
-                    cx="88"
-                    cy="88"
-                    r="74"
-                    stroke="url(#hero-gradient)"
-                    strokeWidth="12"
-                    strokeDasharray={2 * Math.PI * 74}
-                    initial={{ strokeDashoffset: 2 * Math.PI * 74 }}
-                    animate={{ strokeDashoffset: (2 * Math.PI * 74) * (1 - 0.58) }}
-                    transition={{ duration: 1.8, ease: "easeOut" }}
+                  {/* Segment 1: SEO (Purple) */}
+                  <circle
+                    cx="80"
+                    cy="80"
+                    r="60"
+                    fill="transparent"
+                    stroke="#8b5cf6"
+                    strokeWidth="16"
+                    strokeDasharray="377"
+                    strokeDashoffset="120"
                     strokeLinecap="round"
-                    fill="transparent"
+                    className="transition-all duration-1000"
                   />
+                  {/* Segment 2: Performance (Pink/Red) */}
+                  <circle
+                    cx="80"
+                    cy="80"
+                    r="60"
+                    fill="transparent"
+                    stroke="#f43f5e"
+                    strokeWidth="16"
+                    strokeDasharray="377"
+                    strokeDashoffset="240"
+                    strokeLinecap="round"
+                    className="transition-all duration-1000"
+                  />
+                  {/* Segment 3: Mobile (Teal/Emerald) */}
+                  <circle
+                    cx="80"
+                    cy="80"
+                    r="60"
+                    fill="transparent"
+                    stroke="#10b981"
+                    strokeWidth="16"
+                    strokeDasharray="377"
+                    strokeDashoffset="310"
+                    strokeLinecap="round"
+                    className="transition-all duration-1000"
+                  />
+                  {/* Segment 4: Security (Cyan) */}
+                  <circle
+                    cx="80"
+                    cy="80"
+                    r="60"
+                    fill="transparent"
+                    stroke="#06b6d4"
+                    strokeWidth="16"
+                    strokeDasharray="377"
+                    strokeDashoffset="345"
+                    strokeLinecap="round"
+                    className="transition-all duration-1000"
+                  />
+                </svg>
+
+                <div className="absolute flex flex-col items-center justify-center text-center">
+                  <span className="text-4xl font-black text-slate-900 tracking-tight">64%</span>
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">
+                    Grade C+ (64/100)
+                  </span>
+                </div>
+              </div>
+
+              {/* Legend row */}
+              <div className="grid grid-cols-2 gap-2 pt-4 border-t border-slate-100 text-xs">
+                <div className="flex items-center gap-1.5 text-slate-600">
+                  <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
+                  <span>SEO: 72%</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-slate-600">
+                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
+                  <span>Speed: 38% (Crit)</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-slate-600">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                  <span>Mobile: 69%</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-slate-600">
+                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
+                  <span>Security: 68%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. BAR CHART CARD (USER ACTIVITY / CORE WEB VITALS) */}
+            <div className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="font-bold text-sm text-slate-900">Core Web Vitals & Speed Load (Seconds)</h3>
+                  <p className="text-[11px] text-slate-400">Current WordPress vs Target Next.js + VPS</p>
+                </div>
+                <span className="text-slate-400 hover:text-slate-600 cursor-pointer text-xs font-bold">•••</span>
+              </div>
+
+              {/* Bar Chart Geometry */}
+              <div className="h-52 flex items-end justify-between gap-3 pt-6 pb-2 px-2 border-b border-slate-100">
+                {[
+                  { label: "TTFB", current: 82, target: 15, currentSec: "1.2s", targetSec: "0.1s" },
+                  { label: "FCP", current: 95, target: 20, currentSec: "2.4s", targetSec: "0.4s" },
+                  { label: "LCP", current: 100, target: 24, currentSec: "3.8s", targetSec: "0.6s" },
+                  { label: "Total", current: 100, target: 26, currentSec: "4.2s", targetSec: "0.8s" },
+                  { label: "Payload", current: 100, target: 12, currentSec: "6.4MB", targetSec: "650KB" },
+                  { label: "DOM", current: 85, target: 18, currentSec: "2,140", targetSec: "320" }
+                ].map((bar, i) => (
+                  <div key={i} className="flex-1 flex flex-col items-center gap-1.5 group relative">
+                    {/* Tooltip */}
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-10 bg-slate-900 text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-20 pointer-events-none">
+                      Current: {bar.currentSec} | Target: {bar.targetSec}
+                    </div>
+
+                    <div className="w-full flex items-end justify-center gap-1.5 h-36">
+                      {/* Current WordPress Bar (Purple/Lavender) */}
+                      <div
+                        className="w-3.5 bg-purple-600 rounded-t-sm transition-all duration-500 group-hover:brightness-110"
+                        style={{ height: `${bar.current}%` }}
+                      />
+                      {/* Target Next.js Bar (Soft Violet / Mint) */}
+                      <div
+                        className="w-3.5 bg-purple-200 rounded-t-sm transition-all duration-500 group-hover:bg-purple-300"
+                        style={{ height: `${bar.target}%` }}
+                      />
+                    </div>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase">{bar.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Legend */}
+              <div className="flex items-center justify-between pt-3 text-xs text-slate-500">
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-sm bg-purple-600" />
+                    <span>Current WordPress</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-sm bg-purple-200" />
+                    <span>Next.js 15 VPS Target</span>
+                  </span>
+                </div>
+                <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  -85% Latency Drop
+                </span>
+              </div>
+            </div>
+
+            {/* 3. TWO STACKED KPI CARDS */}
+            <div className="lg:col-span-3 flex flex-col gap-6">
+              {/* Top KPI Card: Mobile Speed Stall (Replaces $4,580 AUD card) */}
+              <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
+                <div className="flex items-center justify-between">
+                  <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                    <Zap className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-extrabold bg-rose-50 text-rose-600 px-2 py-0.5 rounded border border-rose-200 uppercase">
+                    Failed LCP
+                  </span>
+                </div>
+
+                <div className="my-2">
+                  <h4 className="text-2xl font-black text-slate-900 tracking-tight">4.2s Stall</h4>
+                  <p className="text-xs text-slate-400 mt-0.5">Mobile Largest Contentful Paint</p>
+                </div>
+
+                <div>
+                  <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2">
+                    <div className="bg-rose-500 h-1.5 rounded-full w-[82%]" />
+                  </div>
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-slate-500">Google Core Web Vitals</span>
+                    <span className="text-rose-600 font-extrabold">Target: &lt; 1.2s</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom KPI Card: 270 Portfolio Photos Overload */}
+              <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
+                <div className="flex items-center justify-between">
+                  <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-extrabold bg-amber-50 text-amber-800 px-2 py-0.5 rounded border border-amber-200 uppercase">
+                    Zero WebP
+                  </span>
+                </div>
+
+                <div className="my-2">
+                  <h4 className="text-2xl font-black text-slate-900 tracking-tight">270 Photos</h4>
+                  <p className="text-xs text-slate-400 mt-0.5">Uncompressed Gallery Overload</p>
+                </div>
+
+                <div>
+                  <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2">
+                    <div className="bg-amber-500 h-1.5 rounded-full w-[90%]" />
+                  </div>
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-slate-500">6.39 MB Initial Payload</span>
+                    <span className="text-emerald-600 font-extrabold">Next.js Target: 650KB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================================= */}
+          {/* MIDDLE ROW: AREA WAVE CHART & PIE CHART */}
+          {/* ========================================================= */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            {/* 4. STATISTICS / TRAJECTORY DUAL-WAVE CHART */}
+            <div className="lg:col-span-8 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                <div>
+                  <h3 className="font-bold text-sm text-slate-900">Conversion & Speed Trajectory Simulation</h3>
+                  <p className="text-[11px] text-slate-400">
+                    Comparing visitor bounce rate vs conversion probability across 6 milestone sprints
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 text-xs">
+                  <span className="flex items-center gap-1.5 text-purple-700 font-bold">
+                    <span className="w-2.5 h-2.5 rounded-full bg-purple-600" />
+                    WordPress Bounce (High)
+                  </span>
+                  <span className="flex items-center gap-1.5 text-emerald-600 font-bold">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                    Next.js Inquiries (Target)
+                  </span>
+                </div>
+              </div>
+
+              {/* SVG Area Chart with Gradients and Dual Bezier Waves */}
+              <div className="w-full h-60 relative overflow-hidden">
+                <svg className="w-full h-full" viewBox="0 0 600 220" preserveAspectRatio="none">
                   <defs>
-                    <linearGradient id="hero-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#2dd4bf" />
-                      <stop offset="50%" stopColor="#38bdf8" />
-                      <stop offset="100%" stopColor="#3b82f6" />
+                    <linearGradient id="greenArea" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                    </linearGradient>
+                    <linearGradient id="purpleArea" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.15" />
+                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.0" />
                     </linearGradient>
                   </defs>
-                </svg>
 
-                <div className="absolute flex flex-col items-center">
-                  <span className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-sky-400 to-blue-500 tracking-tight">
-                    C+
-                  </span>
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mt-1">
-                    Score: 58/100
-                  </span>
-                </div>
-              </motion.div>
+                  {/* Horizontal gridlines */}
+                  <line x1="0" y1="30" x2="600" y2="30" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                  <line x1="0" y1="80" x2="600" y2="80" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                  <line x1="0" y1="130" x2="600" y2="130" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                  <line x1="0" y1="180" x2="600" y2="180" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
 
-              <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-2">
-                Your page needs improvement
-              </h2>
-              <p className="text-sm text-slate-300 mb-5 max-w-sm leading-relaxed">
-                BT Captures features exceptional photography, but search visibility, loading speed, and link bugs are creating a barrier to high-value client bookings.
-              </p>
-
-              <div className="inline-flex items-center gap-2.5 bg-gradient-to-r from-red-500 to-rose-600 text-white font-extrabold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-[0_0_25px_rgba(239,68,68,0.45)]">
-                <Flame className="w-4 h-4 animate-bounce" />
-                <span>12 Improvements Recommended</span>
-              </div>
-            </div>
-
-            {/* Right: Realistic Device Mockup with Toggle (Desktop / Mobile) */}
-            <div className="lg:col-span-7 flex flex-col items-center">
-              
-              {/* Device Selector Toggle */}
-              <div className="flex items-center bg-[#0d121c] border border-white/10 p-1 rounded-xl mb-4 text-xs font-semibold">
-                <button
-                  onClick={() => setDeviceView("desktop")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    deviceView === "desktop"
-                      ? "bg-teal-500 text-black font-bold shadow-md"
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  <Monitor className="w-3.5 h-3.5" />
-                  <span>Desktop View</span>
-                </button>
-                <button
-                  onClick={() => setDeviceView("mobile")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    deviceView === "mobile"
-                      ? "bg-teal-500 text-black font-bold shadow-md"
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  <Smartphone className="w-3.5 h-3.5" />
-                  <span>Mobile View</span>
-                </button>
-              </div>
-
-              {/* Desktop Mockup Frame */}
-              <AnimatePresence mode="wait">
-                {deviceView === "desktop" ? (
-                  <motion.div
-                    key="desktop"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-full max-w-[480px] bg-[#171f2e] p-3 rounded-2xl border border-white/20 shadow-2xl shadow-black/90"
-                  >
-                    <div className="bg-[#0b0e14] rounded-lg overflow-hidden border border-white/10">
-                      {/* Browser Bar */}
-                      <div className="bg-[#1a2333] px-3.5 py-2 flex items-center gap-2 border-b border-white/10">
-                        <div className="flex gap-1.5">
-                          <div className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-                          <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                        </div>
-                        <div className="flex-1 bg-[#090c12] text-[10px] text-slate-300 rounded px-2.5 py-1 font-mono flex items-center justify-between border border-white/5">
-                          <span>https://btcaptures.com.au/</span>
-                          <Lock className="w-3 h-3 text-emerald-400" />
-                        </div>
-                      </div>
-                      
-                      {/* Live Preview Window: Real Desktop Screenshot */}
-                      <div className="relative h-60 bg-slate-900 overflow-hidden group">
-                        <img
-                          src="/audits/btcaptures-preview.jpg"
-                          alt="Real Website Screenshot of BT Captures"
-                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md border border-white/10 px-2 py-0.5 rounded text-[9px] font-mono text-teal-400 flex items-center gap-1 shadow-lg">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          <span>LIVE CAPTURE</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="h-4 bg-[#232f45] flex items-center justify-center rounded-b-md">
-                      <div className="w-3 h-3 rounded-full bg-slate-400/80" />
-                    </div>
-                    <div className="w-24 h-7 bg-gradient-to-b from-slate-400 to-slate-600 mx-auto [clip-path:polygon(20%_0%,80%_0%,100%_100%,0%_100%)]" />
-                    <div className="w-36 h-1.5 bg-slate-400 mx-auto rounded-full" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="mobile"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-[240px] bg-[#171f2e] p-2.5 rounded-[36px] border-2 border-white/20 shadow-2xl shadow-black/90"
-                  >
-                    <div className="bg-[#0b0e14] rounded-[28px] overflow-hidden border border-white/10 h-[380px] flex flex-col relative">
-                      {/* Dynamic Island / Speaker */}
-                      <div className="absolute top-2 inset-x-0 mx-auto w-16 h-4 bg-black rounded-full z-20 flex items-center justify-end pr-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-teal-500/60" />
-                      </div>
-
-                      {/* Mobile Header Bar */}
-                      <div className="pt-8 pb-2 px-3 bg-[#131a26] border-b border-white/5 text-[9px] text-center text-slate-400 font-mono">
-                        btcaptures.com.au
-                      </div>
-
-                      {/* Screen Content: Real Mobile Screenshot */}
-                      <div className="flex-1 relative overflow-hidden bg-slate-950">
-                        <img
-                          src="/audits/btcaptures-mobile.jpg"
-                          alt="Real Mobile Website Screenshot of BT Captures"
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </div>
-                      
-                      {/* Home Indicator */}
-                      <div className="h-4 bg-black flex items-center justify-center">
-                        <div className="w-16 h-1 bg-white/40 rounded-full" />
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-            </div>
-
-          </div>
-
-          {/* Categories Row: 5 Circular Badges + Interactive Radar */}
-          <div className="pt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* 5 Circular Badges */}
-            <div className="lg:col-span-8 grid grid-cols-3 sm:grid-cols-5 gap-4">
-              
-              {/* Category 1: SEO */}
-              <div className="flex flex-col items-center bg-[#0d121c]/70 border border-white/5 p-3 rounded-2xl hover:border-sky-500/40 transition-colors">
-                <div className="relative w-20 h-20 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="40" cy="40" r="32" stroke="#162033" strokeWidth="6" fill="transparent" />
-                    <circle
-                      cx="40"
-                      cy="40"
-                      r="32"
-                      stroke="#38bdf8"
-                      strokeWidth="6"
-                      strokeDasharray={2 * Math.PI * 32}
-                      strokeDashoffset={(2 * Math.PI * 32) * (1 - 0.55)}
-                      strokeLinecap="round"
-                      fill="transparent"
-                    />
-                  </svg>
-                  <span className="absolute text-xl font-black text-sky-400">C</span>
-                </div>
-                <span className="text-xs font-bold text-slate-200 mt-2">SEO</span>
-                <span className="text-[10px] text-sky-400/80 font-mono">55 / 100</span>
-              </div>
-
-              {/* Category 2: Usability */}
-              <div className="flex flex-col items-center bg-[#0d121c]/70 border border-white/5 p-3 rounded-2xl hover:border-orange-500/40 transition-colors">
-                <div className="relative w-20 h-20 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="40" cy="40" r="32" stroke="#162033" strokeWidth="6" fill="transparent" />
-                    <circle
-                      cx="40"
-                      cy="40"
-                      r="32"
-                      stroke="#fb923c"
-                      strokeWidth="6"
-                      strokeDasharray={2 * Math.PI * 32}
-                      strokeDashoffset={(2 * Math.PI * 32) * (1 - 0.65)}
-                      strokeLinecap="round"
-                      fill="transparent"
-                    />
-                  </svg>
-                  <span className="absolute text-xl font-black text-orange-400">C+</span>
-                </div>
-                <span className="text-xs font-bold text-slate-200 mt-2">Usability</span>
-                <span className="text-[10px] text-orange-400/80 font-mono">65 / 100</span>
-              </div>
-
-              {/* Category 3: Performance */}
-              <div className="flex flex-col items-center bg-[#0d121c]/70 border border-white/5 p-3 rounded-2xl hover:border-rose-500/40 transition-colors">
-                <div className="relative w-20 h-20 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="40" cy="40" r="32" stroke="#162033" strokeWidth="6" fill="transparent" />
-                    <circle
-                      cx="40"
-                      cy="40"
-                      r="32"
-                      stroke="#f87171"
-                      strokeWidth="6"
-                      strokeDasharray={2 * Math.PI * 32}
-                      strokeDashoffset={(2 * Math.PI * 32) * (1 - 0.45)}
-                      strokeLinecap="round"
-                      fill="transparent"
-                    />
-                  </svg>
-                  <span className="absolute text-xl font-black text-rose-400">D+</span>
-                </div>
-                <span className="text-xs font-bold text-slate-200 mt-2">Speed</span>
-                <span className="text-[10px] text-rose-400/80 font-mono">45 / 100</span>
-              </div>
-
-              {/* Category 4: Social */}
-              <div className="flex flex-col items-center bg-[#0d121c]/70 border border-white/5 p-3 rounded-2xl hover:border-purple-500/40 transition-colors">
-                <div className="relative w-20 h-20 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="40" cy="40" r="32" stroke="#162033" strokeWidth="6" fill="transparent" />
-                    <circle
-                      cx="40"
-                      cy="40"
-                      r="32"
-                      stroke="#a78bfa"
-                      strokeWidth="6"
-                      strokeDasharray={2 * Math.PI * 32}
-                      strokeDashoffset={(2 * Math.PI * 32) * (1 - 0.50)}
-                      strokeLinecap="round"
-                      fill="transparent"
-                    />
-                  </svg>
-                  <span className="absolute text-xl font-black text-purple-400">C-</span>
-                </div>
-                <span className="text-xs font-bold text-slate-200 mt-2">Social</span>
-                <span className="text-[10px] text-purple-400/80 font-mono">50 / 100</span>
-              </div>
-
-              {/* Category 5: Security */}
-              <div className="flex flex-col items-center bg-[#0d121c]/70 border border-white/5 p-3 rounded-2xl hover:border-emerald-500/40 transition-colors">
-                <div className="relative w-20 h-20 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="40" cy="40" r="32" stroke="#162033" strokeWidth="6" fill="transparent" />
-                    <circle
-                      cx="40"
-                      cy="40"
-                      r="32"
-                      stroke="#34d399"
-                      strokeWidth="6"
-                      strokeDasharray={2 * Math.PI * 32}
-                      strokeDashoffset={(2 * Math.PI * 32) * (1 - 0.70)}
-                      strokeLinecap="round"
-                      fill="transparent"
-                    />
-                  </svg>
-                  <span className="absolute text-xl font-black text-emerald-400">B-</span>
-                </div>
-                <span className="text-xs font-bold text-slate-200 mt-2">Security</span>
-                <span className="text-[10px] text-emerald-400/80 font-mono">70 / 100</span>
-              </div>
-
-            </div>
-
-            {/* Spider / Radar Balance Chart */}
-            <div className="lg:col-span-4 flex flex-col items-center bg-[#0b0e14]/70 border border-white/10 p-4 rounded-2xl">
-              <div className="relative w-56 h-48">
-                <svg viewBox="0 0 200 200" className="w-full h-full">
-                  <polygon points="100,20 176,75 147,165 53,165 24,75" fill="none" stroke="#1f293d" strokeWidth="1" />
-                  <polygon points="100,50 145,82 128,136 72,136 55,82" fill="none" stroke="#1f293d" strokeWidth="1" />
-                  <polygon points="100,80 115,91 109,109 91,109 85,91" fill="none" stroke="#1f293d" strokeWidth="1" />
-                  
-                  <line x1="100" y1="100" x2="100" y2="20" stroke="#1f293d" strokeWidth="1" />
-                  <line x1="100" y1="100" x2="176" y2="75" stroke="#1f293d" strokeWidth="1" />
-                  <line x1="100" y1="100" x2="147" y2="165" stroke="#1f293d" strokeWidth="1" />
-                  <line x1="100" y1="100" x2="53" y2="165" stroke="#1f293d" strokeWidth="1" />
-                  <line x1="100" y1="100" x2="24" y2="75" stroke="#1f293d" strokeWidth="1" />
-
-                  <motion.polygon
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 0.5 }}
-                    points="100,44 149,83 126,145 74,135 48,82"
-                    fill="rgba(45, 212, 191, 0.25)"
-                    stroke="#2dd4bf"
-                    strokeWidth="2"
+                  {/* Green Area Fill (Next.js Conversion Trajectory) */}
+                  <path
+                    d="M 0 180 C 100 150, 160 80, 240 85 C 320 90, 380 40, 480 30 C 540 25, 580 20, 600 15 L 600 220 L 0 220 Z"
+                    fill="url(#greenArea)"
                   />
-                  <circle cx="100" cy="44" r="3.5" fill="#2dd4bf" />
-                  <circle cx="149" cy="83" r="3.5" fill="#2dd4bf" />
-                  <circle cx="126" cy="145" r="3.5" fill="#2dd4bf" />
-                  <circle cx="74" cy="135" r="3.5" fill="#2dd4bf" />
-                  <circle cx="48" cy="82" r="3.5" fill="#2dd4bf" />
 
-                  <text x="100" y="14" fill="#94a3b8" fontSize="9" textAnchor="middle" fontWeight="bold">Security (70)</text>
-                  <text x="180" y="80" fill="#94a3b8" fontSize="9" textAnchor="start" fontWeight="bold">SEO (55)</text>
-                  <text x="150" y="180" fill="#94a3b8" fontSize="9" textAnchor="middle" fontWeight="bold">Usability (65)</text>
-                  <text x="45" y="180" fill="#94a3b8" fontSize="9" textAnchor="middle" fontWeight="bold">Social (50)</text>
-                  <text x="18" y="80" fill="#94a3b8" fontSize="9" textAnchor="end" fontWeight="bold">Speed (45)</text>
+                  {/* Purple Wave Line (WordPress Bounce Rate) */}
+                  <path
+                    d="M 0 50 C 100 65, 180 120, 260 130 C 340 140, 420 170, 520 180 C 560 185, 590 190, 600 195"
+                    fill="none"
+                    stroke="#8b5cf6"
+                    strokeWidth="3"
+                  />
+
+                  {/* Green Wave Line (Inquiries & Bookings Lift) */}
+                  <path
+                    d="M 0 180 C 100 150, 160 80, 240 85 C 320 90, 380 40, 480 30 C 540 25, 580 20, 600 15"
+                    fill="none"
+                    stroke="#10b981"
+                    strokeWidth="3.5"
+                  />
+
+                  {/* Chart Points */}
+                  <circle cx="240" cy="85" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+                  <circle cx="480" cy="30" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+                  <circle cx="260" cy="130" r="4" fill="#8b5cf6" stroke="#ffffff" strokeWidth="2" />
+                  <circle cx="520" cy="180" r="4" fill="#8b5cf6" stroke="#ffffff" strokeWidth="2" />
+                </svg>
+
+                {/* X-Axis Month / Sprint labels */}
+                <div className="flex justify-between text-[11px] text-slate-400 font-semibold px-2 pt-2 border-t border-slate-100">
+                  <span>Audit Launch</span>
+                  <span>Day 2: Assets</span>
+                  <span>Day 4: Next.js</span>
+                  <span>Day 5: VPS Host</span>
+                  <span>Day 7: Live</span>
+                  <span>Goal: 95+ Score</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. TOP CATEGORIES / PAYLOAD PIE CHART */}
+            <div id="payload" className="lg:col-span-4 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-sm text-slate-900">Payload Distribution (6.39 MB)</h3>
+                <span className="text-slate-400 hover:text-slate-600 cursor-pointer text-xs font-bold">•••</span>
+              </div>
+
+              {/* Pure SVG Pie Chart */}
+              <div className="relative flex items-center justify-center my-2">
+                <svg className="w-48 h-48" viewBox="0 0 100 100">
+                  {/* Segment 1: Uncompressed Photos (Blue/Cyan - 84.5%) */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="25"
+                    fill="transparent"
+                    stroke="#2563eb"
+                    strokeWidth="50"
+                    strokeDasharray="157"
+                    strokeDashoffset="24"
+                  />
+                  {/* Segment 2: JavaScript Theme Scripts (Emerald - 9.8%) */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="25"
+                    fill="transparent"
+                    stroke="#10b981"
+                    strokeWidth="50"
+                    strokeDasharray="157"
+                    strokeDashoffset="141"
+                  />
+                  {/* Segment 3: Fonts & Stylesheets (Amber/Orange - 5.7%) */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="25"
+                    fill="transparent"
+                    stroke="#f59e0b"
+                    strokeWidth="50"
+                    strokeDasharray="157"
+                    strokeDashoffset="150"
+                  />
                 </svg>
               </div>
-              <span className="text-[11px] text-teal-400 mt-1 font-semibold">Diagnostic Radar Matrix</span>
-            </div>
 
+              {/* Category Breakdown */}
+              <div className="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-slate-600">
+                    <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+                    Uncompressed JPEGs (270 Photos)
+                  </span>
+                  <span className="font-bold text-slate-900">5.40 MB (84.5%)</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-slate-600">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                    Flatsome & WooCommerce JS
+                  </span>
+                  <span className="font-bold text-slate-900">625 KB (9.8%)</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-slate-600">
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    CSS, Google Fonts & SVGs
+                  </span>
+                  <span className="font-bold text-slate-900">365 KB (5.7%)</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-        </motion.section>
-
-        {/* ==================================================== */}
-        {/* SECTION: BEFORE VS AFTER COMPARISON CARDS */}
-        {/* ==================================================== */}
-        <div id="comparison" className="scroll-mt-32" />
-        <section className="mb-12">
-          <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-teal-400" />
-            <h3 className="text-xl font-black text-white">Before vs. After Optimization Impact</h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            
-            {/* Card 1: Page Weight */}
-            <div className="bg-[#0f1420] border border-white/10 rounded-2xl p-5 shadow-xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Homepage Payload</span>
-              <div className="flex items-baseline justify-between mt-3 mb-2">
-                <div>
-                  <div className="text-xs text-rose-400 font-semibold">Current (Heavy)</div>
-                  <div className="text-2xl font-black text-rose-500">6.39 MB</div>
-                </div>
-                <ArrowRight className="w-5 h-5 text-slate-500" />
-                <div className="text-right">
-                  <div className="text-xs text-teal-400 font-semibold">After WebP Fix</div>
-                  <div className="text-2xl font-black text-teal-400">&lt; 850 KB</div>
-                </div>
-              </div>
-              <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden mt-3">
-                <div className="bg-gradient-to-r from-teal-400 to-emerald-500 h-full w-[13%]" />
-              </div>
-              <p className="text-[11px] text-slate-400 mt-2 font-medium">
-                ⚡ 87% payload reduction = 3x faster loading on mobile 4G.
-              </p>
-            </div>
-
-            {/* Card 2: Portfolio Rendering */}
-            <div className="bg-[#0f1420] border border-white/10 rounded-2xl p-5 shadow-xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Portfolio Loading</span>
-              <div className="flex items-baseline justify-between mt-3 mb-2">
-                <div>
-                  <div className="text-xs text-rose-400 font-semibold">Single DOM</div>
-                  <div className="text-2xl font-black text-rose-500">270 Photos</div>
-                </div>
-                <ArrowRight className="w-5 h-5 text-slate-500" />
-                <div className="text-right">
-                  <div className="text-xs text-teal-400 font-semibold">Lazy Loaded</div>
-                  <div className="text-2xl font-black text-teal-400">20 / Batch</div>
-                </div>
-              </div>
-              <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden mt-3">
-                <div className="bg-gradient-to-r from-teal-400 to-emerald-500 h-full w-[100%]" />
-              </div>
-              <p className="text-[11px] text-slate-400 mt-2 font-medium">
-                📱 Prevents mobile browser crashing and unresponsive scroll.
-              </p>
-            </div>
-
-            {/* Card 3: Google Search Snippet */}
-            <div className="bg-[#0f1420] border border-white/10 rounded-2xl p-5 shadow-xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Search CTR (Click-Through)</span>
-              <div className="flex items-baseline justify-between mt-3 mb-2">
-                <div>
-                  <div className="text-xs text-rose-400 font-semibold">Blank Snippet</div>
-                  <div className="text-2xl font-black text-rose-500">Low Rank</div>
-                </div>
-                <ArrowRight className="w-5 h-5 text-slate-500" />
-                <div className="text-right">
-                  <div className="text-xs text-teal-400 font-semibold">Rich Meta SEO</div>
-                  <div className="text-2xl font-black text-teal-400">+65% CTR</div>
-                </div>
-              </div>
-              <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden mt-3">
-                <div className="bg-gradient-to-r from-teal-400 to-emerald-500 h-full w-[80%]" />
-              </div>
-              <p className="text-[11px] text-slate-400 mt-2 font-medium">
-                🎯 Targets Melbourne couples, corporate event planners &amp; VIPs.
-              </p>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ==================================================== */}
-        {/* SECTION 1: SEO AUDIT (Scroll Downwards) */}
-        {/* ==================================================== */}
-        <div id="seo" className="scroll-mt-32" />
-        <section className="bg-[#0e131d] border border-white/10 rounded-3xl p-6 md:p-8 mb-8 shadow-2xl relative">
-          <div className="flex items-center justify-between pb-5 border-b border-white/10 mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
-                <Search className="w-5 h-5" />
-              </div>
+          {/* ========================================================= */}
+          {/* ROW 3: DETECTED DEFICIENCIES TABLE */}
+          {/* ========================================================= */}
+          <div id="issues" className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
-                <h3 className="text-xl font-black text-white">1. Search Engine Optimization (SEO)</h3>
-                <p className="text-xs text-slate-400">Search presence, keyword hierarchy, and local Melbourne ranking</p>
+                <h3 className="font-bold text-base text-slate-900">Diagnosed Deficiencies & Audit Log</h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Direct defects discovered on btcaptures.com.au requiring engineering resolution
+                </p>
               </div>
-            </div>
-            <span className="text-xs font-bold uppercase tracking-wider bg-sky-500/10 text-sky-400 border border-sky-500/30 px-3.5 py-1 rounded-full">
-              Grade: C (55/100)
-            </span>
-          </div>
 
-          <div className="space-y-6">
-            
-            {/* SEO 1.1: Meta Description */}
-            <div className="bg-[#080b11] border border-red-500/30 rounded-2xl p-5 hover:border-red-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400 flex-shrink-0 mt-0.5">
-                  <XCircle className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Meta Description Tag Missing Across Entire Website</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/40 px-2.5 py-0.5 rounded-full">
-                      Critical
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    Home, About, Portfolio, and Contact pages have no meta description tags. Google will display arbitrary scraped words in search results rather than a compelling value proposition.
-                  </p>
-                  
-                  {/* Code snippet with copy button */}
-                  <div className="relative bg-black/60 border border-white/10 rounded-xl p-3.5 font-mono text-xs text-slate-300 my-3 group">
-                    <div className="text-slate-400 text-[11px] mb-1 font-sans font-semibold">Recommended AIOSEO Configuration:</div>
-                    <code className="text-teal-300">
-                      &lt;meta name="description" content="BT Captures is Melbourne&apos;s premier photography studio by Bandara Thennakoon. Specializing in corporate events, weddings, fashion runway, and family portraits." /&gt;
-                    </code>
-                    <button
-                      onClick={() => copyToClipboard('<meta name="description" content="BT Captures is Melbourne\'s premier photography studio by Bandara Thennakoon. Specializing in corporate events, weddings, fashion runway, and family portraits." />', 'meta')}
-                      className="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white p-1.5 rounded-lg text-[10px] flex items-center gap-1 cursor-pointer transition-colors"
-                    >
-                      {copiedId === 'meta' ? <Check className="w-3.5 h-3.5 text-teal-400" /> : <Copy className="w-3.5 h-3.5 text-slate-300" />}
-                      <span>{copiedId === 'meta' ? 'Copied' : 'Copy'}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* SEO 1.2: Title Tags */}
-            <div className="bg-[#080b11] border border-amber-500/30 rounded-2xl p-5 hover:border-amber-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 flex-shrink-0 mt-0.5">
-                  <AlertTriangle className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Generic Page Titles Lacking Melbourne Keywords</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
-                      Warning
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    Current titles like <code>HOME - BT Captures</code> don't target local intent.
-                  </p>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-3 text-xs font-mono">
-                    <div className="bg-red-950/20 border border-red-500/20 p-3 rounded-xl">
-                      <span className="text-red-400 font-sans font-bold block mb-1">❌ Current Title:</span>
-                      &lt;title&gt;HOME - BT Captures&lt;/title&gt;
-                    </div>
-                    <div className="bg-teal-950/20 border border-teal-500/30 p-3 rounded-xl">
-                      <span className="text-teal-400 font-sans font-bold block mb-1">✅ Recommended Target:</span>
-                      &lt;title&gt;BT Captures | Event &amp; Portrait Photographer Melbourne&lt;/title&gt;
-                    </div>
-                  </div>
-                </div>
+              {/* Filter Pills */}
+              <div className="flex flex-wrap gap-2 text-xs">
+                <button
+                  onClick={() => setActiveTab("all")}
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
+                    activeTab === "all"
+                      ? "bg-purple-600 text-white shadow-xs"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  All (8)
+                </button>
+                <button
+                  onClick={() => setActiveTab("critical")}
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
+                    activeTab === "critical"
+                      ? "bg-rose-500 text-white shadow-xs"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  Critical (3)
+                </button>
+                <button
+                  onClick={() => setActiveTab("performance")}
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
+                    activeTab === "performance"
+                      ? "bg-amber-500 text-white shadow-xs"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  Speed & Media (3)
+                </button>
+                <button
+                  onClick={() => setActiveTab("seo")}
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
+                    activeTab === "seo"
+                      ? "bg-blue-600 text-white shadow-xs"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  SEO & Meta (2)
+                </button>
               </div>
             </div>
 
-            {/* SEO 1.3: Alt Tags */}
-            <div className="bg-[#080b11] border border-red-500/30 rounded-2xl p-5 hover:border-red-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400 flex-shrink-0 mt-0.5">
-                  <XCircle className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">18 of 20 Homepage Images Missing Alt Attributes</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/40 px-2.5 py-0.5 rounded-full">
-                      Critical
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    90% of your showcase photos have empty <code>alt=&quot;&quot;</code> attributes. For photography, Google Image Search is a powerful source of inbound leads. Adding descriptive alt tags will allow your images to rank in Melbourne photo searches.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ==================================================== */}
-        {/* SECTION 2: USABILITY & UX AUDIT */}
-        {/* ==================================================== */}
-        <div id="usability" className="scroll-mt-32" />
-        <section className="bg-[#0e131d] border border-white/10 rounded-3xl p-6 md:p-8 mb-8 shadow-2xl relative">
-          <div className="flex items-center justify-between pb-5 border-b border-white/10 mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-orange-400 shadow-[0_0_15px_rgba(251,146,60,0.2)]">
-                <Smartphone className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-xl font-black text-white">2. Usability &amp; User Experience Bugs</h3>
-                <p className="text-xs text-slate-400">Interaction integrity, broken navigation, and typography glitches</p>
-              </div>
-            </div>
-            <span className="text-xs font-bold uppercase tracking-wider bg-orange-500/10 text-orange-400 border border-orange-500/30 px-3.5 py-1 rounded-full">
-              Grade: C+ (65/100)
-            </span>
-          </div>
-
-          <div className="space-y-6">
-
-            {/* Usability 2.1: Client Logo Links */}
-            <div className="bg-[#080b11] border border-red-500/30 rounded-2xl p-5 hover:border-red-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400 flex-shrink-0 mt-0.5">
-                  <XCircle className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Client Partner Logos Link Directly to Media Uploads</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/40 px-2.5 py-0.5 rounded-full">
-                      Critical Bug
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    Clicking logos like Monash University, SriLankan Airlines, or Melbourne Fashion Week leaves the website and navigates to the raw JPEG file (e.g. <code>https://btcaptures.com.au/wp-content/uploads/2024/04/srilankan-airlines-logo.jpg</code>).
-                  </p>
-                  <div className="bg-teal-950/30 border-l-2 border-teal-400 p-3 rounded-r-xl text-xs text-teal-200 mt-3">
-                    <strong className="text-teal-400 uppercase tracking-wider block mb-1">How to Fix in Flatsome Theme:</strong>
-                    Edit the Client Logos Carousel and switch the Link Action from &quot;Open Media File&quot; to &quot;None&quot; (or add external partner URLs with <code>target=&quot;_blank&quot;</code>).
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Usability 2.2: Footer Copyright */}
-            <div className="bg-[#080b11] border border-amber-500/30 rounded-2xl p-5 hover:border-amber-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 flex-shrink-0 mt-0.5">
-                  <AlertTriangle className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Footer Copyright Character Encoding Defect</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
-                      Visual Bug
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    The footer displays: <code>Copyright 2026 &#xFFFD; BT Captures</code> due to an invalid character encoding byte. Replace with standard HTML code: <code>Copyright &amp;copy; 2026 BT Captures. All rights reserved.</code>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Usability 2.3: Phone Link Space */}
-            <div className="bg-[#080b11] border border-amber-500/30 rounded-2xl p-5 hover:border-amber-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 flex-shrink-0 mt-0.5">
-                  <PhoneCall className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Phone Link Contains URL-Encoded Whitespace (`%20`)</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
-                      Warning
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    The call link is formatted as <code>tel:%200433887629</code>. Certain smartphone dialers fail or refuse to open when spaces are encoded into a phone dial protocol. Change to clean format: <code>tel:+61433887629</code>.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ==================================================== */}
-        {/* SECTION 3: PERFORMANCE & SPEED */}
-        {/* ==================================================== */}
-        <div id="performance" className="scroll-mt-32" />
-        <section className="bg-[#0e131d] border border-white/10 rounded-3xl p-6 md:p-8 mb-8 shadow-2xl relative">
-          <div className="flex items-center justify-between pb-5 border-b border-white/10 mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400 shadow-[0_0_15px_rgba(244,63,94,0.2)]">
-                <Zap className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-xl font-black text-white">3. Performance &amp; Page Speed</h3>
-                <p className="text-xs text-slate-400">Payload weight, high-resolution image compression, and mobile responsiveness</p>
-              </div>
-            </div>
-            <span className="text-xs font-bold uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/30 px-3.5 py-1 rounded-full">
-              Grade: D+ (45/100)
-            </span>
-          </div>
-
-          <div className="space-y-6">
-
-            {/* Performance 3.1: Heavy Images */}
-            <div className="bg-[#080b11] border border-red-500/30 rounded-2xl p-5 hover:border-red-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400 flex-shrink-0 mt-0.5">
-                  <XCircle className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Massive Uncompressed Images (6.39 MB Download on Homepage)</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/40 px-2.5 py-0.5 rounded-full">
-                      Critical
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    Multiple photos are uploaded straight from cameras without web compression. Single files exceed 2.3MB each, dragging down mobile load times on cellular 4G/5G connections.
-                  </p>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-3">
-                    <div className="bg-black/60 p-3 rounded-xl border border-white/5 text-xs font-mono">
-                      <div className="text-rose-400 font-bold">Fashion-22.jpg</div>
-                      <div className="text-slate-400 mt-1">2,353 KB (2.35 MB) &bull; Target: ~140 KB WebP</div>
-                    </div>
-                    <div className="bg-black/60 p-3 rounded-xl border border-white/5 text-xs font-mono">
-                      <div className="text-rose-400 font-bold">Kids-14.jpg</div>
-                      <div className="text-slate-400 mt-1">1,617 KB (1.61 MB) &bull; Target: ~110 KB WebP</div>
-                    </div>
-                  </div>
-
-                  <div className="bg-teal-950/30 border-l-2 border-teal-400 p-3 rounded-r-xl text-xs text-teal-200">
-                    <strong className="text-teal-400 uppercase tracking-wider block mb-1">Recommended Solution:</strong>
-                    Batch convert images to modern <strong>WebP/AVIF</strong> format with a maximum width of 1920px. This cuts homepage weight from 6.39MB to under 850KB.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Performance 3.2: 270 Images Overload */}
-            <div className="bg-[#080b11] border border-red-500/30 rounded-2xl p-5 hover:border-red-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400 flex-shrink-0 mt-0.5">
-                  <XCircle className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Portfolio Page Overload: 270 Photos Loaded in Single Request</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/40 px-2.5 py-0.5 rounded-full">
-                      Critical
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    The <code>/portfolio/</code> page loads <strong>270 high-resolution photos</strong> at once. On mobile devices, this causes browser stuttering, high data costs for users, and elevated bounce rates.
-                  </p>
-                  <div className="bg-teal-950/30 border-l-2 border-teal-400 p-3 rounded-r-xl text-xs text-teal-200 mt-3">
-                    <strong className="text-teal-400 uppercase tracking-wider block mb-1">Recommended Architecture:</strong>
-                    Segment portfolio into sub-galleries (Weddings, Corporate, Fashion) and apply infinite-scroll lazy loading with 16–20 photos per batch.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ==================================================== */}
-        {/* SECTION 4: SECURITY & SOCIAL */}
-        {/* ==================================================== */}
-        <div id="security" className="scroll-mt-32" />
-        <section className="bg-[#0e131d] border border-white/10 rounded-3xl p-6 md:p-8 mb-8 shadow-2xl relative">
-          <div className="flex items-center justify-between pb-5 border-b border-white/10 mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-xl font-black text-white">4. Social Meta &amp; Server Hardening</h3>
-                <p className="text-xs text-slate-400">Open Graph tags, cache plugin maintenance, and HTTP security</p>
-              </div>
-            </div>
-            <span className="text-xs font-bold uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/30 px-3.5 py-1 rounded-full">
-              Grade: B- (70/100)
-            </span>
-          </div>
-
-          <div className="space-y-6">
-
-            {/* Social 4.1 */}
-            <div className="bg-[#080b11] border border-amber-500/30 rounded-2xl p-5 hover:border-amber-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 flex-shrink-0 mt-0.5">
-                  <Share2 className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Missing Open Graph Description (`og:description`)</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
-                      Notice
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    When someone shares your website link on WhatsApp or iMessage, no summary preview appears under the card. Add Open Graph metadata in AIOSEO social tab.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Security 4.2 */}
-            <div className="bg-[#080b11] border border-amber-500/30 rounded-2xl p-5 hover:border-amber-500/50 transition-all shadow-lg">
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 flex-shrink-0 mt-0.5">
-                  <Lock className="w-4 h-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Outdated WP Rocket Cache Plugin (v3.11.2 from 2022)</h4>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
-                      Security
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-300 mt-1">
-                    The server header exposes <code>X-Powered-By: WP Rocket/3.11.2</code>. Update WP Rocket or switch to native LiteSpeed Cache for WordPress to prevent known vulnerabilities.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ==================================================== */}
-        {/* THE RECOMMENDED SOLUTION: NEXT.JS + SANITY.IO + VPS */}
-        {/* ==================================================== */}
-        <div id="solution" className="scroll-mt-32" />
-        <section className="relative bg-gradient-to-b from-[#131b2e] via-[#0d1322] to-[#080d18] border-2 border-teal-500/40 rounded-3xl p-6 md:p-10 mb-12 shadow-[0_0_50px_rgba(20,184,166,0.15)] overflow-hidden">
-          
-          {/* Background Ambient Glow */}
-          <div className="absolute top-0 right-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-
-          {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-white/10 mb-8 relative z-10">
-            <div>
-              <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-teal-300 bg-teal-500/20 border border-teal-500/40 px-3.5 py-1.5 rounded-full shadow-lg mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-teal-400" />
-                The Permanent Modern Solution
-              </span>
-              <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight">
-                Next.js + Sanity.io + High-Performance VPS
-              </h3>
-              <p className="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
-                Rather than spending time and money continuously patching an outdated, bloated WordPress template with 270 raw images, migrating to a <strong>Modern Headless Architecture</strong> gives BT Captures lightning-fast speed, effortless photo updates, and 100/100 Google scores.
-              </p>
-            </div>
-
-            <div className="bg-[#0b101c] border border-teal-500/30 p-4 rounded-2xl flex flex-col items-center text-center self-start md:self-auto min-w-[200px] shadow-xl">
-              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Target Performance</span>
-              <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-emerald-400 mt-0.5">
-                99 / 100
-              </span>
-              <span className="text-[10px] text-teal-400 font-semibold mt-1">Google Core Web Vitals</span>
-            </div>
-          </div>
-
-          {/* 3 Core Architectural Pillars */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 relative z-10">
-            
-            {/* Pillar 1: Next.js */}
-            <div className="bg-[#0a0e17]/90 border border-teal-500/30 rounded-2xl p-6 hover:border-teal-400/60 transition-all shadow-xl group">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-blue-600 flex items-center justify-center text-black font-black text-xl mb-4 shadow-[0_0_20px_rgba(45,212,191,0.4)] group-hover:scale-105 transition-transform">
-                ▲
-              </div>
-              <div className="flex items-center justify-between mb-1">
-                <h4 className="text-lg font-black text-white">Next.js 15 Frontend</h4>
-                <span className="text-[10px] uppercase font-mono font-bold text-teal-400 bg-teal-950 px-2 py-0.5 rounded border border-teal-500/30">React SSR</span>
-              </div>
-              <p className="text-xs text-slate-400 mb-4 font-medium">The world&apos;s fastest modern framework</p>
-              
-              <ul className="space-y-2.5 text-xs text-slate-300">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Sub-Second Loading (&lt;0.8s):</strong> Zero lag, instantaneous page transitions across all devices.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Next/Image Auto-Optimization:</strong> High-res photography is dynamically compressed to WebP/AVIF without quality loss.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Infinite Smooth Portfolio:</strong> 270+ photos render in categorized tabs (Weddings, Fashion, Corporate) without browser freezing.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Automated Melbourne Local SEO:</strong> Dynamic Open Graph social previews and automated JSON-LD rich snippets.</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Pillar 2: Sanity.io */}
-            <div className="bg-[#0a0e17]/90 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-400/60 transition-all shadow-xl group">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 via-rose-500 to-purple-600 flex items-center justify-center text-white font-black text-lg mb-4 shadow-[0_0_20px_rgba(244,63,94,0.4)] group-hover:scale-105 transition-transform">
-                ✦
-              </div>
-              <div className="flex items-center justify-between mb-1">
-                <h4 className="text-lg font-black text-white">Sanity.io Studio</h4>
-                <span className="text-[10px] uppercase font-mono font-bold text-rose-400 bg-rose-950 px-2 py-0.5 rounded border border-rose-500/30">Headless CMS</span>
-              </div>
-              <p className="text-xs text-slate-400 mb-4 font-medium">Tailored visual content management for Bandara</p>
-              
-              <ul className="space-y-2.5 text-xs text-slate-300">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Upload from Phone or Camera:</strong> Bandara can upload new client galleries directly from mobile or laptop in seconds.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Smart Hotspot Cropping:</strong> Automatically locks focus on models&apos; faces and couples so mobile screens never cut people out.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Drag-and-Drop Gallery Sorting:</strong> Easily organize featured shoots, pricing packages, client logos, and testimonials.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Zero Plugin Maintenance:</strong> Never worry about broken WordPress plugins, outdated PHP, or database crashes again.</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Pillar 3: High-Performance VPS */}
-            <div className="bg-[#0a0e17]/90 border border-blue-500/30 rounded-2xl p-6 hover:border-blue-400/60 transition-all shadow-xl group">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-lg mb-4 shadow-[0_0_20px_rgba(59,130,246,0.4)] group-hover:scale-105 transition-transform">
-                ⚡
-              </div>
-              <div className="flex items-center justify-between mb-1">
-                <h4 className="text-lg font-black text-white">High-Performance VPS</h4>
-                <span className="text-[10px] uppercase font-mono font-bold text-blue-400 bg-blue-950 px-2 py-0.5 rounded border border-blue-500/30">Dedicated Cloud</span>
-              </div>
-              <p className="text-xs text-slate-400 mb-4 font-medium">Isolated dedicated power with Sydney/Melbourne edge</p>
-              
-              <ul className="space-y-2.5 text-xs text-slate-300">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Dedicated CPU &amp; NVMe Storage:</strong> No shared hosting limits. Your site handles unlimited viral traffic with zero slowdowns.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Enterprise Nginx with HTTP/3 &amp; Brotli:</strong> Modern transport protocol delivers photos over 2x faster than standard Apache.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Bank-Grade Security (HSTS &amp; CSP):</strong> Complete protection against DDoS, brute-force attacks, and xmlrpc exploits.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <span><strong>Automated Daily Cloud Backups:</strong> Full snapshot backups keep your entire photography portfolio 100% safe.</span>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-
-          {/* Side-by-Side Comparison Matrix */}
-          <div className="bg-[#090d16] border border-white/10 rounded-2xl overflow-hidden shadow-2xl mb-8 relative z-10">
-            <div className="px-6 py-4 bg-white/5 border-b border-white/10 flex items-center justify-between">
-              <span className="font-bold text-sm text-white flex items-center gap-2">
-                <span>⚖️</span>
-                <span>WordPress (Flatsome) vs. SiteSpark Modern Headless Stack</span>
-              </span>
-              <span className="text-xs text-teal-400 font-semibold font-mono">Direct Technical Audit Comparison</span>
-            </div>
-
+            {/* Table */}
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-white/10 bg-[#0e1422] text-slate-400 uppercase font-mono text-[10px] tracking-wider">
-                    <th className="py-3 px-5">Performance &amp; Feature Area</th>
-                    <th className="py-3 px-5 text-rose-400">Current Site (WordPress + Flatsome)</th>
-                    <th className="py-3 px-5 text-teal-300">SiteSpark Stack (VPS + Sanity + Next.js)</th>
+                  <tr className="border-b border-slate-200/80 text-slate-400 font-bold uppercase tracking-wider">
+                    <th className="pb-3 px-3">Severity</th>
+                    <th className="pb-3 px-3">Defect Description</th>
+                    <th className="pb-3 px-3">Technical Root Cause</th>
+                    <th className="pb-3 px-3">SiteSpark Solution</th>
+                    <th className="pb-3 px-3 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5 text-slate-300">
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-5 font-bold text-white">Homepage Download Payload</td>
-                    <td className="py-3 px-5 text-rose-400 font-mono font-semibold">❌ 6.39 MB (Extreme data load)</td>
-                    <td className="py-3 px-5 text-teal-300 font-mono font-bold">✅ &lt; 650 KB (Automatic WebP conversion)</td>
+                <tbody className="divide-y divide-slate-100">
+                  <tr className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3 px-3">
+                      <span className="bg-rose-100 text-rose-700 font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase">
+                        Critical
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 font-bold text-slate-900">
+                      Client Partner Logos Open Raw Image JPEGs
+                    </td>
+                    <td className="py-3 px-3 text-slate-500">
+                      Flatsome UX Builder default image link triggers full-screen navigation to raw JPEG file.
+                    </td>
+                    <td className="py-3 px-3 text-emerald-700 font-semibold">
+                      Unlink media or replace with SVG partner carousel linking to client case studies.
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple-600 hover:text-purple-800 font-bold underline"
+                      >
+                        Fix Now
+                      </a>
+                    </td>
                   </tr>
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-5 font-bold text-white">Portfolio Image Experience</td>
-                    <td className="py-3 px-5 text-rose-400">❌ 270 raw photos loaded in single page (Crashes mobile)</td>
-                    <td className="py-3 px-5 text-teal-300 font-bold">✅ Categorized dynamic tabs with lazy loading (Infinite scroll)</td>
+
+                  <tr className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3 px-3">
+                      <span className="bg-rose-100 text-rose-700 font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase">
+                        Critical
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 font-bold text-slate-900">
+                      6.39 MB Page Payload & 270 Photo Overload
+                    </td>
+                    <td className="py-3 px-3 text-slate-500">
+                      Full resolution camera exports loaded synchronously without pagination or AVIF compression.
+                    </td>
+                    <td className="py-3 px-3 text-emerald-700 font-semibold">
+                      Next.js 15 automatic AVIF responsive images + Sanity.io cloud CDN CDN pagination.
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple-600 hover:text-purple-800 font-bold underline"
+                      >
+                        Fix Now
+                      </a>
+                    </td>
                   </tr>
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-5 font-bold text-white">Photo Uploads &amp; Editing</td>
-                    <td className="py-3 px-5 text-rose-400">❌ Clunky WP Media Library + manual resizing</td>
-                    <td className="py-3 px-5 text-teal-300 font-bold">✅ Sanity Studio: Upload from phone with smart facial hotspot cropping</td>
+
+                  <tr className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3 px-3">
+                      <span className="bg-amber-100 text-amber-800 font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase">
+                        High
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 font-bold text-slate-900">
+                      Missing Melbourne Photographer Title & Meta Tags
+                    </td>
+                    <td className="py-3 px-3 text-slate-500">
+                      Default page title displays generic &quot;Home - BT Captures&quot; without target geo keywords.
+                    </td>
+                    <td className="py-3 px-3 text-emerald-700 font-semibold">
+                      LocalBusiness + Photographer Schema.org JSON-LD targeting Melbourne photography niches.
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple-600 hover:text-purple-800 font-bold underline"
+                      >
+                        Fix Now
+                      </a>
+                    </td>
                   </tr>
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-5 font-bold text-white">Security &amp; Maintenance</td>
-                    <td className="py-3 px-5 text-rose-400">❌ Outdated WP Rocket (2022), exposed xmlrpc, plugin vulnerabilities</td>
-                    <td className="py-3 px-5 text-teal-300 font-bold">✅ 100% Headless: Immune to WordPress bots, zero plugin maintenance</td>
-                  </tr>
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-5 font-bold text-white">Hosting Infrastructure</td>
-                    <td className="py-3 px-5 text-rose-400">❌ Shared LiteSpeed hosting limits</td>
-                    <td className="py-3 px-5 text-teal-300 font-bold">✅ Dedicated Cloud VPS with HTTP/3, Brotli &amp; Australian edge caching</td>
-                  </tr>
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-5 font-bold text-white">Google SEO &amp; Rich Cards</td>
-                    <td className="py-3 px-5 text-rose-400">❌ Missing meta descriptions, weak generic titles</td>
-                    <td className="py-3 px-5 text-teal-300 font-bold">✅ Dynamic Melbourne schema markup, automated OpenGraph previews</td>
+
+                  <tr className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3 px-3">
+                      <span className="bg-amber-100 text-amber-800 font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase">
+                        Medium
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 font-bold text-slate-900">
+                      Footer Copyright Encoding Glitch & Telephone Spacing
+                    </td>
+                    <td className="py-3 px-3 text-slate-500">
+                      Raw unescaped &copy; symbol in Flatsome footer and %20 blank space inside tel: URL tag.
+                    </td>
+                    <td className="py-3 px-3 text-emerald-700 font-semibold">
+                      Sanitize footer text and format clean direct click-to-dial mobile protocol.
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple-600 hover:text-purple-800 font-bold underline"
+                      >
+                        Fix Now
+                      </a>
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          {/* Quick Migration Quote Banner */}
-          <div className="bg-gradient-to-r from-teal-500/10 via-blue-500/10 to-purple-500/10 border border-teal-500/30 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left relative z-10">
-            <div>
-              <h5 className="text-base font-bold text-white">Ready to elevate BT Captures with Next.js, Sanity.io &amp; a Dedicated VPS?</h5>
-              <p className="text-xs text-slate-300 mt-0.5">SiteSpark can seamlessly migrate your existing photography content in under 7 days.</p>
-            </div>
-            <a
-              href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20reviewed%20the%20BT%20Captures%20audit%20and%20would%20like%20to%20discuss%20the%20VPS%20+%20Sanity.io%20+%20Next.js%20migration%20stack."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-teal-400 hover:bg-teal-300 text-black font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all hover:scale-105 shadow-[0_0_20px_rgba(45,212,191,0.4)] whitespace-nowrap"
-            >
-              Request Stack Migration
-            </a>
-          </div>
-
-        </section>
-
-        {/* ==================================================== */}
-        {/* ROADMAP CHECKLIST */}
-        {/* ==================================================== */}
-        <div id="roadmap" className="scroll-mt-32" />
-        <section className="bg-gradient-to-br from-[#121927] via-[#0e1420] to-[#080c14] border border-teal-500/30 rounded-3xl p-6 md:p-10 mb-12 shadow-2xl relative overflow-hidden">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-teal-400 flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4" />
-                Actionable Implementation Plan
-              </span>
-              <h3 className="text-2xl md:text-3xl font-black text-white mt-1">Priority Fix Roadmap</h3>
-              <p className="text-slate-400 text-xs md:text-sm mt-1">
-                Interactive checklist — click any item to preview resolution status and track audit score progression.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <div className="bg-teal-500/10 text-teal-300 font-bold px-4 py-2 rounded-xl border border-teal-500/30 text-xs sm:text-sm shadow-lg flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-                Target Score: C+ (64) &rarr; A (94+)
+          {/* ========================================================= */}
+          {/* ROW 4: INTERACTIVE 7-DAY SPRINT ROADMAP */}
+          {/* ========================================================= */}
+          <div id="roadmap" className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <span className="text-xs font-bold text-purple-600 uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  SiteSpark 7-Day Sprint
+                </span>
+                <h3 className="text-xl font-black text-slate-900 mt-1">
+                  Interactive Priority Fix Roadmap
+                </h3>
+              </div>
+              <div className="bg-purple-50 text-purple-700 font-bold px-3 py-1.5 rounded-xl border border-purple-200 text-xs flex items-center gap-2">
+                <span>{completedTasks.length} of 5 Milestones Resolved</span>
               </div>
             </div>
-          </div>
 
-          {/* Interactive Sprint Tabs */}
-          <div className="flex flex-wrap gap-2.5 mb-6 border-b border-white/10 pb-4">
-            <button
-              onClick={() => setRoadmapTab("migration")}
-              className={`px-4 py-2 rounded-xl font-bold text-xs md:text-sm transition-all flex items-center gap-2 ${
-                roadmapTab === "migration"
-                  ? "bg-teal-400 text-black shadow-[0_0_20px_rgba(45,212,191,0.35)] font-black"
-                  : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/5"
-              }`}
-            >
-              <Zap className="w-4 h-4" />
-              🚀 Next.js + Sanity.io 7-Day Sprint (SiteSpark Recommendation)
-            </button>
-            <button
-              onClick={() => setRoadmapTab("quickfix")}
-              className={`px-4 py-2 rounded-xl font-bold text-xs md:text-sm transition-all flex items-center gap-2 ${
-                roadmapTab === "quickfix"
-                  ? "bg-teal-400 text-black shadow-[0_0_20px_rgba(45,212,191,0.35)] font-black"
-                  : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/5"
-              }`}
-            >
-              <Layers className="w-4 h-4" />
-              🔧 WordPress Quick Hotfixes (Temporary Patch)
-            </button>
-          </div>
-
-          {/* Progress Tracker Bar */}
-          {(() => {
-            const currentList = roadmapTab === "migration" ? [101, 102, 103, 104, 105] : [201, 202, 203, 204, 205];
-            const completedCount = currentList.filter(id => completedTasks.includes(id)).length;
-            const progressPct = Math.round((completedCount / currentList.length) * 100);
-
-            return (
-              <div className="bg-[#080b11]/90 border border-white/10 rounded-2xl p-4 mb-6">
-                <div className="flex items-center justify-between text-xs mb-2">
-                  <span className="text-slate-300 font-semibold flex items-center gap-2">
-                    <span className="text-teal-400 font-black">{completedCount} of {currentList.length}</span> Milestones Marked Resolved
-                  </span>
-                  <span className="text-teal-400 font-extrabold">{progressPct}% Complete</span>
-                </div>
-                <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+            <div className="space-y-3">
+              {[
+                {
+                  id: 1,
+                  day: "Day 1",
+                  title: "Headless Content Modeling (Sanity.io Studio)",
+                  desc: "Set up fast schema for Wedding, Portrait, Corporate galleries with instant mobile uploads."
+                },
+                {
+                  id: 2,
+                  day: "Day 2–3",
+                  title: "Next.js 15 App Router Frontend & Masonry Grid",
+                  desc: "Fluid infinite masonry portfolio with automatic AVIF/WebP image optimization and blur-up loading."
+                },
+                {
+                  id: 3,
+                  day: "Day 4",
+                  title: "Dedicated Cloud VPS Hosting & Dockerization",
+                  desc: "Deploy onto high-speed Sydney/Melbourne VPS with automated Nginx reverse proxy and SSL."
+                },
+                {
+                  id: 4,
+                  day: "Day 5",
+                  title: "Melbourne Local SEO & Schema.org Rich Snippets",
+                  desc: "Inject dynamic Photographer and AggregateRating structured data for Google Maps 3-Pack ranking."
+                },
+                {
+                  id: 5,
+                  day: "Day 6–7",
+                  title: "Conversion Engine & Direct WhatsApp Booking Integration",
+                  desc: "Embed live 5-star Google reviews carousel and 1-tap WhatsApp consultation buttons (+94715448553)."
+                }
+              ].map((task) => {
+                const isChecked = completedTasks.includes(task.id);
+                return (
                   <div
-                    className="bg-gradient-to-r from-teal-500 to-emerald-400 h-2 rounded-full transition-all duration-500 ease-out shadow-[0_0_12px_rgba(45,212,191,0.6)]"
-                    style={{ width: `${progressPct}%` }}
-                  />
-                </div>
-              </div>
-            );
-          })()}
-
-          {/* Task List */}
-          <div className="space-y-3.5">
-            {(roadmapTab === "migration"
-              ? [
-                  {
-                    id: 101,
-                    priority: "Day 1",
-                    color: "bg-blue-500 text-white",
-                    title: "Sanity.io Headless CMS Architecture & Schema Design",
-                    desc: "Model high-res photography galleries (Weddings, Events, Portraits), Melbourne shoot locations, and client video testimonials with instant real-time publishing.",
-                    benefit: "Eliminates WordPress admin bloat, zero plugin conflicts, studio team can upload photos directly from phone."
-                  },
-                  {
-                    id: 102,
-                    priority: "Day 2–3",
-                    color: "bg-purple-500 text-white",
-                    title: "Next.js 15 App Router Frontend & Framer Motion Masonry Gallery",
-                    desc: "Build lightning-fast fluid portfolio grid using next/image with AVIF/WebP automatic compression, blur placeholders, and zero CLS (Cumulative Layout Shift).",
-                    benefit: "Drops page weight from 6.39MB to < 650KB with sub-second portfolio transitions."
-                  },
-                  {
-                    id: 103,
-                    priority: "Day 4",
-                    color: "bg-indigo-500 text-white",
-                    title: "Dockerized Cloud VPS Deployment with Nginx & HTTP/3",
-                    desc: "Deploy standalone Docker container onto dedicated high-speed Sydney/Melbourne cloud VPS instance with automated Let's Encrypt SSL and brotli compression.",
-                    benefit: "Bypasses shared WordPress hosting CPU throttling; instant server response (<120ms TTFB)."
-                  },
-                  {
-                    id: 104,
-                    priority: "Day 5",
-                    color: "bg-amber-400 text-black font-black",
-                    title: "Melbourne Local SEO Architecture & Schema.org Rich Snippets",
-                    desc: "Inject dynamic Photographer, LocalBusiness, AggregateRating, and geo-targeted JSON-LD structured data with canonical OpenGraph cards across all service pages.",
-                    benefit: "Ranks BT Captures directly in Melbourne Google Maps 3-Pack and rich image search carousels."
-                  },
-                  {
-                    id: 105,
-                    priority: "Day 6–7",
-                    color: "bg-emerald-400 text-black font-black",
-                    title: "Conversion Engine: Google 5★ Social Proof & Direct WhatsApp Inquiries",
-                    desc: "Wire up live Google reviews carousel, sticky booking bar, and one-tap WhatsApp quick consultation button (+94 71 544 8553) with automated client lead attribution.",
-                    benefit: "Doubles inquiry conversion rate from mobile traffic and Instagram visitors."
-                  }
-                ]
-              : [
-                  {
-                    id: 201,
-                    priority: "Immediate",
-                    color: "bg-red-500 text-white",
-                    title: "Fix Client Partner Logos Linking to Raw JPEGs",
-                    desc: "Disable link action in Flatsome UX builder so clicking client logos does not navigate users to raw media file paths (/wp-content/uploads/...).",
-                    benefit: "Instantly removes unprofessional dead ends for prospective corporate clients."
-                  },
-                  {
-                    id: 202,
-                    priority: "Day 1–2",
-                    color: "bg-red-500 text-white",
-                    title: "Configure Melbourne Keyword Titles & Meta Descriptions",
-                    desc: "Configure All in One SEO (AIOSEO) with targeted meta tags focusing on 'Melbourne Event & Portrait Photographer' instead of default page names.",
-                    benefit: "Fixes zero-click search snippets and increases search engine CTR."
-                  },
-                  {
-                    id: 203,
-                    priority: "Week 1",
-                    color: "bg-amber-500 text-black font-bold",
-                    title: "Compress Homepage Photos & Paginate 270-Image Portfolio Overload",
-                    desc: "Run ShortPixel or WebP Express to convert bulky JPEGs and implement infinite lazy-loading to eliminate the initial 6.39MB download stall.",
-                    benefit: "Reduces Largest Contentful Paint (LCP) from 3.8s down to under 1.8s."
-                  },
-                  {
-                    id: 204,
-                    priority: "Week 1",
-                    color: "bg-amber-500 text-black font-bold",
-                    title: "Correct Footer Copyright Entity & Telephone Link Spacing",
-                    desc: "Replace raw HTML entity glitch (©) in Flatsome theme footer options and strip the invalid '%20' space from the `tel:+61 400 000 000` link tag.",
-                    benefit: "Ensures Australian mobile phone visitors can dial directly in one tap."
-                  },
-                  {
-                    id: 205,
-                    priority: "Growth",
-                    color: "bg-teal-400 text-black font-bold",
-                    title: "Embed Google 5-Star Reviews & Floating WhatsApp Quick Chat",
-                    desc: "Add Elfsight or Trustindex Google Review badge and install direct WhatsApp floating action widget linked to +94 71 544 8553.",
-                    benefit: "Capitalizes on 5-star reputation to convert casual visitors into booked sessions."
-                  }
-                ]
-            ).map((item) => {
-              const isChecked = completedTasks.includes(item.id);
-
-              return (
-                <div
-                  key={item.id}
-                  onClick={() => toggleTask(item.id)}
-                  className={`cursor-pointer rounded-2xl p-4 md:p-5 transition-all duration-200 border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
-                    isChecked
-                      ? "bg-emerald-950/20 border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.15)]"
-                      : "bg-[#080b11]/80 border-white/10 hover:border-teal-500/40 hover:bg-[#0c121d]"
-                  }`}
-                >
-                  <div className="flex items-start gap-3.5">
-                    <button
-                      type="button"
-                      aria-label="Toggle task completion"
-                      className={`mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-all ${
-                        isChecked
-                          ? "bg-emerald-500 text-black shadow-[0_0_12px_rgba(16,185,129,0.5)]"
-                          : "border-2 border-slate-600 hover:border-teal-400 text-transparent"
-                      }`}
-                    >
-                      <Check className="w-4 h-4 stroke-[3]" />
-                    </button>
-
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className={`text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded font-extrabold ${item.color}`}>
-                          {item.priority}
-                        </span>
-                        <h5 className={`text-sm md:text-base font-bold transition-all ${
-                          isChecked ? "text-emerald-300 line-through opacity-85" : "text-white"
-                        }`}>
-                          {item.title}
-                        </h5>
+                    key={task.id}
+                    onClick={() => toggleTask(task.id)}
+                    className={`cursor-pointer rounded-xl p-4 transition-all border flex items-start justify-between gap-4 ${
+                      isChecked
+                        ? "bg-purple-50/50 border-purple-200"
+                        : "bg-slate-50 border-slate-200/70 hover:bg-white hover:border-purple-300"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={`w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                          isChecked ? "bg-purple-600 text-white" : "border-2 border-slate-400"
+                        }`}
+                      >
+                        {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                       </div>
-                      <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
-                      <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-teal-400/90 font-medium">
-                        <Sparkles className="w-3 h-3 text-teal-400" />
-                        <span>Impact: {item.benefit}</span>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-purple-100 text-purple-700">
+                            {task.day}
+                          </span>
+                          <h5 className={`text-xs sm:text-sm font-bold ${isChecked ? "line-through text-slate-500" : "text-slate-900"}`}>
+                            {task.title}
+                          </h5>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-1">{task.desc}</p>
                       </div>
                     </div>
+                    <span className="text-[11px] font-bold text-purple-600 shrink-0">
+                      {isChecked ? "Completed" : "Pending"}
+                    </span>
                   </div>
-
-                  <div className="shrink-0 self-end md:self-center">
-                    {isChecked ? (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/30">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                        Resolved with SiteSpark
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 bg-white/5 px-3 py-1.5 rounded-xl border border-white/10 hover:border-teal-500/30">
-                        <Clock className="w-3.5 h-3.5 text-slate-500" />
-                        Action Required
-                      </span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
-          {/* Bottom Roadmap Action Bar */}
-          <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-teal-950/30 -mx-6 md:-mx-10 -mb-6 md:-mb-10 p-6 md:p-8">
-            <div>
-              <h4 className="text-white font-bold text-sm md:text-base">Ready to execute this transformation?</h4>
-              <p className="text-slate-400 text-xs mt-0.5">
-                SiteSpark can deliver the complete Next.js 15 + Sanity.io migration with 95+ PageSpeed guaranteed.
+          {/* ========================================================= */}
+          {/* BOTTOM CALL TO ACTION BANNER */}
+          {/* ========================================================= */}
+          <div className="bg-gradient-to-r from-purple-700 via-indigo-700 to-slate-900 text-white rounded-3xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div className="space-y-2 text-center md:text-left">
+              <span className="text-xs font-bold uppercase tracking-widest text-purple-300 bg-white/10 px-3 py-1 rounded-full border border-white/20">
+                SiteSpark Agency Guarantee
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black">
+                Transform BT Captures to 95+ PageSpeed Score
+              </h3>
+              <p className="text-purple-200 text-xs sm:text-sm max-w-xl">
+                Migrate from bloated Flatsome WordPress to High-Performance Next.js 15 + Sanity.io Studio on a dedicated Cloud VPS in just 7 days.
               </p>
             </div>
-            <a
-              href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20reviewed%20the%20Priority%20Fix%20Roadmap%20for%20BT%20Captures%20and%20would%20like%20to%20begin%20the%207-day%20migration%20sprint."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-teal-400 hover:bg-teal-300 text-black font-black px-6 py-3 rounded-xl text-xs md:text-sm uppercase tracking-wider transition-all hover:scale-105 shadow-[0_0_20px_rgba(45,212,191,0.4)] flex items-center gap-2 shrink-0"
-            >
-              <MessageCircle className="w-4 h-4" />
-              Start 7-Day Sprint via WhatsApp
-            </a>
-          </div>
-        </section>
 
-        {/* ==================================================== */}
-        {/* SITESPARK AGENCY CALL TO ACTION */}
-        {/* ==================================================== */}
-        <section className="relative bg-gradient-to-r from-teal-950/70 via-blue-950/60 to-purple-950/70 border border-teal-500/30 rounded-3xl p-8 md:p-12 text-center overflow-hidden shadow-2xl">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-teal-500/10 via-transparent to-transparent pointer-events-none" />
-          
-          <div className="max-w-2xl mx-auto relative z-10">
-            <span className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-teal-300 bg-teal-500/20 px-4 py-1.5 rounded-full border border-teal-500/40 mb-4 shadow-lg">
-              <Sparkles className="w-4 h-4 text-teal-300" />
-              Engineered by SiteSpark Agency
-            </span>
-            <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight">
-              Ready to turn these fixes into more photography bookings?
-            </h3>
-            <p className="text-sm text-slate-300 mt-3 mb-8 leading-relaxed">
-              SiteSpark specializes in high-speed website optimization, search engine rankings, and bespoke web apps. We can resolve all these audit defects in under 48 hours.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
               <a
-                href="https://sitespark.online#contact"
-                className="bg-gradient-to-r from-teal-400 to-cyan-500 hover:from-teal-300 hover:to-cyan-400 text-black font-extrabold px-8 py-3.5 rounded-full text-sm transition-all hover:scale-105 shadow-[0_0_30px_rgba(45,212,191,0.5)] flex items-center gap-2"
-              >
-                <span>Get This Fixed with SiteSpark</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <a
-                href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20reviewed%20the%20BT%20Captures%20audit%20and%20would%20like%20to%20discuss%20optimizing%20my%20website."
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 hover:bg-white/20 text-white font-bold px-7 py-3.5 rounded-full text-sm transition-all border border-white/20 flex items-center gap-2 backdrop-blur-md"
+                className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-white font-black px-6 py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/40 transition-all hover:scale-105"
               >
-                <MessageCircle className="w-4 h-4 text-emerald-400" />
-                <span>Chat on WhatsApp</span>
+                <MessageCircle className="w-5 h-5" />
+                Chat on WhatsApp (+94 71 544 8553)
               </a>
             </div>
           </div>
-        </section>
+        </main>
+      </div>
 
-      </main>
-
-      {/* FOOTER */}
-      <footer className="max-w-6xl mx-auto px-4 mt-20 pt-8 border-t border-white/10 text-center text-xs text-slate-500">
-        <p>&copy; 2026 SiteSpark. All rights reserved &bull; Independent Digital Performance Audit for BT Captures</p>
-        <p className="mt-1 text-slate-600">https://sitespark.online &bull; Modern Web Engineering &amp; Creative Development</p>
-      </footer>
-
+      {/* ========================================================= */}
+      {/* FLOATING WHATSAPP PILL BUTTON (MOBILE & DESKTOP) */}
+      {/* ========================================================= */}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Direct WhatsApp Message"
+        className="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 sm:px-5 sm:py-3.5 rounded-full shadow-2xl shadow-emerald-500/50 flex items-center gap-2.5 transition-all hover:scale-105 group"
+      >
+        <MessageCircle className="w-6 h-6 fill-current animate-bounce" />
+        <span className="hidden sm:inline font-bold text-xs tracking-wide">
+          WhatsApp Support
+        </span>
+      </a>
     </div>
   );
 }

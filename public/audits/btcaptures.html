@@ -1,1205 +1,578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Audit Results for btcaptures.com.au</title>
-  <!-- Google Fonts: Inter -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BT Captures - Executive Audit Dashboard | SiteSpark</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Chart.js for Radar & Doughnut charts -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              purple: '#7c3aed',
+              dark: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    :root {
-      --primary-navy: #3b4859;
-      --bg-page: #f8fafc;
-      --bg-card: #ffffff;
-      --border-color: #e2e8f0;
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --text-light: #94a3b8;
-      
-      --color-pass: #10b981;
-      --color-pass-bg: #ecfdf5;
-      --color-warn: #f59e0b;
-      --color-warn-bg: #fffbeb;
-      --color-fail: #ef4444;
-      --color-fail-bg: #fef2f2;
-      --color-blue: #3b82f6;
-
-      --ring-blue: #3b82f6;
-      --ring-orange: #f97316;
-      --ring-green: #10b981;
-      --ring-purple: #8b5cf6;
-      --ring-red: #ef4444;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-page);
-      color: var(--text-main);
-      line-height: 1.5;
-      padding-bottom: 80px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f4f6fa;
+      color: #1e293b;
     }
-
-    /* TOP HEADER BAR */
-    .top-header {
-      background-color: var(--primary-navy);
-      color: #ffffff;
-      padding: 16px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
     }
-
-    .top-header h1 {
-      font-size: 20px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .top-header .domain-link {
-      color: #93c5fd;
-      text-decoration: none;
-    }
-    .top-header .domain-link:hover {
-      text-decoration: underline;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 12px;
-    }
-
-    .btn-pdf {
-      background-color: #2563eb;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.2s;
-    }
-    .btn-pdf:hover {
-      background-color: #1d4ed8;
-    }
-
-    /* CONTAINER */
-    .container {
-      max-width: 1140px;
-      margin: 32px auto 0;
-      padding: 0 20px;
-    }
-
-    /* HERO AUDIT SUMMARY CARD */
-    .hero-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 40px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      margin-bottom: 32px;
-    }
-
-    .hero-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      padding-bottom: 36px;
-      border-bottom: 1px solid #edf2f7;
-    }
-
-    .hero-score-box {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    /* Big Grade Ring */
-    .main-grade-ring {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: conic-gradient(
-        var(--ring-blue) 0% 60%,
-        #e2e8f0 60% 100%
-      );
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    .main-grade-ring::after {
-      content: '';
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      background: #ffffff;
-      border-radius: 50%;
-    }
-
-    .main-grade-letter {
-      position: relative;
-      z-index: 2;
-      font-size: 44px;
-      font-weight: 800;
-      color: var(--ring-blue);
-      letter-spacing: -1px;
-    }
-
-    .hero-verdict {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 12px;
-    }
-
-    .hero-pill-badge {
-      display: inline-block;
-      background-color: #ef4444;
-      color: #ffffff;
-      padding: 8px 20px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.25);
-    }
-
-    /* Desktop Mockup */
-    .mockup-wrapper {
-      flex: 1.2;
-      display: flex;
-      justify-content: center;
-    }
-
-    .imac-mockup {
-      width: 100%;
-      max-width: 440px;
-      background: #1e293b;
-      border-radius: 12px 12px 0 0;
-      padding: 10px 10px 0;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-      position: relative;
-    }
-
-    .imac-screen {
-      background: #ffffff;
-      border-radius: 6px 6px 0 0;
-      height: 230px;
-      overflow: hidden;
-      border: 1px solid #334155;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .imac-browser-bar {
-      height: 22px;
-      background: #f1f5f9;
-      border-bottom: 1px solid #cbd5e1;
-      display: flex;
-      align-items: center;
-      padding: 0 8px;
-      gap: 5px;
-    }
-
-    .imac-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #94a3b8;
-    }
-
-    .imac-url-bar {
-      flex: 1;
-      height: 14px;
-      background: #ffffff;
-      border-radius: 3px;
-      font-size: 8px;
-      display: flex;
-      align-items: center;
-      padding-left: 6px;
-      color: #64748b;
-    }
-
-    .imac-content {
-      flex: 1;
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://btcaptures.com.au/wp-content/uploads/2024/04/banner-03.jpg');
-      background-size: cover;
-      background-position: center;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 15px;
-    }
-
-    .imac-content h3 {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .imac-content p {
-      font-size: 9px;
-      color: #cbd5e1;
-      max-width: 280px;
-    }
-
-    .imac-chin {
-      height: 24px;
-      background: #475569;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .imac-apple-logo {
-      width: 10px;
-      height: 10px;
-      background: #94a3b8;
-      border-radius: 50%;
-    }
-
-    .imac-stand {
-      width: 90px;
-      height: 40px;
-      background: linear-gradient(to bottom, #94a3b8, #cbd5e1);
-      margin: 0 auto;
-      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-    }
-
-    .imac-base {
-      width: 150px;
-      height: 6px;
-      background: #64748b;
-      margin: 0 auto;
-      border-radius: 3px;
-    }
-
-    /* FIVE CATEGORY RINGS + SPIDER RADAR */
-    .hero-categories-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding-top: 36px;
-      flex-wrap: wrap;
-    }
-
-    .category-gauges-group {
-      display: flex;
-      gap: 28px;
-      flex-wrap: wrap;
-      justify-content: center;
-      flex: 1;
-    }
-
-    .gauge-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .circle-ring {
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
-    }
-
-    .circle-ring::after {
-      content: '';
-      position: absolute;
-      width: 66px;
-      height: 66px;
-      background: #ffffff;
-      border-radius: 50%;
-    }
-
-    .circle-letter {
-      position: relative;
-      z-index: 2;
-      font-size: 22px;
-      font-weight: 700;
-    }
-
-    .gauge-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    /* Radar Chart Container */
-    .radar-chart-container {
-      width: 220px;
-      height: 170px;
-      flex-shrink: 0;
-    }
-
-    /* SECTION DETAIL CARDS (Sequential Scrolling) */
-    .audit-section {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 32px;
-      margin-bottom: 28px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 18px;
-      border-bottom: 2px solid #f1f5f9;
-      margin-bottom: 24px;
-    }
-
-    .section-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-icon-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .section-heading {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .section-subtext {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .section-grade-pill {
-      font-size: 14px;
-      font-weight: 700;
-      padding: 4px 14px;
-      border-radius: 20px;
-    }
-
-    /* AUDIT CHECK ITEMS */
-    .check-item {
-      padding: 18px 0;
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .check-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .check-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-
-    .status-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 800;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .status-icon.pass { background: var(--color-pass-bg); color: var(--color-pass); border: 1.5px solid var(--color-pass); }
-    .status-icon.warn { background: var(--color-warn-bg); color: var(--color-warn); border: 1.5px solid var(--color-warn); }
-    .status-icon.fail { background: var(--color-fail-bg); color: var(--color-fail); border: 1.5px solid var(--color-fail); }
-
-    .check-body {
-      flex: 1;
-    }
-
-    .check-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
-    }
-
-    .check-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .check-status-tag {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      padding: 2px 8px;
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
       border-radius: 4px;
-    }
-    .check-status-tag.pass { background: var(--color-pass-bg); color: var(--color-pass); }
-    .check-status-tag.warn { background: var(--color-warn-bg); color: #b45309; }
-    .check-status-tag.fail { background: var(--color-fail-bg); color: var(--color-fail); }
-
-    .check-desc {
-      font-size: 13.5px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .check-evidence-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      padding: 10px 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: #334155;
-      margin: 8px 0;
-      overflow-x: auto;
-    }
-
-    .check-fix-box {
-      background: #f0fdf4;
-      border-left: 3px solid var(--color-pass);
-      padding: 8px 12px;
-      border-radius: 0 4px 4px 0;
-      font-size: 13px;
-      color: #166534;
-      margin-top: 6px;
-    }
-
-    .check-fix-box strong {
-      color: #15803d;
-    }
-
-    /* ACTION CHECKLIST CARD */
-    .checklist-card {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      color: #ffffff;
-      border-radius: 12px;
-      padding: 36px;
-      margin-top: 40px;
-    }
-
-    .checklist-card h2 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .checklist-card p {
-      color: #94a3b8;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .roadmap-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .roadmap-item {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .roadmap-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .roadmap-priority-pill {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
-    .roadmap-priority-pill.high { background: #ef4444; color: #fff; }
-    .roadmap-priority-pill.med { background: #f59e0b; color: #fff; }
-    .roadmap-priority-pill.low { background: #3b82f6; color: #fff; }
-
-    .roadmap-text {
-      font-size: 14px;
-      font-weight: 500;
-      color: #f1f5f9;
-    }
-
-    .roadmap-sub {
-      font-size: 12px;
-      color: #94a3b8;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      margin-top: 48px;
-      color: var(--text-light);
-      font-size: 13px;
-    }
-
-    @media (max-width: 860px) {
-      .hero-top-row { flex-direction: column; }
-      .hero-categories-row { flex-direction: column; }
-      .radar-chart-container { width: 100%; height: 200px; }
     }
   </style>
 </head>
-<body>
+<body class="antialiased min-h-screen flex selection:bg-purple-100 selection:text-purple-900">
 
-  <!-- TOP HEADER BAR -->
-  <header class="top-header">
-    <h1>
-      Audit Results for <a href="https://btcaptures.com.au/" target="_blank" class="domain-link">btcaptures.com.au</a>
-    </h1>
-    <div class="top-actions">
-      <button class="btn-pdf" onclick="window.print()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Save / Print PDF
-      </button>
+  <!-- Mobile Drawer Backdrop -->
+  <div id="mobileBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity"></div>
+
+  <!-- ========================================================= -->
+  <!-- LEFT SIDEBAR (SYN-UI REPLICA) -->
+  <!-- ========================================================= -->
+  <aside id="sidebar" class="fixed lg:sticky top-0 left-0 h-screen w-64 bg-white border-r border-slate-200 z-50 flex flex-col justify-between shrink-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+    <div class="flex flex-col h-full overflow-y-auto custom-scrollbar">
+      <!-- Logo Header -->
+      <div class="h-16 flex items-center justify-between px-6 border-b border-slate-100">
+        <a href="https://sitespark.online" class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 via-indigo-600 to-pink-500 flex items-center justify-center shadow-md shadow-purple-500/25">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div class="flex items-center">
+            <span class="font-black text-lg tracking-tight bg-gradient-to-r from-purple-700 to-slate-900 bg-clip-text text-transparent">SITESPARK</span>
+            <span class="text-[9px] font-extrabold text-purple-600 ml-1.5 uppercase px-1.5 py-0.5 bg-purple-50 rounded">UI-OS</span>
+          </div>
+        </a>
+        <button onclick="toggleSidebar()" class="lg:hidden p-1.5 rounded-lg hover:bg-slate-100 text-slate-500">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="p-4 space-y-6 text-xs font-semibold">
+        <!-- Dashboard Section -->
+        <div>
+          <div class="px-3 mb-2 flex items-center justify-between text-purple-700 uppercase tracking-wider text-[11px] font-bold">
+            <span class="flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              Dashboard
+            </span>
+            <svg class="w-3.5 h-3.5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="space-y-1">
+            <a href="#overview" class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-purple-50 text-purple-700 font-bold shadow-xs">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2 h-2 rounded-full bg-purple-600 ring-4 ring-purple-100"></span>
+                <span>Audit Overview</span>
+              </div>
+              <span class="text-[9px] font-extrabold bg-purple-200/60 text-purple-800 px-1.5 py-0.5 rounded">Live</span>
+            </a>
+            <a href="#vitals" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all">
+              <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+              <span>Core Web Vitals</span>
+            </a>
+            <a href="#payload" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all">
+              <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+              <span>6.39MB Payload</span>
+            </a>
+            <a href="#roadmap" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all">
+              <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+              <span>7-Day Fix Sprint</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Audit Modules -->
+        <div>
+          <span class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Audit Modules</span>
+          <div class="space-y-1">
+            <a href="#deficiencies" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all">
+              <span class="flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                Flagged Issues
+              </span>
+              <span class="text-[10px] font-extrabold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">8 Issues</span>
+            </a>
+            <a href="#architecture" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all">
+              <span class="flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                VPS + Next.js Stack
+              </span>
+              <span class="text-[10px] font-extrabold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">95+ A</span>
+            </a>
+          </div>
+        </div>
+
+      </nav>
+
+      <!-- Sidebar Client Footer -->
+      <div class="p-4 border-t border-slate-100 bg-slate-50/70 mt-auto">
+        <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs">
+          <div class="flex items-center gap-3 mb-2.5">
+            <div class="w-9 h-9 rounded-xl bg-purple-600 text-white font-black flex items-center justify-center text-xs shadow-md shadow-purple-500/20">
+              BT
+            </div>
+            <div class="overflow-hidden">
+              <h6 class="font-bold text-xs text-slate-900 truncate">BT Captures</h6>
+              <p class="text-[10px] text-slate-500 truncate">Melbourne, Australia</p>
+            </div>
+          </div>
+          <a href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20am%20reviewing%20the%20BT%20Captures%20Executive%20Dashboard." target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-[11px] flex items-center justify-center gap-1.5 shadow-sm shadow-emerald-500/30 transition-all">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            WhatsApp Support
+          </a>
+        </div>
+      </div>
     </div>
-  </header>
+  </aside>
 
-  <div class="container">
+  <!-- ========================================================= -->
+  <!-- MAIN WORKSPACE -->
+  <!-- ========================================================= -->
+  <div class="flex-1 flex flex-col min-w-0">
+    <!-- Top Header Bar -->
+    <header class="h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+      <!-- Search bar & Mobile button -->
+      <div class="flex items-center gap-3 flex-1 max-w-lg">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100" aria-label="Open sidebar">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
 
-    <!-- HERO AUDIT SUMMARY CARD -->
-    <section class="hero-card">
-      <div class="hero-top-row">
+        <div class="relative w-full max-w-md hidden sm:block">
+          <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" placeholder="Search metrics, pages, issues..." class="w-full pl-9 pr-4 py-2 bg-[#f4f6fa] border border-slate-200 rounded-xl text-xs text-slate-700 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all">
+        </div>
+      </div>
 
-        <!-- Left: Overall Grade & Status -->
-        <div class="hero-score-box">
-          <div class="main-grade-ring">
-            <span class="main-grade-letter">C+</span>
-          </div>
-          <div class="hero-verdict">Your page needs improvement</div>
-          <div class="hero-pill-badge">You have 12 Improvements Recommended</div>
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="relative">
+          <button class="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+            <span class="absolute top-1.5 right-1.5 w-4 h-4 bg-rose-500 text-white rounded-full text-[9px] font-extrabold flex items-center justify-center">8</span>
+          </button>
         </div>
 
-        <!-- Right: Realistic Desktop Device Mockup -->
-        <div class="mockup-wrapper">
-          <div class="imac-mockup">
-            <div class="imac-screen">
-              <div class="imac-browser-bar">
-                <div class="imac-dot" style="background:#ef4444;"></div>
-                <div class="imac-dot" style="background:#f59e0b;"></div>
-                <div class="imac-dot" style="background:#10b981;"></div>
-                <div class="imac-url-bar">https://btcaptures.com.au/</div>
+        <a href="https://wa.me/94715448553" target="_blank" class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 px-3 py-1.5 rounded-xl font-bold text-xs transition-all">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          WhatsApp: +94 71 544 8553
+        </a>
+
+        <div class="w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center ring-2 ring-purple-500/20">
+          BT
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Workspace Body -->
+    <main class="p-4 md:p-8 space-y-6">
+      <!-- Title & Breadcrumb -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-xs text-slate-400 font-medium">
+            <span>Dashboard</span>
+            <span>/</span>
+            <span>Client Audits</span>
+            <span>/</span>
+            <span class="text-purple-600 font-semibold">btcaptures.com.au</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mt-1 flex items-center gap-2.5">
+            Bandara Thennakoon Photography
+            <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full border border-amber-300">Grade C+ (64)</span>
+          </h1>
+        </div>
+
+        <div class="flex items-center gap-2.5 self-start sm:self-center">
+          <a href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20am%20ready%20for%20the%20Next.js%20+%20Sanity.io%20+%20VPS%20migration." target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-purple-600/20 flex items-center gap-1.5 transition-all hover:scale-102">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Start 7-Day Sprint
+          </a>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- TOP ROW: 3 CARDS (EXACT SYN-UI LAYOUT) -->
+      <!-- ========================================================= -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6" id="overview">
+        <!-- 1. DONUT GAUGE CARD (85% CIRCLE MATCH) -->
+        <div class="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-sm text-slate-900">Total Audit Score</h3>
+            <span class="text-slate-400 font-bold">•••</span>
+          </div>
+
+          <!-- Circular SVG Donut Chart -->
+          <div class="relative flex items-center justify-center my-4">
+            <svg class="w-52 h-52 -rotate-90 transform" viewBox="0 0 160 160">
+              <circle cx="80" cy="80" r="60" fill="transparent" stroke="#f1f5f9" stroke-width="16"/>
+              <!-- Segment 1: SEO (Purple) -->
+              <circle cx="80" cy="80" r="60" fill="transparent" stroke="#8b5cf6" stroke-width="16" stroke-dasharray="377" stroke-dashoffset="120" stroke-linecap="round"/>
+              <!-- Segment 2: Performance (Pink/Red) -->
+              <circle cx="80" cy="80" r="60" fill="transparent" stroke="#f43f5e" stroke-width="16" stroke-dasharray="377" stroke-dashoffset="240" stroke-linecap="round"/>
+              <!-- Segment 3: Mobile (Teal/Emerald) -->
+              <circle cx="80" cy="80" r="60" fill="transparent" stroke="#10b981" stroke-width="16" stroke-dasharray="377" stroke-dashoffset="310" stroke-linecap="round"/>
+              <!-- Segment 4: Security (Cyan) -->
+              <circle cx="80" cy="80" r="60" fill="transparent" stroke="#06b6d4" stroke-width="16" stroke-dasharray="377" stroke-dashoffset="345" stroke-linecap="round"/>
+            </svg>
+
+            <div class="absolute flex flex-col items-center justify-center text-center">
+              <span class="text-4xl font-black text-slate-900 tracking-tight">64%</span>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Grade C+ (64/100)</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-4 border-t border-slate-100 text-xs">
+            <div class="flex items-center gap-1.5 text-slate-600">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+              <span>SEO: 72%</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-slate-600">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+              <span>Speed: 38% (Crit)</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-slate-600">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span>Mobile: 69%</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-slate-600">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+              <span>Security: 68%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. USER ACTIVITY / CORE WEB VITALS BAR CHART -->
+        <div class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between" id="vitals">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h3 class="font-bold text-sm text-slate-900">Core Web Vitals & Latency</h3>
+              <p class="text-[11px] text-slate-400">Current WordPress vs Target Next.js + VPS</p>
+            </div>
+            <span class="text-slate-400 font-bold">•••</span>
+          </div>
+
+          <div class="h-52 flex items-end justify-between gap-3 pt-6 pb-2 px-2 border-b border-slate-100">
+            <!-- TTFB -->
+            <div class="flex-1 flex flex-col items-center gap-1.5">
+              <div class="w-full flex items-end justify-center gap-1.5 h-36">
+                <div class="w-3.5 bg-purple-600 rounded-t-sm" style="height: 82%;"></div>
+                <div class="w-3.5 bg-purple-200 rounded-t-sm" style="height: 15%;"></div>
               </div>
-              <div class="imac-content" style="padding: 0; position: relative;">
-                <img src="/audits/btcaptures-preview.jpg" alt="Real Website Screenshot of BT Captures" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
-                <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.85); color: #34d399; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.5px;">
-                  ● LIVE CAPTURE
-                </div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase">TTFB</span>
+            </div>
+            <!-- FCP -->
+            <div class="flex-1 flex flex-col items-center gap-1.5">
+              <div class="w-full flex items-end justify-center gap-1.5 h-36">
+                <div class="w-3.5 bg-purple-600 rounded-t-sm" style="height: 95%;"></div>
+                <div class="w-3.5 bg-purple-200 rounded-t-sm" style="height: 20%;"></div>
+              </div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase">FCP</span>
+            </div>
+            <!-- LCP -->
+            <div class="flex-1 flex flex-col items-center gap-1.5">
+              <div class="w-full flex items-end justify-center gap-1.5 h-36">
+                <div class="w-3.5 bg-purple-600 rounded-t-sm" style="height: 100%;"></div>
+                <div class="w-3.5 bg-purple-200 rounded-t-sm" style="height: 24%;"></div>
+              </div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase">LCP</span>
+            </div>
+            <!-- Total Load -->
+            <div class="flex-1 flex flex-col items-center gap-1.5">
+              <div class="w-full flex items-end justify-center gap-1.5 h-36">
+                <div class="w-3.5 bg-purple-600 rounded-t-sm" style="height: 100%;"></div>
+                <div class="w-3.5 bg-purple-200 rounded-t-sm" style="height: 26%;"></div>
+              </div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase">Load</span>
+            </div>
+            <!-- Payload -->
+            <div class="flex-1 flex flex-col items-center gap-1.5">
+              <div class="w-full flex items-end justify-center gap-1.5 h-36">
+                <div class="w-3.5 bg-purple-600 rounded-t-sm" style="height: 100%;"></div>
+                <div class="w-3.5 bg-purple-200 rounded-t-sm" style="height: 12%;"></div>
+              </div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase">Size</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-3 text-xs text-slate-500">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-sm bg-purple-600"></span>
+                <span>Current WordPress</span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-sm bg-purple-200"></span>
+                <span>Next.js Target</span>
+              </span>
+            </div>
+            <span class="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">-85% Faster</span>
+          </div>
+        </div>
+
+        <!-- 3. TWO STACKED KPI CARDS -->
+        <div class="lg:col-span-3 flex flex-col gap-6">
+          <!-- Card 1: 4.2s Stall (Replaces $4,580 AUD card) -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <span class="text-[10px] font-extrabold bg-rose-50 text-rose-600 px-2 py-0.5 rounded border border-rose-200 uppercase">Failed LCP</span>
+            </div>
+
+            <div class="my-2">
+              <h4 class="text-2xl font-black text-slate-900 tracking-tight">4.2s Stall</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Mobile Largest Contentful Paint</p>
+            </div>
+
+            <div>
+              <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2">
+                <div class="bg-rose-500 h-1.5 rounded-full w-[82%]"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-500">Google Core Web Vitals</span>
+                <span class="text-rose-600 font-extrabold">Target: &lt; 1.2s</span>
               </div>
             </div>
-            <div class="imac-chin">
-              <div class="imac-apple-logo"></div>
-            </div>
-            <div class="imac-stand"></div>
-            <div class="imac-base"></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Categories Row: 5 Rings + Spider Radar Chart -->
-      <div class="hero-categories-row">
-
-        <div class="category-gauges-group">
-
-          <!-- Gauge 1: SEO -->
-          <div class="gauge-item">
-            <div class="circle-ring" style="background: conic-gradient(var(--ring-blue) 0% 55%, #e2e8f0 55% 100%);">
-              <span class="circle-letter" style="color: var(--ring-blue);">C</span>
-            </div>
-            <span class="gauge-label">SEO</span>
           </div>
 
-          <!-- Gauge 2: Usability -->
-          <div class="gauge-item">
-            <div class="circle-ring" style="background: conic-gradient(var(--ring-orange) 0% 65%, #e2e8f0 65% 100%);">
-              <span class="circle-letter" style="color: var(--ring-orange);">C+</span>
+          <!-- Card 2: 270 Photos Overload -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <span class="text-[10px] font-extrabold bg-amber-50 text-amber-800 px-2 py-0.5 rounded border border-amber-200 uppercase">Zero WebP</span>
             </div>
-            <span class="gauge-label">Usability</span>
-          </div>
 
-          <!-- Gauge 3: Performance -->
-          <div class="gauge-item">
-            <div class="circle-ring" style="background: conic-gradient(var(--ring-red) 0% 45%, #e2e8f0 45% 100%);">
-              <span class="circle-letter" style="color: var(--ring-red);">D+</span>
+            <div class="my-2">
+              <h4 class="text-2xl font-black text-slate-900 tracking-tight">270 Photos</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Uncompressed Gallery Overload</p>
             </div>
-            <span class="gauge-label">Performance</span>
-          </div>
 
-          <!-- Gauge 4: Social -->
-          <div class="gauge-item">
-            <div class="circle-ring" style="background: conic-gradient(var(--ring-purple) 0% 50%, #e2e8f0 50% 100%);">
-              <span class="circle-letter" style="color: var(--ring-purple);">C-</span>
-            </div>
-            <span class="gauge-label">Social</span>
-          </div>
-
-          <!-- Gauge 5: Security -->
-          <div class="gauge-item">
-            <div class="circle-ring" style="background: conic-gradient(var(--ring-green) 0% 70%, #e2e8f0 70% 100%);">
-              <span class="circle-letter" style="color: var(--ring-green);">B-</span>
-            </div>
-            <span class="gauge-label">Security</span>
-          </div>
-
-        </div>
-
-        <!-- Radar Chart on the Right -->
-        <div class="radar-chart-container">
-          <canvas id="radarChart"></canvas>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ============================================== -->
-    <!-- SECTION 1: SEO AUDIT (Scroll Down)            -->
-    <!-- ============================================== -->
-    <section class="audit-section">
-      <div class="section-header">
-        <div class="section-title-wrap">
-          <div class="section-icon-badge" style="background: rgba(59, 130, 246, 0.1); color: var(--color-blue);">🔍</div>
-          <div>
-            <h2 class="section-heading">Search Engine Optimization (SEO)</h2>
-            <div class="section-subtext">Evaluates keyword targeting, meta tags, heading structure, and crawlability</div>
-          </div>
-        </div>
-        <span class="section-grade-pill" style="background: rgba(59, 130, 246, 0.1); color: var(--color-blue);">Grade: C (55/100)</span>
-      </div>
-
-      <!-- Item 1.1: Meta Description -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon fail">✕</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Meta Description Tag Missing</span>
-              <span class="check-status-tag fail">Failed</span>
-            </div>
-            <p class="check-desc">Your site does not have a meta description tag on Home, About, Portfolio, or Contact pages. Search engines use this text to display an attractive snippet in search results.</p>
-            <div class="check-evidence-box">
-              &lt;meta name="description" content="" /&gt;  &lt;!-- Completely Missing from &lt;head&gt; --&gt;
-            </div>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Open All in One SEO (AIOSEO) settings in WordPress. Set a unique description (140–160 characters), e.g.: <em>"BT Captures is Melbourne's premier photography studio by Bandara Thennakoon. Specializing in corporate events, weddings, fashion, birthdays, and portraits."</em>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 1.2: Page Titles -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon warn">!</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Page Titles Lack Geographic &amp; Service Keywords</span>
-              <span class="check-status-tag warn">Warning</span>
-            </div>
-            <p class="check-desc">Your title tags are too generic and don't target Melbourne clients who search for specific photography services.</p>
-            <div class="check-evidence-box">
-              Current: &lt;title&gt;HOME - BT Captures&lt;/title&gt;<br>
-              Recommended: &lt;title&gt;BT Captures | Event &amp; Portrait Photographer Melbourne&lt;/title&gt;
-            </div>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Update page titles in WordPress to include your location (Melbourne, VIC) and primary specialties (Events, Fashion, Portraits).
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 1.3: Headings -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon warn">!</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">H1 Tag Structure &amp; Missing H2/H3 Subheadings</span>
-              <span class="check-status-tag warn">Warning</span>
-            </div>
-            <p class="check-desc">The homepage has two separate H1 tags (<code>&lt;h1&gt;BT Captures&lt;/h1&gt;</code> and <code>&lt;h1&gt;Clients&lt;/h1&gt;</code>), and zero H2/H3 tags. Best practices dictate exactly one primary H1 per page followed by logical H2 subheadings.</p>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Keep one single H1 for your primary headline, and convert the "Clients" header into an <code>&lt;h2&gt;</code> tag in the Flatsome page builder.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 1.4: Image Alt Attributes -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon fail">✕</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Image Alt Attributes Empty (18 of 20 images)</span>
-              <span class="check-status-tag fail">Failed</span>
-            </div>
-            <p class="check-desc">90% of your homepage images have empty <code>alt=""</code> attributes. For photographers, Google Image Search is a major source of discovery.</p>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> In WordPress Media Library, add descriptive alternative text for all client photos, e.g., <em>"Melbourne Fashion Week runway show photography by BT Captures"</em>.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 1.5: XML Sitemap & Robots.txt -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon pass">✓</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">XML Sitemap and Robots.txt Present</span>
-              <span class="check-status-tag pass">Passed</span>
-            </div>
-            <p class="check-desc">Your <code>robots.txt</code> and dynamic XML sitemap (<code>sitemap.xml</code> via AIOSEO) are properly configured and accessible to Googlebot.</p>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ============================================== -->
-    <!-- SECTION 2: USABILITY AUDIT (Scroll Down)      -->
-    <!-- ============================================== -->
-    <section class="audit-section">
-      <div class="section-header">
-        <div class="section-title-wrap">
-          <div class="section-icon-badge" style="background: rgba(245, 158, 11, 0.1); color: var(--color-warn);">📱</div>
-          <div>
-            <h2 class="section-heading">Usability &amp; User Experience</h2>
-            <div class="section-subtext">Evaluates mobile responsiveness, broken links, tap targets, and layout consistency</div>
-          </div>
-        </div>
-        <span class="section-grade-pill" style="background: rgba(245, 158, 11, 0.1); color: var(--color-warn);">Grade: C+ (65/100)</span>
-      </div>
-
-      <!-- Item 2.1: Client Logo Link Bug -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon fail">✕</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Client Partner Logos Link Directly to Raw JPEGs</span>
-              <span class="check-status-tag fail">Failed</span>
-            </div>
-            <p class="check-desc">When users click the logos of Monash University, SriLankan Airlines, or Melbourne Fashion Week, the website navigates away to a raw JPEG upload file instead of staying on your site or linking to client pages.</p>
-            <div class="check-evidence-box">
-              Clicking logo navigates to: https://btcaptures.com.au/wp-content/uploads/2024/04/srilankan-airlines-logo.jpg
-            </div>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> In Flatsome theme editor, change client logo links from "Media File" to "None", or set external client links with <code>target="_blank"</code>.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 2.2: Character Encoding Bug -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon warn">!</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Footer Copyright Symbol Displays Character Encoding Error</span>
-              <span class="check-status-tag warn">Warning</span>
-            </div>
-            <p class="check-desc">Your footer displays <code>Copyright 2026 &#xFFFD; BT Captures</code>. The copyright symbol (<code>&copy;</code>) was saved with a character encoding mismatch, displaying a broken question mark box.</p>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Replace the character in Flatsome Theme Options &rarr; Footer with standard HTML code: <code>Copyright &amp;copy; 2026 BT Captures. All rights reserved.</code>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 2.3: Phone Link Encoding -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon warn">!</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Phone Link Contains URL-Encoded Whitespace (`%20`)</span>
-              <span class="check-status-tag warn">Warning</span>
-            </div>
-            <p class="check-desc">The call link is formatted as <code>tel:%200433887629</code>. Certain smartphone dialers fail or produce errors when spaces are encoded into a phone dial protocol.</p>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Update the anchor tag to the standard international format without spaces: <code>&lt;a href="tel:+61433887629"&gt;</code>.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 2.4: Mobile Viewport -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon pass">✓</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Mobile Viewport Configured Properly</span>
-              <span class="check-status-tag pass">Passed</span>
-            </div>
-            <p class="check-desc"><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code> is properly defined, ensuring layout scaling on mobile screens.</p>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ============================================== -->
-    <!-- SECTION 3: PERFORMANCE AUDIT (Scroll Down)   -->
-    <!-- ============================================== -->
-    <section class="audit-section">
-      <div class="section-header">
-        <div class="section-title-wrap">
-          <div class="section-icon-badge" style="background: rgba(239, 68, 68, 0.1); color: var(--color-fail);">⚡</div>
-          <div>
-            <h2 class="section-heading">Performance &amp; Speed</h2>
-            <div class="section-subtext">Evaluates image payloads, page weight, script execution, and loading responsiveness</div>
-          </div>
-        </div>
-        <span class="section-grade-pill" style="background: rgba(239, 68, 68, 0.1); color: var(--color-fail);">Grade: D+ (45/100)</span>
-      </div>
-
-      <!-- Item 3.1: Heavy Images -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon fail">✕</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Massive Uncompressed Images (Homepage Weight: 6.39 MB)</span>
-              <span class="check-status-tag fail">Failed</span>
-            </div>
-            <p class="check-desc">The homepage requires over 6.3MB of image downloads alone. Individual photos exceed 1.5MB to 2.3MB each, drastically slowing down Largest Contentful Paint (LCP) on 4G mobile devices.</p>
-            <div class="check-evidence-box">
-              Fashion-22.jpg &rarr; 2,353 KB (2.35 MB) [Uncompressed JPEG]<br>
-              Kids-14.jpg &rarr; 1,617 KB (1.61 MB)<br>
-              MELMARA23-69.jpg &rarr; 611 KB<br>
-              Major-Events-73-scaled.jpg &rarr; 602 KB
-            </div>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Resize images to a maximum display width of 1920px and convert them to modern <strong>WebP/AVIF</strong> format. This will shrink total homepage weight from 6.39 MB down to under 850 KB.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 3.2: Portfolio Overload -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon fail">✕</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Portfolio Page Loads 270 Images in a Single Request</span>
-              <span class="check-status-tag fail">Failed</span>
-            </div>
-            <p class="check-desc">The <code>/portfolio/</code> page loads <strong>270 high-resolution photos</strong> at once. On mobile browsers, this causes excessive memory consumption, stuttering scroll, and potential crashes.</p>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Split the portfolio into dedicated sub-galleries (e.g., Weddings, Corporate, Fashion) or implement infinite-scroll lazy loading with 16–20 photos loaded per batch.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 3.3: Web Server & HTTP/3 -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon pass">✓</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">LiteSpeed Server with HTTP/3 &amp; Brotli Enabled</span>
-              <span class="check-status-tag pass">Passed</span>
-            </div>
-            <p class="check-desc">The web server is running high-performance LiteSpeed with active HTTP/3 (QUIC) support, ensuring minimal network latency.</p>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ============================================== -->
-    <!-- SECTION 4: SOCIAL TAGS AUDIT (Scroll Down)    -->
-    <!-- ============================================== -->
-    <section class="audit-section">
-      <div class="section-header">
-        <div class="section-title-wrap">
-          <div class="section-icon-badge" style="background: rgba(139, 92, 246, 0.1); color: var(--ring-purple);">🔗</div>
-          <div>
-            <h2 class="section-heading">Social Media &amp; Sharing</h2>
-            <div class="section-subtext">Evaluates Open Graph meta tags, Twitter card previews, and social profile links</div>
-          </div>
-        </div>
-        <span class="section-grade-pill" style="background: rgba(139, 92, 246, 0.1); color: var(--ring-purple);">Grade: C- (50/100)</span>
-      </div>
-
-      <!-- Item 4.1: Open Graph Description -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon fail">✕</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Open Graph Description (`og:description`) Missing</span>
-              <span class="check-status-tag fail">Failed</span>
-            </div>
-            <p class="check-desc">When someone shares your website link on WhatsApp, Facebook, LinkedIn, or iMessage, no summary preview appears under the card.</p>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Fill out the Facebook &amp; Social settings inside AIOSEO with a compelling summary card and high-res cover image.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 4.2: Facebook Profile Link -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon warn">!</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Facebook Link Points to Legacy URL (`facebook.com/ClickU.photos/`)</span>
-              <span class="check-status-tag warn">Warning</span>
-            </div>
-            <p class="check-desc">The footer Facebook icon links to <code>https://www.facebook.com/ClickU.photos/</code>, which appears to be a past branding handle or placeholder.</p>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Verify and update your Facebook profile link in the Flatsome Social Links menu to match your official BT Captures profile.
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ============================================== -->
-    <!-- SECTION 5: SECURITY AUDIT (Scroll Down)       -->
-    <!-- ============================================== -->
-    <section class="audit-section">
-      <div class="section-header">
-        <div class="section-title-wrap">
-          <div class="section-icon-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--color-pass);">🔒</div>
-          <div>
-            <h2 class="section-heading">Security &amp; Technical Hardening</h2>
-            <div class="section-subtext">Evaluates SSL encryption, security headers, plugin freshness, and attack surface</div>
-          </div>
-        </div>
-        <span class="section-grade-pill" style="background: rgba(16, 185, 129, 0.1); color: var(--color-pass);">Grade: B- (70/100)</span>
-      </div>
-
-      <!-- Item 5.1: SSL Certificate -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon pass">✓</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">HTTPS / SSL Certificate Active &amp; Valid</span>
-              <span class="check-status-tag pass">Passed</span>
-            </div>
-            <p class="check-desc">The domain enforces valid HTTPS encryption across all pages with modern TLS protocols.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 5.2: Security Headers -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon warn">!</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Missing Standard HTTP Security Headers</span>
-              <span class="check-status-tag warn">Warning</span>
-            </div>
-            <p class="check-desc">HTTP security headers like <code>Strict-Transport-Security (HSTS)</code>, <code>X-Frame-Options</code>, and <code>X-Content-Type-Options</code> are not being sent by your LiteSpeed server.</p>
-            <div class="check-evidence-box">
-              # Add to your .htaccess file:<br>
-              Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS<br>
-              Header set X-Frame-Options "SAMEORIGIN"<br>
-              Header set X-Content-Type-Options "nosniff"
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 5.3: Outdated Plugins -->
-      <div class="check-item">
-        <div class="check-header">
-          <div class="status-icon warn">!</div>
-          <div class="check-body">
-            <div class="check-title-row">
-              <span class="check-title">Outdated WP Rocket Cache Plugin (v3.11.2 from 2022)</span>
-              <span class="check-status-tag warn">Warning</span>
-            </div>
-            <p class="check-desc">The site exposes <code>X-Powered-By: WP Rocket/3.11.2</code>. Running plugins that are over two years out of date exposes your WordPress site to known security flaws.</p>
-            <div class="check-fix-box">
-              <strong>How to Fix:</strong> Update WP Rocket or switch to the native LiteSpeed Cache for WordPress plugin.
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ============================================== -->
-    <!-- ROADMAP / PRIORITY ACTION CHECKLIST            -->
-    <!-- ============================================== -->
-    <section class="checklist-card">
-      <h2>Recommended Priority Action Plan</h2>
-      <p>Follow these high-impact steps to elevate your score from <strong>C+ (58)</strong> to an <strong>A (90+)</strong></p>
-
-      <div class="roadmap-list">
-        
-        <div class="roadmap-item">
-          <div class="roadmap-left">
-            <span class="roadmap-priority-pill high">High Priority</span>
             <div>
-              <div class="roadmap-text">Fix Client Partner Logos Linking to Raw JPEGs</div>
-              <div class="roadmap-sub">Set link destination to 'None' in Flatsome theme builder</div>
+              <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2">
+                <div class="bg-amber-500 h-1.5 rounded-full w-[90%]"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-500">6.39 MB Initial Payload</span>
+                <span class="text-emerald-600 font-extrabold">Next.js Target: 650KB</span>
+              </div>
             </div>
           </div>
-          <span style="color: #ef4444; font-weight: 700; font-size: 13px;">Immediate</span>
         </div>
-
-        <div class="roadmap-item">
-          <div class="roadmap-left">
-            <span class="roadmap-priority-pill high">High Priority</span>
-            <div>
-              <div class="roadmap-text">Configure Meta Descriptions &amp; Keyword Titles</div>
-              <div class="roadmap-sub">Target "Melbourne Event Photographer" in AIOSEO across all main pages</div>
-            </div>
-          </div>
-          <span style="color: #ef4444; font-weight: 700; font-size: 13px;">Day 1–2</span>
-        </div>
-
-        <div class="roadmap-item">
-          <div class="roadmap-left">
-            <span class="roadmap-priority-pill high">High Priority</span>
-            <div>
-              <div class="roadmap-text">Compress Homepage Photos &amp; Restructure 270 Portfolio Images</div>
-              <div class="roadmap-sub">Convert to WebP format to reduce 6.39MB payload to ~850KB</div>
-            </div>
-          </div>
-          <span style="color: #f59e0b; font-weight: 700; font-size: 13px;">Week 1</span>
-        </div>
-
-        <div class="roadmap-item">
-          <div class="roadmap-left">
-            <span class="roadmap-priority-pill med">Medium Priority</span>
-            <div>
-              <div class="roadmap-text">Fix Footer Copyright Symbol &amp; Phone URL Spacing</div>
-              <div class="roadmap-sub">Fix <code>Copyright 2026 &#xFFFD;</code> and <code>tel:+61433887629</code></div>
-            </div>
-          </div>
-          <span style="color: #f59e0b; font-weight: 700; font-size: 13px;">Week 1</span>
-        </div>
-
-        <div class="roadmap-item">
-          <div class="roadmap-left">
-            <span class="roadmap-priority-pill low">Growth</span>
-            <div>
-              <div class="roadmap-text">Add Google 5-Star Reviews &amp; WhatsApp Floating Chat Button</div>
-              <div class="roadmap-sub">Drastically lifts inquiries and booking conversions for Melbourne clients</div>
-            </div>
-          </div>
-          <span style="color: #3b82f6; font-weight: 700; font-size: 13px;">Week 2</span>
-        </div>
-
       </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer>
-      <p>&copy; 2026 Audit Report generated for <strong>BT Captures</strong> (btcaptures.com.au)</p>
-      <p style="margin-top: 4px;">Audited on October 18, 2026 with automated Lighthouse, SEO, and Security parsers.</p>
-    </footer>
+      <!-- ========================================================= -->
+      <!-- MIDDLE ROW: WAVE CHART & PIE CHART -->
+      <!-- ========================================================= -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 4. DUAL WAVE AREA CHART (STATISTICS) -->
+        <div class="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <h3 class="font-bold text-sm text-slate-900">Conversion & Speed Trajectory Simulation</h3>
+              <p class="text-[11px] text-slate-400">Comparing bounce rate vs booking conversions over 6 sprint milestones</p>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="flex items-center gap-1.5 text-purple-700 font-bold">
+                <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+                WordPress Bounce
+              </span>
+              <span class="flex items-center gap-1.5 text-emerald-600 font-bold">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                Next.js Inquiries
+              </span>
+            </div>
+          </div>
 
+          <div class="w-full h-60 relative overflow-hidden">
+            <svg class="w-full h-full" viewBox="0 0 600 220" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+              <line x1="0" y1="30" x2="600" y2="30" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3 3"/>
+              <line x1="0" y1="80" x2="600" y2="80" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3 3"/>
+              <line x1="0" y1="130" x2="600" y2="130" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3 3"/>
+              <line x1="0" y1="180" x2="600" y2="180" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3 3"/>
+
+              <path d="M 0 180 C 100 150, 160 80, 240 85 C 320 90, 380 40, 480 30 C 540 25, 580 20, 600 15 L 600 220 L 0 220 Z" fill="url(#gArea)"/>
+              <path d="M 0 50 C 100 65, 180 120, 260 130 C 340 140, 420 170, 520 180 C 560 185, 590 190, 600 195" fill="none" stroke="#8b5cf6" stroke-width="3"/>
+              <path d="M 0 180 C 100 150, 160 80, 240 85 C 320 90, 380 40, 480 30 C 540 25, 580 20, 600 15" fill="none" stroke="#10b981" stroke-width="3.5"/>
+
+              <circle cx="240" cy="85" r="5" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="480" cy="30" r="5" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="260" cy="130" r="4" fill="#8b5cf6" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="520" cy="180" r="4" fill="#8b5cf6" stroke="#ffffff" stroke-width="2"/>
+            </svg>
+            <div class="flex justify-between text-[11px] text-slate-400 font-semibold px-2 pt-2 border-t border-slate-100">
+              <span>Day 1: Audit</span>
+              <span>Day 2: Sanity CMS</span>
+              <span>Day 4: Next.js</span>
+              <span>Day 5: VPS Host</span>
+              <span>Day 7: Live</span>
+              <span>Target: 95+ Score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. TOP CATEGORIES / PAYLOAD PIE CHART -->
+        <div class="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between" id="payload">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-sm text-slate-900">Payload Distribution (6.39 MB)</h3>
+            <span class="text-slate-400 font-bold">•••</span>
+          </div>
+
+          <div class="relative flex items-center justify-center my-2">
+            <svg class="w-48 h-48" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="25" fill="transparent" stroke="#2563eb" stroke-width="50" stroke-dasharray="157" stroke-dashoffset="24"/>
+              <circle cx="50" cy="50" r="25" fill="transparent" stroke="#10b981" stroke-width="50" stroke-dasharray="157" stroke-dashoffset="141"/>
+              <circle cx="50" cy="50" r="25" fill="transparent" stroke="#f59e0b" stroke-width="50" stroke-dasharray="157" stroke-dashoffset="150"/>
+            </svg>
+          </div>
+
+          <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 text-slate-600">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                Uncompressed JPEGs (270 Photos)
+              </span>
+              <span class="font-bold text-slate-900">5.40 MB (84.5%)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 text-slate-600">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                Flatsome & WooCommerce JS
+              </span>
+              <span class="font-bold text-slate-900">625 KB (9.8%)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 text-slate-600">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                CSS, Google Fonts & SVGs
+              </span>
+              <span class="font-bold text-slate-900">365 KB (5.7%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- ROW 3: DETECTED DEFICIENCIES TABLE -->
+      <!-- ========================================================= -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs" id="deficiencies">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <h3 class="font-bold text-base text-slate-900">Diagnosed Deficiencies & Audit Log</h3>
+            <p class="text-xs text-slate-500 mt-0.5">Direct defects discovered on btcaptures.com.au requiring engineering resolution</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-400 font-bold uppercase tracking-wider">
+                <th class="pb-3 px-3">Severity</th>
+                <th class="pb-3 px-3">Defect Description</th>
+                <th class="pb-3 px-3">Technical Root Cause</th>
+                <th class="pb-3 px-3">SiteSpark Solution</th>
+                <th class="pb-3 px-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-3"><span class="bg-rose-100 text-rose-700 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase">Critical</span></td>
+                <td class="py-3 px-3 font-bold text-slate-900">Client Partner Logos Open Raw Image JPEGs</td>
+                <td class="py-3 px-3 text-slate-500">Flatsome UX Builder default image link triggers full-screen navigation to raw JPEG file.</td>
+                <td class="py-3 px-3 text-emerald-700 font-semibold">Unlink media or replace with SVG partner carousel linking to client case studies.</td>
+                <td class="py-3 px-3 text-right"><a href="https://wa.me/94715448553" target="_blank" class="text-purple-600 font-bold underline">Fix Now</a></td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-3"><span class="bg-rose-100 text-rose-700 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase">Critical</span></td>
+                <td class="py-3 px-3 font-bold text-slate-900">6.39 MB Page Payload & 270 Photo Overload</td>
+                <td class="py-3 px-3 text-slate-500">Full resolution camera exports loaded synchronously without pagination or AVIF compression.</td>
+                <td class="py-3 px-3 text-emerald-700 font-semibold">Next.js 15 automatic AVIF responsive images + Sanity.io cloud CDN pagination.</td>
+                <td class="py-3 px-3 text-right"><a href="https://wa.me/94715448553" target="_blank" class="text-purple-600 font-bold underline">Fix Now</a></td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-3"><span class="bg-amber-100 text-amber-800 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase">High</span></td>
+                <td class="py-3 px-3 font-bold text-slate-900">Missing Melbourne Photographer Title & Meta Tags</td>
+                <td class="py-3 px-3 text-slate-500">Default page title displays generic &quot;Home - BT Captures&quot; without target geo keywords.</td>
+                <td class="py-3 px-3 text-emerald-700 font-semibold">LocalBusiness + Photographer Schema.org JSON-LD targeting Melbourne photography niches.</td>
+                <td class="py-3 px-3 text-right"><a href="https://wa.me/94715448553" target="_blank" class="text-purple-600 font-bold underline">Fix Now</a></td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-3"><span class="bg-amber-100 text-amber-800 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase">Medium</span></td>
+                <td class="py-3 px-3 font-bold text-slate-900">Footer Copyright Glitch & Phone Spacing</td>
+                <td class="py-3 px-3 text-slate-500">Raw unescaped &copy; symbol in Flatsome footer and %20 blank space inside tel: URL tag.</td>
+                <td class="py-3 px-3 text-emerald-700 font-semibold">Sanitize footer text and format clean direct click-to-dial mobile protocol.</td>
+                <td class="py-3 px-3 text-right"><a href="https://wa.me/94715448553" target="_blank" class="text-purple-600 font-bold underline">Fix Now</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- BOTTOM CALL TO ACTION BANNER -->
+      <!-- ========================================================= -->
+      <div class="bg-gradient-to-r from-purple-700 via-indigo-700 to-slate-900 text-white rounded-3xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div class="space-y-2 text-center md:text-left">
+          <span class="text-xs font-bold uppercase tracking-widest text-purple-300 bg-white/10 px-3 py-1 rounded-full border border-white/20">SiteSpark Agency Guarantee</span>
+          <h3 class="text-2xl sm:text-3xl font-black">Transform BT Captures to 95+ PageSpeed Score</h3>
+          <p class="text-purple-200 text-xs sm:text-sm max-w-xl">Migrate from bloated Flatsome WordPress to High-Performance Next.js 15 + Sanity.io Studio on a dedicated Cloud VPS in just 7 days.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+          <a href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20am%20ready%20for%20the%20BT%20Captures%207-day%20sprint." target="_blank" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-white font-black px-6 py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/40 transition-all hover:scale-105">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            Chat on WhatsApp (+94 71 544 8553)
+          </a>
+        </div>
+      </div>
+    </main>
   </div>
 
-  <!-- RADAR CHART INITIALIZATION SCRIPT -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const ctx = document.getElementById('radarChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'radar',
-        data: {
-          labels: ['SEO', 'Usability', 'Performance', 'Social', 'Security'],
-          datasets: [{
-            data: [55, 65, 45, 50, 70],
-            backgroundColor: 'rgba(59, 130, 246, 0.25)',
-            borderColor: '#3b82f6',
-            borderWidth: 2,
-            pointBackgroundColor: '#2563eb',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: '#2563eb'
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            r: {
-              angleLines: { color: '#e2e8f0' },
-              grid: { color: '#e2e8f0' },
-              pointLabels: {
-                font: { size: 10.5, family: 'Inter', weight: '600' },
-                color: '#475569'
-              },
-              ticks: { display: false, max: 100, min: 0 }
-            }
-          },
-          plugins: {
-            legend: { display: false }
-          }
-        }
-      });
-    });
-  </script>
+  <!-- FLOATING WHATSAPP PILL -->
+  <a href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20am%20reviewing%20the%20BT%20Captures%20Dashboard." target="_blank" class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 sm:px-5 sm:py-3.5 rounded-full shadow-2xl shadow-emerald-500/50 flex items-center gap-2.5 transition-all hover:scale-105">
+    <svg class="w-6 h-6 fill-current animate-bounce" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+    <span class="hidden sm:inline font-bold text-xs tracking-wide">WhatsApp Support</span>
+  </a>
 
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('mobileBackdrop');
+      if (sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+  </script>
 </body>
 </html>

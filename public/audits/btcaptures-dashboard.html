@@ -122,17 +122,6 @@
           </div>
         </div>
 
-        <!-- View Switcher -->
-        <div>
-          <span class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">View Modes</span>
-          <a href="/audits/btcaptures" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl bg-slate-900 text-white font-medium hover:bg-black transition-all shadow-sm">
-            <span class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
-              Dark Studio View
-            </span>
-            <span class="text-xs">&rarr;</span>
-          </a>
-        </div>
       </nav>
 
       <!-- Sidebar Client Footer -->
@@ -176,10 +165,6 @@
 
       <!-- Right Header Actions -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <a href="/audits/btcaptures" class="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all" title="Dark View">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-        </a>
-
         <div class="relative">
           <button class="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
@@ -220,9 +205,6 @@
           <a href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20am%20ready%20for%20the%20Next.js%20+%20Sanity.io%20+%20VPS%20migration." target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-purple-600/20 flex items-center gap-1.5 transition-all hover:scale-102">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             Start 7-Day Sprint
-          </a>
-          <a href="/audits/btcaptures" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs">
-            Dark View
           </a>
         </div>
       </div>
@@ -348,52 +330,52 @@
 
         <!-- 3. TWO STACKED KPI CARDS -->
         <div class="lg:col-span-3 flex flex-col gap-6">
-          <!-- Card 1: $4,580 -->
+          <!-- Card 1: 4.2s Stall (Replaces $4,580 AUD card) -->
           <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
             <div class="flex items-center justify-between">
-              <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
               </div>
-              <span class="text-slate-400 font-bold">•••</span>
+              <span class="text-[10px] font-extrabold bg-rose-50 text-rose-600 px-2 py-0.5 rounded border border-rose-200 uppercase">Failed LCP</span>
             </div>
 
             <div class="my-2">
-              <h4 class="text-2xl font-black text-slate-900 tracking-tight">$4,580 AUD</h4>
-              <p class="text-xs text-slate-400 mt-0.5">Est. Lost Melbourne Inquiries / Mo</p>
+              <h4 class="text-2xl font-black text-slate-900 tracking-tight">4.2s Stall</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Mobile Largest Contentful Paint</p>
             </div>
 
             <div>
               <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2">
-                <div class="bg-emerald-500 h-1.5 rounded-full w-[78%]"></div>
+                <div class="bg-rose-500 h-1.5 rounded-full w-[82%]"></div>
               </div>
               <div class="flex items-center justify-between text-[11px]">
-                <span class="text-slate-500">Bounce drop-off</span>
-                <span class="text-emerald-600 font-extrabold">+18% Recoverable</span>
+                <span class="text-slate-500">Google Core Web Vitals</span>
+                <span class="text-rose-600 font-extrabold">Target: &lt; 1.2s</span>
               </div>
             </div>
           </div>
 
-          <!-- Card 2: 8,126 -->
+          <!-- Card 2: 270 Photos Overload -->
           <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
             <div class="flex items-center justify-between">
-              <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               </div>
-              <span class="text-slate-400 font-bold">•••</span>
+              <span class="text-[10px] font-extrabold bg-amber-50 text-amber-800 px-2 py-0.5 rounded border border-amber-200 uppercase">Zero WebP</span>
             </div>
 
             <div class="my-2">
-              <h4 class="text-2xl font-black text-slate-900 tracking-tight">8,126</h4>
-              <p class="text-xs text-slate-400 mt-0.5">Melbourne Visitors Affected</p>
+              <h4 class="text-2xl font-black text-slate-900 tracking-tight">270 Photos</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Uncompressed Gallery Overload</p>
             </div>
 
             <div>
               <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2">
-                <div class="bg-rose-500 h-1.5 rounded-full w-[65%]"></div>
+                <div class="bg-amber-500 h-1.5 rounded-full w-[90%]"></div>
               </div>
               <div class="flex items-center justify-between text-[11px]">
-                <span class="text-slate-500">Uncompressed Mobile Stalls</span>
-                <span class="text-rose-600 font-extrabold">+35% Potential Lift</span>
+                <span class="text-slate-500">6.39 MB Initial Payload</span>
+                <span class="text-emerald-600 font-extrabold">Next.js Target: 650KB</span>
               </div>
             </div>
           </div>
@@ -567,9 +549,6 @@
           <a href="https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20am%20ready%20for%20the%20BT%20Captures%207-day%20sprint." target="_blank" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-white font-black px-6 py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/40 transition-all hover:scale-105">
             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
             Chat on WhatsApp (+94 71 544 8553)
-          </a>
-          <a href="/audits/btcaptures" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3.5 rounded-2xl text-xs sm:text-sm text-center border border-white/20 transition-all">
-            View Dark Report
           </a>
         </div>
       </div>

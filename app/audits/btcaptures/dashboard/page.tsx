@@ -230,22 +230,6 @@ export default function BTCapturesWhiteDashboard() {
               </div>
             </div>
 
-            {/* Quick Switch to Dark Studio View */}
-            <div>
-              <span className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
-                View Modes
-              </span>
-              <Link
-                href="/audits/btcaptures"
-                className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-slate-900 text-white font-medium hover:bg-black transition-all shadow-sm"
-              >
-                <span className="flex items-center gap-2">
-                  <Moon className="w-3.5 h-3.5 text-yellow-400" />
-                  Dark Studio View
-                </span>
-                <span className="text-[10px] text-slate-400">&rarr;</span>
-              </Link>
-            </div>
           </nav>
 
           {/* Sidebar Footer / Client Badge */}
@@ -302,14 +286,6 @@ export default function BTCapturesWhiteDashboard() {
 
           {/* Right Action Icons */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <Link
-              href="/audits/btcaptures"
-              title="Toggle Dark Studio View"
-              className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all"
-            >
-              <Moon className="w-4 h-4" />
-            </Link>
-
             <div className="relative">
               <button
                 className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all relative"
@@ -372,12 +348,6 @@ export default function BTCapturesWhiteDashboard() {
                 <Sparkles className="w-3.5 h-3.5" />
                 Upgrade to Next.js + Sanity
               </a>
-              <Link
-                href="/audits/btcaptures"
-                className="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs flex items-center gap-1.5 transition-all"
-              >
-                Dark View
-              </Link>
             </div>
           </div>
 
@@ -550,52 +520,56 @@ export default function BTCapturesWhiteDashboard() {
 
             {/* 3. TWO STACKED KPI CARDS */}
             <div className="lg:col-span-3 flex flex-col gap-6">
-              {/* Top KPI Card: Lost Revenue */}
+              {/* Top KPI Card: Mobile Speed Stall (Replaces $4,580 AUD card) */}
               <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
                 <div className="flex items-center justify-between">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                    <DollarSign className="w-5 h-5" />
+                  <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                    <Zap className="w-5 h-5" />
                   </div>
-                  <span className="text-slate-400 hover:text-slate-600 cursor-pointer text-xs font-bold">•••</span>
+                  <span className="text-[10px] font-extrabold bg-rose-50 text-rose-600 px-2 py-0.5 rounded border border-rose-200 uppercase">
+                    Failed LCP
+                  </span>
                 </div>
 
                 <div className="my-2">
-                  <h4 className="text-2xl font-black text-slate-900 tracking-tight">$4,580 AUD</h4>
-                  <p className="text-xs text-slate-400 mt-0.5">Est. Lost Bookings / Month</p>
+                  <h4 className="text-2xl font-black text-slate-900 tracking-tight">4.2s Stall</h4>
+                  <p className="text-xs text-slate-400 mt-0.5">Mobile Largest Contentful Paint</p>
                 </div>
 
                 <div>
                   <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2">
-                    <div className="bg-emerald-500 h-1.5 rounded-full w-[78%]" />
+                    <div className="bg-rose-500 h-1.5 rounded-full w-[82%]" />
                   </div>
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-slate-500">Bounce drop-off</span>
-                    <span className="text-emerald-600 font-extrabold">+18% Recoverable</span>
+                    <span className="text-slate-500">Google Core Web Vitals</span>
+                    <span className="text-rose-600 font-extrabold">Target: &lt; 1.2s</span>
                   </div>
                 </div>
               </div>
 
-              {/* Bottom KPI Card: Mobile Traffic Visitors */}
+              {/* Bottom KPI Card: 270 Portfolio Photos Overload */}
               <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
                 <div className="flex items-center justify-between">
-                  <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
-                    <Users className="w-5 h-5" />
+                  <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <Layers className="w-5 h-5" />
                   </div>
-                  <span className="text-slate-400 hover:text-slate-600 cursor-pointer text-xs font-bold">•••</span>
+                  <span className="text-[10px] font-extrabold bg-amber-50 text-amber-800 px-2 py-0.5 rounded border border-amber-200 uppercase">
+                    Zero WebP
+                  </span>
                 </div>
 
                 <div className="my-2">
-                  <h4 className="text-2xl font-black text-slate-900 tracking-tight">8,126</h4>
-                  <p className="text-xs text-slate-400 mt-0.5">Melbourne Visitors Affected</p>
+                  <h4 className="text-2xl font-black text-slate-900 tracking-tight">270 Photos</h4>
+                  <p className="text-xs text-slate-400 mt-0.5">Uncompressed Gallery Overload</p>
                 </div>
 
                 <div>
                   <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2">
-                    <div className="bg-rose-500 h-1.5 rounded-full w-[65%]" />
+                    <div className="bg-amber-500 h-1.5 rounded-full w-[90%]" />
                   </div>
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-slate-500">Uncompressed Mobile Stalls</span>
-                    <span className="text-rose-600 font-extrabold">+35% Potential Lift</span>
+                    <span className="text-slate-500">6.39 MB Initial Payload</span>
+                    <span className="text-emerald-600 font-extrabold">Next.js Target: 650KB</span>
                   </div>
                 </div>
               </div>
@@ -1061,12 +1035,6 @@ export default function BTCapturesWhiteDashboard() {
                 <MessageCircle className="w-5 h-5" />
                 Chat on WhatsApp (+94 71 544 8553)
               </a>
-              <Link
-                href="/audits/btcaptures"
-                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3.5 rounded-2xl text-xs sm:text-sm text-center border border-white/20 transition-all"
-              >
-                View Dark Report
-              </Link>
             </div>
           </div>
         </main>
