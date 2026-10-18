@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import {
   Search,
-  Moon,
   Sun,
   Bell,
   Grid,
@@ -21,7 +20,6 @@ import {
   XCircle,
   MessageCircle,
   PhoneCall,
-  DollarSign,
   Users,
   TrendingUp,
   Clock,
@@ -40,15 +38,16 @@ import {
   PieChart as PieIcon,
   BarChart3,
   Flame,
-  Check
+  Check,
+  Server,
+  Database
 } from "lucide-react";
 
 export default function BTCapturesWhiteDashboard() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeMenu, setActiveMenu] = useState("default");
+  const [activeMenu, setActiveMenu] = useState("overview");
   const [activeTab, setActiveTab] = useState<"all" | "critical" | "performance" | "seo">("all");
-  const [completedTasks, setCompletedTasks] = useState<number[]>([1]);
-  const [chartMetric, setChartMetric] = useState<"speed" | "inquiries">("speed");
+  const [completedTasks, setCompletedTasks] = useState<number[]>([1, 2]);
 
   const toggleTask = (id: number) => {
     setCompletedTasks(prev =>
@@ -56,8 +55,98 @@ export default function BTCapturesWhiteDashboard() {
     );
   };
 
+  const scrollTo = (id: string) => {
+    setActiveMenu(id);
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const whatsappUrl =
     "https://wa.me/94715448553?text=Hi%20SiteSpark,%20I%20am%20reviewing%20the%20BT%20Captures%20Executive%20Dashboard%20and%20would%20like%20to%20discuss%20the%20Next.js%20+%20Sanity.io%20+%20VPS%20migration.";
+
+  // Diagnosed Deficiencies Data
+  const auditIssues = [
+    {
+      id: 1,
+      category: "critical",
+      severity: "Critical",
+      badgeColor: "bg-rose-100 text-rose-700",
+      title: "Client Partner Logos Open Raw Image JPEGs",
+      cause: "Flatsome UX Builder default image link triggers full-screen navigation to raw JPEG file (/wp-content/uploads/...).",
+      solution: "Unlink media or replace with SVG partner carousel linking to client case studies."
+    },
+    {
+      id: 2,
+      category: "critical",
+      severity: "Critical",
+      badgeColor: "bg-rose-100 text-rose-700",
+      title: "6.39 MB Page Payload & 270 Photo Overload",
+      cause: "Full resolution camera exports loaded synchronously without pagination or AVIF compression.",
+      solution: "Next.js 15 automatic AVIF responsive images + Sanity.io cloud CDN pagination drops size to < 650KB."
+    },
+    {
+      id: 3,
+      category: "critical",
+      severity: "Critical",
+      badgeColor: "bg-rose-100 text-rose-700",
+      title: "No Security Headers (HSTS, CSP, X-Frame-Options)",
+      cause: "Shared cPanel hosting server configuration exposes website to clickjacking and MIME attacks.",
+      solution: "Implement strict Nginx reverse proxy security headers with automated SSL grade A+ on Cloud VPS."
+    },
+    {
+      id: 4,
+      category: "performance",
+      severity: "High",
+      badgeColor: "bg-amber-100 text-amber-800",
+      title: "Largest Contentful Paint (LCP) Stalls at 4.2s on Mobile",
+      cause: "Massive uncompressed hero images block initial render pipeline on 4G Australian mobile devices.",
+      solution: "Priority preloading with next/image blur placeholders drops LCP under 1.1s."
+    },
+    {
+      id: 5,
+      category: "performance",
+      severity: "High",
+      badgeColor: "bg-amber-100 text-amber-800",
+      title: "Missing Melbourne Photographer Title & Meta Tags",
+      cause: "Default page title displays generic 'Home - BT Captures' without target Melbourne keywords.",
+      solution: "LocalBusiness + Photographer Schema.org JSON-LD targeting Melbourne photography niches."
+    },
+    {
+      id: 6,
+      category: "performance",
+      severity: "Medium",
+      badgeColor: "bg-amber-100 text-amber-800",
+      title: "Footer Copyright Encoding Glitch & Phone Spacing",
+      cause: "Raw unescaped &copy; symbol in Flatsome footer and %20 blank space inside tel: URL tag.",
+      solution: "Sanitize footer text and format clean direct click-to-dial mobile protocol."
+    },
+    {
+      id: 7,
+      category: "seo",
+      severity: "Medium",
+      badgeColor: "bg-blue-100 text-blue-800",
+      title: "No Structured Data / Schema Markup for Melbourne Local SEO",
+      cause: "Google cannot parse studio pricing, service areas, address, or customer rating stars.",
+      solution: "Inject Rich Snippet JSON-LD for Google Maps 3-Pack and rich snippet search results."
+    },
+    {
+      id: 8,
+      category: "seo",
+      severity: "Medium",
+      badgeColor: "bg-blue-100 text-blue-800",
+      title: "Missing OpenGraph & Twitter Card Social Meta Tags",
+      cause: "Links shared on WhatsApp, Facebook, and iMessage show blank gray thumbnails.",
+      solution: "Dynamic OpenGraph preview card generation for all wedding and event galleries."
+    }
+  ];
+
+  const filteredIssues = auditIssues.filter(issue => {
+    if (activeTab === "all") return true;
+    return issue.category === activeTab;
+  });
 
   return (
     <div className="min-h-screen bg-[#f4f6fa] text-slate-800 flex font-sans antialiased selection:bg-purple-100 selection:text-purple-900">
@@ -67,7 +156,7 @@ export default function BTCapturesWhiteDashboard() {
       {mobileMenuOpen && (
         <div
           onClick={() => setMobileMenuOpen(false)}
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden transition-opacity"
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 lg:hidden transition-opacity"
         />
       )}
 
@@ -116,15 +205,16 @@ export default function BTCapturesWhiteDashboard() {
               </div>
               <div className="space-y-1">
                 <button
-                  onClick={() => setActiveMenu("default")}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all ${
-                    activeMenu === "default"
-                      ? "bg-purple-50 text-purple-700 font-bold shadow-sm"
+                  type="button"
+                  onClick={() => scrollTo("overview")}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all cursor-pointer ${
+                    activeMenu === "overview"
+                      ? "bg-purple-50 text-purple-700 font-bold shadow-xs"
                       : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className={`w-2 h-2 rounded-full ${activeMenu === "default" ? "bg-purple-600 ring-4 ring-purple-100" : "bg-slate-300"}`} />
+                    <span className={`w-2 h-2 rounded-full ${activeMenu === "overview" ? "bg-purple-600 ring-4 ring-purple-100" : "bg-slate-300"}`} />
                     <span>Default Audit View</span>
                   </div>
                   <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">
@@ -133,22 +223,27 @@ export default function BTCapturesWhiteDashboard() {
                 </button>
 
                 <button
-                  onClick={() => setActiveMenu("performance")}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
-                    activeMenu === "performance"
-                      ? "bg-purple-50 text-purple-700 font-bold"
+                  type="button"
+                  onClick={() => scrollTo("vitals")}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all cursor-pointer ${
+                    activeMenu === "vitals"
+                      ? "bg-purple-50 text-purple-700 font-bold shadow-xs"
                       : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
-                  <span className="w-2 h-2 rounded-full bg-slate-300" />
+                  <span className={`w-2 h-2 rounded-full ${activeMenu === "vitals" ? "bg-purple-600" : "bg-slate-300"}`} />
                   <span>Performance & Speed</span>
                 </button>
 
                 <button
-                  onClick={() => setActiveMenu("seo")}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
+                  type="button"
+                  onClick={() => {
+                    setActiveTab("seo");
+                    scrollTo("issues");
+                  }}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all cursor-pointer ${
                     activeMenu === "seo"
-                      ? "bg-purple-50 text-purple-700 font-bold"
+                      ? "bg-purple-50 text-purple-700 font-bold shadow-xs"
                       : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
@@ -157,14 +252,15 @@ export default function BTCapturesWhiteDashboard() {
                 </button>
 
                 <button
-                  onClick={() => setActiveMenu("architecture")}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
+                  type="button"
+                  onClick={() => scrollTo("architecture")}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all cursor-pointer ${
                     activeMenu === "architecture"
-                      ? "bg-purple-50 text-purple-700 font-bold"
+                      ? "bg-purple-50 text-purple-700 font-bold shadow-xs"
                       : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
-                  <span className="w-2 h-2 rounded-full bg-slate-300" />
+                  <span className={`w-2 h-2 rounded-full ${activeMenu === "architecture" ? "bg-purple-600" : "bg-slate-300"}`} />
                   <span>VPS + Next.js + Sanity</span>
                 </button>
               </div>
@@ -176,9 +272,10 @@ export default function BTCapturesWhiteDashboard() {
                 Audit Modules
               </span>
               <div className="space-y-1">
-                <a
-                  href="#overview"
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all"
+                <button
+                  type="button"
+                  onClick={() => scrollTo("overview")}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-left"
                 >
                   <span className="flex items-center gap-2">
                     <BarChart3 className="w-3.5 h-3.5 text-slate-400" />
@@ -187,11 +284,12 @@ export default function BTCapturesWhiteDashboard() {
                   <span className="text-[10px] font-extrabold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
                     C+ (64)
                   </span>
-                </a>
+                </button>
 
-                <a
-                  href="#payload"
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all"
+                <button
+                  type="button"
+                  onClick={() => scrollTo("payload")}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-left"
                 >
                   <span className="flex items-center gap-2">
                     <PieIcon className="w-3.5 h-3.5 text-slate-400" />
@@ -200,11 +298,15 @@ export default function BTCapturesWhiteDashboard() {
                   <span className="text-[10px] font-extrabold text-red-600 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">
                     6.39 MB
                   </span>
-                </a>
+                </button>
 
-                <a
-                  href="#issues"
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all"
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveTab("all");
+                    scrollTo("issues");
+                  }}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-left"
                 >
                   <span className="flex items-center gap-2">
                     <AlertTriangle className="w-3.5 h-3.5 text-slate-400" />
@@ -213,11 +315,12 @@ export default function BTCapturesWhiteDashboard() {
                   <span className="text-[10px] font-extrabold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">
                     8 Issues
                   </span>
-                </a>
+                </button>
 
-                <a
-                  href="#roadmap"
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all"
+                <button
+                  type="button"
+                  onClick={() => scrollTo("roadmap")}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-left"
                 >
                   <span className="flex items-center gap-2">
                     <FolderKanban className="w-3.5 h-3.5 text-slate-400" />
@@ -226,10 +329,9 @@ export default function BTCapturesWhiteDashboard() {
                   <span className="text-[10px] font-extrabold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
                     7 Days
                   </span>
-                </a>
+                </button>
               </div>
             </div>
-
           </nav>
 
           {/* Sidebar Footer / Client Badge */}
@@ -268,7 +370,7 @@ export default function BTCapturesWhiteDashboard() {
           <div className="flex items-center gap-3 flex-1 max-w-lg">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100"
+              className="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 cursor-pointer"
               aria-label="Open sidebar"
             >
               <Menu className="w-5 h-5" />
@@ -288,7 +390,8 @@ export default function BTCapturesWhiteDashboard() {
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="relative">
               <button
-                className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all relative"
+                onClick={() => scrollTo("issues")}
+                className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all relative cursor-pointer"
                 aria-label="Notifications"
               >
                 <Bell className="w-4 h-4" />
@@ -348,13 +451,20 @@ export default function BTCapturesWhiteDashboard() {
                 <Sparkles className="w-3.5 h-3.5" />
                 Upgrade to Next.js + Sanity
               </a>
+              <button
+                type="button"
+                onClick={() => scrollTo("roadmap")}
+                className="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
+              >
+                View Sprint
+              </button>
             </div>
           </div>
 
           {/* ========================================================= */}
-          {/* TOP ROW: 3 CARDS (MATCHING SYN-UI LAYOUT) */}
+          {/* TOP ROW: 3 CARDS (EXACT SYN-UI LAYOUT) */}
           {/* ========================================================= */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+          <div id="overview" className="scroll-mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
             {/* 1. DONUT GAUGE CARD (TOTAL HEALTH / 85% CIRCLE) */}
             <div className="lg:col-span-4 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4">
@@ -458,7 +568,7 @@ export default function BTCapturesWhiteDashboard() {
             </div>
 
             {/* 2. BAR CHART CARD (USER ACTIVITY / CORE WEB VITALS) */}
-            <div className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+            <div id="vitals" className="scroll-mt-24 lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h3 className="font-bold text-sm text-slate-900">Core Web Vitals & Speed Load (Seconds)</h3>
@@ -520,7 +630,7 @@ export default function BTCapturesWhiteDashboard() {
 
             {/* 3. TWO STACKED KPI CARDS */}
             <div className="lg:col-span-3 flex flex-col gap-6">
-              {/* Top KPI Card: Mobile Speed Stall (Replaces $4,580 AUD card) */}
+              {/* Top KPI Card: Mobile Speed Stall */}
               <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex-1 flex flex-col justify-between">
                 <div className="flex items-center justify-between">
                   <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
@@ -609,10 +719,6 @@ export default function BTCapturesWhiteDashboard() {
                       <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
                       <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
                     </linearGradient>
-                    <linearGradient id="purpleArea" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.15" />
-                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.0" />
-                    </linearGradient>
                   </defs>
 
                   {/* Horizontal gridlines */}
@@ -663,7 +769,7 @@ export default function BTCapturesWhiteDashboard() {
             </div>
 
             {/* 5. TOP CATEGORIES / PAYLOAD PIE CHART */}
-            <div id="payload" className="lg:col-span-4 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+            <div id="payload" className="scroll-mt-24 lg:col-span-4 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-bold text-sm text-slate-900">Payload Distribution (6.39 MB)</h3>
                 <span className="text-slate-400 hover:text-slate-600 cursor-pointer text-xs font-bold">•••</span>
@@ -736,9 +842,9 @@ export default function BTCapturesWhiteDashboard() {
           </div>
 
           {/* ========================================================= */}
-          {/* ROW 3: DETECTED DEFICIENCIES TABLE */}
+          {/* ROW 3: DETECTED DEFICIENCIES TABLE WITH WORKING FILTERS */}
           {/* ========================================================= */}
-          <div id="issues" className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+          <div id="issues" className="scroll-mt-24 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
                 <h3 className="font-bold text-base text-slate-900">Diagnosed Deficiencies & Audit Log</h3>
@@ -747,52 +853,56 @@ export default function BTCapturesWhiteDashboard() {
                 </p>
               </div>
 
-              {/* Filter Pills */}
+              {/* Filter Pills (Fully Working Interactive Filter) */}
               <div className="flex flex-wrap gap-2 text-xs">
                 <button
+                  type="button"
                   onClick={() => setActiveTab("all")}
-                  className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
                     activeTab === "all"
                       ? "bg-purple-600 text-white shadow-xs"
                       : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
-                  All (8)
+                  All ({auditIssues.length})
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActiveTab("critical")}
-                  className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
                     activeTab === "critical"
                       ? "bg-rose-500 text-white shadow-xs"
                       : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
-                  Critical (3)
+                  Critical ({auditIssues.filter(i => i.category === "critical").length})
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActiveTab("performance")}
-                  className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
                     activeTab === "performance"
                       ? "bg-amber-500 text-white shadow-xs"
                       : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
-                  Speed & Media (3)
+                  Speed & Media ({auditIssues.filter(i => i.category === "performance").length})
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActiveTab("seo")}
-                  className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
+                  className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
                     activeTab === "seo"
                       ? "bg-blue-600 text-white shadow-xs"
                       : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
-                  SEO & Meta (2)
+                  SEO & Meta ({auditIssues.filter(i => i.category === "seo").length})
                 </button>
               </div>
             </div>
 
-            {/* Table */}
+            {/* Dynamically Filtered Table */}
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
@@ -805,122 +915,98 @@ export default function BTCapturesWhiteDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  <tr className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-3">
-                      <span className="bg-rose-100 text-rose-700 font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase">
-                        Critical
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 font-bold text-slate-900">
-                      Client Partner Logos Open Raw Image JPEGs
-                    </td>
-                    <td className="py-3 px-3 text-slate-500">
-                      Flatsome UX Builder default image link triggers full-screen navigation to raw JPEG file.
-                    </td>
-                    <td className="py-3 px-3 text-emerald-700 font-semibold">
-                      Unlink media or replace with SVG partner carousel linking to client case studies.
-                    </td>
-                    <td className="py-3 px-3 text-right">
-                      <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-purple-600 hover:text-purple-800 font-bold underline"
-                      >
-                        Fix Now
-                      </a>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-3">
-                      <span className="bg-rose-100 text-rose-700 font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase">
-                        Critical
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 font-bold text-slate-900">
-                      6.39 MB Page Payload & 270 Photo Overload
-                    </td>
-                    <td className="py-3 px-3 text-slate-500">
-                      Full resolution camera exports loaded synchronously without pagination or AVIF compression.
-                    </td>
-                    <td className="py-3 px-3 text-emerald-700 font-semibold">
-                      Next.js 15 automatic AVIF responsive images + Sanity.io cloud CDN CDN pagination.
-                    </td>
-                    <td className="py-3 px-3 text-right">
-                      <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-purple-600 hover:text-purple-800 font-bold underline"
-                      >
-                        Fix Now
-                      </a>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-3">
-                      <span className="bg-amber-100 text-amber-800 font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase">
-                        High
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 font-bold text-slate-900">
-                      Missing Melbourne Photographer Title & Meta Tags
-                    </td>
-                    <td className="py-3 px-3 text-slate-500">
-                      Default page title displays generic &quot;Home - BT Captures&quot; without target geo keywords.
-                    </td>
-                    <td className="py-3 px-3 text-emerald-700 font-semibold">
-                      LocalBusiness + Photographer Schema.org JSON-LD targeting Melbourne photography niches.
-                    </td>
-                    <td className="py-3 px-3 text-right">
-                      <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-purple-600 hover:text-purple-800 font-bold underline"
-                      >
-                        Fix Now
-                      </a>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-3">
-                      <span className="bg-amber-100 text-amber-800 font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase">
-                        Medium
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 font-bold text-slate-900">
-                      Footer Copyright Encoding Glitch & Telephone Spacing
-                    </td>
-                    <td className="py-3 px-3 text-slate-500">
-                      Raw unescaped &copy; symbol in Flatsome footer and %20 blank space inside tel: URL tag.
-                    </td>
-                    <td className="py-3 px-3 text-emerald-700 font-semibold">
-                      Sanitize footer text and format clean direct click-to-dial mobile protocol.
-                    </td>
-                    <td className="py-3 px-3 text-right">
-                      <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-purple-600 hover:text-purple-800 font-bold underline"
-                      >
-                        Fix Now
-                      </a>
-                    </td>
-                  </tr>
+                  {filteredIssues.map((issue) => (
+                    <tr key={issue.id} className="hover:bg-slate-50/80 transition-colors">
+                      <td className="py-3 px-3">
+                        <span className={`font-extrabold px-2.5 py-1 rounded-md text-[10px] uppercase ${issue.badgeColor}`}>
+                          {issue.severity}
+                        </span>
+                      </td>
+                      <td className="py-3 px-3 font-bold text-slate-900">
+                        {issue.title}
+                      </td>
+                      <td className="py-3 px-3 text-slate-500 leading-relaxed">
+                        {issue.cause}
+                      </td>
+                      <td className="py-3 px-3 text-emerald-700 font-semibold leading-relaxed">
+                        {issue.solution}
+                      </td>
+                      <td className="py-3 px-3 text-right whitespace-nowrap">
+                        <a
+                          href={whatsappUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-lg font-bold text-[11px] inline-flex items-center gap-1 transition-all"
+                        >
+                          Fix Now &rarr;
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
 
           {/* ========================================================= */}
+          {/* ARCHITECTURE SECTION: VPS + NEXT.JS + SANITY */}
+          {/* ========================================================= */}
+          <div id="architecture" className="scroll-mt-24 bg-white border border-slate-200/90 rounded-2xl p-6 md:p-8 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <span className="text-xs font-bold text-purple-600 uppercase tracking-wider flex items-center gap-1.5">
+                  <Server className="w-3.5 h-3.5" />
+                  Production Modern Architecture
+                </span>
+                <h3 className="text-xl font-black text-slate-900 mt-1">
+                  High-Performance Cloud VPS + Next.js 15 + Sanity.io Studio
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Eliminating WordPress database bottlenecks, PHP latency, and bloated theme plugins
+                </p>
+              </div>
+              <span className="bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-xl border border-emerald-200 text-xs self-start sm:self-center">
+                Score Guarantee: 95+ PageSpeed
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/60">
+                <div className="flex items-center gap-2 mb-2 font-bold text-sm text-slate-900">
+                  <Zap className="w-4 h-4 text-purple-600" />
+                  Next.js 15 App Router
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Static prerendering with fluid Framer Motion animations. Automatic AVIF/WebP image optimization loads instant portfolio transitions.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/60">
+                <div className="flex items-center gap-2 mb-2 font-bold text-sm text-slate-900">
+                  <Database className="w-4 h-4 text-indigo-600" />
+                  Sanity.io Studio CMS
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Real-time headless content studio. Bandara Thennakoon team can upload and organize photo collections directly from smartphone with zero plugin friction.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/60">
+                <div className="flex items-center gap-2 mb-2 font-bold text-sm text-slate-900">
+                  <Server className="w-4 h-4 text-emerald-600" />
+                  High-Speed Cloud VPS
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Dedicated Australian Docker container with Nginx reverse proxy, automated SSL, and brotli compression ensuring sub-100ms TTFB response.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================================= */}
           {/* ROW 4: INTERACTIVE 7-DAY SPRINT ROADMAP */}
           {/* ========================================================= */}
-          <div id="roadmap" className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+          <div id="roadmap" className="scroll-mt-24 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
                 <span className="text-xs font-bold text-purple-600 uppercase tracking-wider flex items-center gap-1.5">
