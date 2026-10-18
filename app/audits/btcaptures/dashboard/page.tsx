@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Globe,
   Smartphone,
+  Monitor,
   ExternalLink,
   CheckCircle2,
   AlertTriangle,
@@ -226,6 +227,24 @@ export default function BTCapturesWhiteDashboard() {
                 >
                   <span className={`w-2 h-2 rounded-full ${activeMenu === "vitals" ? "bg-purple-600" : "bg-slate-300"}`} />
                   <span>Performance & Speed</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => scrollTo("mobile-comparison")}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all cursor-pointer ${
+                    activeMenu === "mobile-comparison"
+                      ? "bg-purple-50 text-purple-700 font-bold shadow-xs"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className={`w-2 h-2 rounded-full ${activeMenu === "mobile-comparison" ? "bg-purple-600" : "bg-slate-300"}`} />
+                    <span>Mobile vs Desktop</span>
+                  </div>
+                  <span className="text-[10px] font-bold bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded">
+                    42 / 100
+                  </span>
                 </button>
 
                 <button
@@ -661,6 +680,188 @@ export default function BTCapturesWhiteDashboard() {
                     <span className="text-slate-500">6.39 MB Initial Payload</span>
                     <span className="text-emerald-600 font-extrabold">Next.js Target: 650KB</span>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================================= */}
+          {/* MOBILE VS DESKTOP EXPERIENCE COMPARISON CARD */}
+          {/* ========================================================= */}
+          <div id="mobile-comparison" className="scroll-mt-24 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <span className="text-xs font-bold text-purple-600 uppercase tracking-wider flex items-center gap-1.5">
+                  <Smartphone className="w-3.5 h-3.5" />
+                  Mobile Diagnostics &amp; Responsive Audit
+                </span>
+                <h3 className="text-xl font-black text-slate-900 mt-1">
+                  Mobile vs Desktop Performance Gap
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  78% of Melbourne photography clients browse on smartphones. Here is how current WordPress performance fails mobile visitors.
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="bg-rose-50 text-rose-700 font-extrabold px-3 py-1.5 rounded-xl border border-rose-200 text-xs flex items-center gap-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  Mobile Deficit: -26 Points
+                </span>
+              </div>
+            </div>
+
+            {/* Comparison Columns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Column 1: Mobile (Current 4G Mobile Score 42/100) */}
+              <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                        <Smartphone className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Mobile Phone Viewport</h4>
+                        <p className="text-[11px] text-slate-500">4G Network &bull; iPhone / Android</p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-black bg-rose-600 text-white px-2.5 py-1 rounded-lg shadow-xs">
+                      Score: 42 / 100
+                    </span>
+                  </div>
+
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center justify-between py-2 border-b border-rose-100/80 text-xs">
+                      <span className="text-slate-600 font-medium">Largest Contentful Paint (LCP)</span>
+                      <span className="font-black text-rose-600">4.2s (Failed)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-rose-100/80 text-xs">
+                      <span className="text-slate-600 font-medium">Initial Mobile Data Load</span>
+                      <span className="font-black text-rose-600">6.39 MB (Excessive)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-rose-100/80 text-xs">
+                      <span className="text-slate-600 font-medium">Touch Target Accessibility</span>
+                      <span className="font-black text-rose-600">54% (Too Cramped)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-rose-100/80 text-xs">
+                      <span className="text-slate-600 font-medium">Cumulative Layout Shift (CLS)</span>
+                      <span className="font-black text-amber-700">0.28 (Shifting)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 text-xs">
+                      <span className="text-slate-600 font-medium">Quick WhatsApp / Call Sticky</span>
+                      <span className="font-black text-rose-600">Missing</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-rose-200/60">
+                  <p className="text-[11px] text-rose-700 font-semibold leading-relaxed">
+                    &bull; High bounce risk: 62% of mobile visitors abandon if load time exceeds 3 seconds.
+                  </p>
+                </div>
+              </div>
+
+              {/* Column 2: Desktop (Current Desktop Score 68/100) */}
+              <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center">
+                        <Monitor className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Desktop Broadband View</h4>
+                        <p className="text-[11px] text-slate-500">Fast NBN &bull; Mac / PC Chrome</p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-black bg-slate-700 text-white px-2.5 py-1 rounded-lg shadow-xs">
+                      Score: 68 / 100
+                    </span>
+                  </div>
+
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center justify-between py-2 border-b border-slate-200/60 text-xs">
+                      <span className="text-slate-600 font-medium">Largest Contentful Paint (LCP)</span>
+                      <span className="font-black text-amber-600">2.1s (Moderate)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-slate-200/60 text-xs">
+                      <span className="text-slate-600 font-medium">Initial Desktop Data Load</span>
+                      <span className="font-black text-slate-700">6.39 MB (Broadband)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-slate-200/60 text-xs">
+                      <span className="text-slate-600 font-medium">Mouse Navigation &amp; Layout</span>
+                      <span className="font-black text-emerald-600">82% (Functional)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-slate-200/60 text-xs">
+                      <span className="text-slate-600 font-medium">Cumulative Layout Shift (CLS)</span>
+                      <span className="font-black text-emerald-600">0.08 (Stable)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 text-xs">
+                      <span className="text-slate-600 font-medium">Header Phone Number Protocol</span>
+                      <span className="font-black text-amber-700">%20 Whitespace Bug</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-slate-200">
+                  <p className="text-[11px] text-slate-500 font-medium leading-relaxed">
+                    &bull; Tolerable on fast Wi-Fi, but heavy 6.39MB payload still stresses CPU rendering.
+                  </p>
+                </div>
+              </div>
+
+              {/* Column 3: SiteSpark Target (Next.js 15 + Sanity on VPS) */}
+              <div className="rounded-2xl border-2 border-emerald-300 bg-emerald-50/40 p-5 flex flex-col justify-between shadow-xs">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                        <Sparkles className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Next.js 15 VPS Target</h4>
+                        <p className="text-[11px] text-emerald-700 font-medium">Unified Mobile &amp; Desktop</p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-black bg-emerald-600 text-white px-2.5 py-1 rounded-lg shadow-sm">
+                      Score: 98 / 100
+                    </span>
+                  </div>
+
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center justify-between py-2 border-b border-emerald-100/80 text-xs">
+                      <span className="text-slate-600 font-medium">Mobile 4G LCP Response</span>
+                      <span className="font-black text-emerald-600">&lt; 0.8s (Instant)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-emerald-100/80 text-xs">
+                      <span className="text-slate-600 font-medium">Optimized AVIF/WebP Payload</span>
+                      <span className="font-black text-emerald-600">&lt; 650 KB (-90%)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-emerald-100/80 text-xs">
+                      <span className="text-slate-600 font-medium">Mobile Touch Accessibility</span>
+                      <span className="font-black text-emerald-600">100% (Thumb-Friendly)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-emerald-100/80 text-xs">
+                      <span className="text-slate-600 font-medium">Layout Shift (CLS)</span>
+                      <span className="font-black text-emerald-600">0.00 (Zero Shift)</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2 text-xs">
+                      <span className="text-slate-600 font-medium">Direct WhatsApp Conversion</span>
+                      <span className="font-black text-emerald-600">1-Tap Integrated</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-emerald-200">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-xs"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    Discuss Mobile Upgrade on WhatsApp
+                  </a>
                 </div>
               </div>
             </div>
